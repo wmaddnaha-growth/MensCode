@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شفرة الرجالة - الدليل الجريء للزوجات فقط</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <!-- Meta Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '4002420423385265');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=4002420423385265&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <!-- Microsoft Clarity Code -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "xff8setg4h");
+    </script>
+    <!-- End Microsoft Clarity Code -->
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            bg: '#fcfcfc', // Light background
+                            text: '#2d3748', // Dark text for readability
+                            primary: '#8b1c2b',
+                            light: '#fde8eb', // Very light pink for panels
+                            gold: '#d4af37',
+                            white: '#ffffff'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 4s ease-in-out infinite',
+                        'fade-in': 'fadeIn 0.3s ease-out forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #fdf8f9;
+            color: #2d3748;
+            scroll-behavior: smooth;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(139, 28, 43, 0.1);
+            box-shadow: 0 10px 40px -10px rgba(139, 28, 43, 0.08);
+        }
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to left, #8b1c2b, #d4af37);
+        }
+        .btn-glow {
+            box-shadow: 0 4px 15px rgba(139, 28, 43, 0.3);
+            transition: all 0.3s ease;
+        }
+        .btn-glow:hover {
+            box-shadow: 0 6px 20px rgba(139, 28, 43, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        /* Book Mockup CSS */
+        .book-container {
+            perspective: 1000px;
+        }
+        .book {
+            width: 240px;
+            height: 340px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateY(-20deg);
+            transition: transform 0.5s ease;
+            box-shadow: -15px 15px 30px rgba(0,0,0,0.15);
+        }
+        .book:hover {
+            transform: rotateY(0deg) scale(1.05);
+        }
+        /* إزالة تنسيقات book-front القديمة لأننا سنستخدم صورة */
+        
+        /* Form Styles */
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid #e2e8f0;
+            background-color: #f8fafc;
+            transition: all 0.2s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #8b1c2b;
+            box-shadow: 0 0 0 3px rgba(139, 28, 43, 0.1);
+            background-color: #ffffff;
+        }
+        
+        /* Toast Notification */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 100;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 15px;
+            transition: visibility 0s, opacity 0.5s linear;
+            opacity: 0;
+        }
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Swiper Carousel CSS */
+        .indexSwiper {
+            width: 100%;
+            padding-top: 40px;
+            padding-bottom: 60px;
+            overflow: visible; /* السماح بظهور الظلال خارج الحاوية */
+        }
+        
+        /* ضبط حجم الشريحة الأساسي */
+        .indexSwiper .swiper-slide {
+            width: 260px; /* Base width for mobile */
+            aspect-ratio: 9/16; /* 9:16 Ratio */
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1rem;
+            border: 2px solid rgba(139, 28, 43, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            
+            /* هنا السحر: تصغير كل الصور بشكل افتراضي إلى 75% وجعلها باهتة */
+            opacity: 0.4; 
+            transform: scale(0.75);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* حركة ناعمة */
+            transform-origin: center center; /* لضمان التكبير من المنتصف */
+            overflow: hidden;
+        }
+        @media (min-width: 768px) {
+            .indexSwiper .swiper-slide {
+                width: 320px;
+            }
+        }
+        
+        /* الصورة المنتصفية النشطة */
+        .indexSwiper .swiper-slide-active {
+            opacity: 1;
+            /* إعادة الصورة النشطة لحجمها الطبيعي (100%) */
+            transform: scale(1);
+            border: 4px solid #8b1c2b; /* فريم مميز وأسمك للصورة الواضحة */
+            box-shadow: 0 25px 50px -12px rgba(139, 28, 43, 0.4); /* ظل أقوى يبرز الصورة للخارج */
+            z-index: 10; /* لضمان ظهورها فوق الصور الأخرى */
+        }
+        
+        .swiper-pagination-bullet-active {
+            background: #8b1c2b !important;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-primary selection:text-white pb-20 md:pb-0">
+
+    <div class="bg-red-900 text-white text-center py-2 px-4 text-sm md:text-base font-semibold tracking-wide shadow-md relative z-20">
+        🚨 تنبيه هام: هذا المحتوى جريء جداً (+18) ومخصص للمتزوجات فقط.
+    </div>
+
+    <header class="relative pt-12 pb-20 overflow-hidden bg-gradient-to-b from-white to-pink-50">
+        <!-- Background accents -->
+        <div class="absolute top-[-10%] right-[-5%] w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow"></div>
+        <div class="absolute bottom-[-10%] left-[-5%] w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                
+                <!-- Hero Content -->
+                <div class="w-full lg:w-1/2 text-center lg:text-right">
+                    <span class="inline-block py-1 px-4 rounded-full bg-pink-100 text-brand-primary border border-pink-200 text-sm font-bold mb-6">
+                        الإصدار السري والأكثر جرأة 🤫
+                    </span>
+                    
+                    <h1 class="text-5xl md:text-6xl font-black mb-4 leading-tight text-gray-900">
+                        كتاب شفرة الرجالة
+                    </h1>
+                    
+                    <h2 class="text-lg md:text-xl font-medium mb-10 text-gray-600 leading-relaxed">
+                        الدليل الجريء للزوجات لتعلم فنون و اسرار <span class="font-bold text-gray-900">الديرتي توك</span> و <span class="font-bold text-gray-900">البلوجوب</span> و <span class="font-bold text-gray-900">الهاندجوب</span> اللي بيجننوا الرجالة و <span class="font-bold text-gray-900">يخلي جوزك يدمنك</span>.
+                    </h2>
+                    
+                    <ul class="text-base md:text-lg mb-12 space-y-5 text-right w-full">
+                        <li class="flex items-start gap-3 text-gray-600">
+                            <span class="shrink-0 mt-0.5 text-xl">✅</span>
+                            <p class="leading-relaxed"><span class="font-bold text-gray-900">تطبيق عملي ومباشر:</span> بعيد عن التنظير وكلام التنمية البشرية.</p>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-600">
+                            <span class="shrink-0 mt-0.5 text-xl">🔞</span>
+                            <p class="leading-relaxed"><span class="font-bold text-gray-900">للمتزوجات فقط:</span> كتالوج جريء ومكشوف لأسرار غرفة النوم.</p>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-600">
+                            <span class="shrink-0 mt-0.5 text-xl">🧠</span>
+                            <p class="leading-relaxed"><span class="font-bold text-gray-900">فك شفرة دماغ جوزك:</span> واكتشفي أعمق رغباته العميقة.</p>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-600">
+                            <span class="shrink-0 mt-0.5 text-xl">👠</span>
+                            <p class="leading-relaxed"><span class="font-bold text-gray-900">فنون الإثارة:</span> تقنيات المداعبة، والـ Dirty Talk اللي بيكهرب أعصابه.</p>
+                        </li>
+                    </ul>
+                    
+                    <!-- Decision Block (Price + CTA) -->
+                    <div class="mt-10">
+                        <div class="mb-5 flex justify-center lg:justify-start items-center gap-4">
+                            <span class="text-4xl font-black text-brand-primary">297 ج.م</span>
+                            <span class="text-xl text-gray-400 line-through font-bold">1197 ج.م</span>
+                            <span class="bg-green-100 text-green-700 text-sm font-bold px-3 py-1 rounded-full border border-green-200">لفترة محدودة</span>
+                        </div>
+
+                        <div class="flex justify-center lg:justify-start">
+                            <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
+                                احصلي على نسختك الآن
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                            </button>
+                        </div>
+                        
+                        <!-- Guarantees -->
+                        <div class="mt-6 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-6 text-sm text-gray-600 font-medium">
+                            <div class="flex items-center gap-1.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                                استلام فوري (واتساب/ايميل)
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                                خصوصية 100%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Image Area -->
+                <div class="w-full lg:w-1/2 flex flex-col items-center justify-center mt-10 lg:mt-0 relative">
+                    
+                    <!-- +18 Badge -->
+                    <div class="absolute top-0 right-1/4 md:right-1/3 lg:right-1/4 transform translate-x-1/2 -translate-y-1/2 z-20">
+                        <span class="bg-red-600 text-white font-black text-lg px-4 py-2 rounded-full border-4 border-white shadow-lg animate-pulse flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                            للكبار فقط +18
+                        </span>
+                    </div>
+
+                    <!-- Book Image -->
+                    <div class="animate-float relative w-64 md:w-72">
+                        <img src="images/book-cover.jpg" alt="غلاف كتاب شفرة الرجالة" class="w-full h-auto rounded-lg shadow-2xl" onerror="this.src='https://placehold.co/400x600/4a0e17/ffffff?text=+18+كتاب+شفرة+الرجالة'">
+                        
+                        <!-- Book Shadow Effect -->
+                        <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-5/6 h-6 bg-black/20 blur-xl rounded-[100%]"></div>
+                    </div>
+                    
+                    <!-- PDF Note -->
+                    <div class="mt-8 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-sm border border-gray-200 flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        <span class="text-gray-800 font-bold">كتاب إلكتروني (PDF) - يقرأ على الموبايل</span>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-12 bg-white border-y border-pink-100 shadow-sm relative z-10">
+        <div class="container mx-auto px-4 max-w-4xl text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 leading-relaxed text-gray-800">
+                لأن للأسف المصدر الوحيد للأسرار الجريئة دلوقتي هي <span class="text-brand-primary">"الأفلام الوحشة"</span>...
+            </h2>
+            <p class="text-lg text-gray-600 leading-relaxed font-medium">
+                قررنا نعملك دليل كامل يغنيكي عن ده، يحميكي من أي إدمان إحنا في غنى عنه، ويعلمك الاحترافية بطريقة بسيطة وسهلة، تخليه ميشوفش غيرك وتخليكم تستنوا العلاقة كل يوم بشغف جديد.
+            </p>
+        </div>
+    </section>
+
+    <!-- Carousel Section Start -->
+    <section class="py-16 bg-gradient-to-b from-white to-pink-50 relative overflow-hidden">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <!-- Headline & Subheadline -->
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-black mb-4 text-gray-900">📖 نظرة خاطفة من الداخل... <span class="text-brand-primary">(الفهرس)</span></h2>
+                <p class="text-lg text-gray-600 font-medium max-w-2xl mx-auto leading-relaxed">
+                    الشفافية الكاملة هي شعارنا. تصفحي فهرس "شفرة الرجالة" وتعرفي على الأسرار والمواضيع الجريئة التي تنتظرك قبل خطوة الشراء.
+                </p>
+                <div class="mt-6 inline-flex items-center gap-2 bg-pink-100 text-brand-primary font-bold px-6 py-3 rounded-full animate-pulse shadow-sm border border-pink-200 cursor-default">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" /></svg>
+                    <span>اسحبي الصور لليمين لرؤية فهرس الكتاب كامل</span>
+                </div>
+            </div>
+
+            <!-- Swiper Container -->
+            <div class="swiper indexSwiper">
+                <div class="swiper-wrapper">
+                    <!-- Slides (Images 9:16) -->
+                    <div class="swiper-slide">
+                        <img src="images/index-1.jpg" alt="الفهرس 1" class="w-full h-full object-contain" loading="lazy">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="images/index-2.jpg" alt="الفهرس 2" class="w-full h-full object-contain" loading="lazy">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="images/index-3.jpg" alt="الفهرس 3" class="w-full h-full object-contain" loading="lazy">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="images/index-4.jpg" alt="الفهرس 4" class="w-full h-full object-contain" loading="lazy">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="images/index-5.jpg" alt="الفهرس 5" class="w-full h-full object-contain" loading="lazy">
+                    </div>
+                </div>
+                <!-- Pagination Dots -->
+                <div class="swiper-pagination mt-4"></div>
+            </div>
+        </div>
+    </section>
+    <!-- Carousel Section End -->
+
+    <section class="py-20 relative bg-pink-50/50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-black mb-4 text-gray-900">🔥 ماذا سيكشف لكِ "الكتالوج السري"؟</h2>
+                <p class="text-xl text-brand-primary font-semibold">أسرار وتطبيقات لا تُدرس إلا في الغرف المغلقة</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Feature 1 -->
+                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 group">
+                    <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-primary transition-colors duration-300">
+                        <span class="text-3xl group-hover:scale-110 transition-transform">🧠</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-900">سيكولوجية الرجل</h3>
+                    <p class="text-gray-600 leading-relaxed">فهم الأسباب الخفية التي تجعل الرجل يحتاج للعلاقة كملجأ للأمان وتجديد الثقة، وليس فقط كمتعة جسدية.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 group">
+                    <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-primary transition-colors duration-300">
+                        <span class="text-3xl group-hover:scale-110 transition-transform">👄</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-900">دليل الـ Dirty Talk</h3>
+                    <p class="text-gray-600 leading-relaxed">إتقان فنون الكلام الجريء والهمسات التي ترفع معدل الأدرينالين لديه وتجعلك العشيقة التي لا يشبع منها.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 group">
+                    <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-primary transition-colors duration-300">
+                        <span class="text-3xl group-hover:scale-110 transition-transform">👩‍🏫</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-900">مهارات الأستاذة</h3>
+                    <p class="text-gray-600 leading-relaxed">تكنيكات عملية وجريئة (يدوية وفموية) مشروحة خطوة بخطوة، لتكوني المحترفة التي تملأ عينيه.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 group">
+                    <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-primary transition-colors duration-300">
+                        <span class="text-3xl group-hover:scale-110 transition-transform">🎪</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-900">أوضاع الابتكار والجنون</h3>
+                    <p class="text-gray-600 leading-relaxed">التخلص من روتين السرير، وتحويل أي مساحة في منزلك إلى مسرح متجدد للمتعة والارتباط الروحي.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 group">
+                    <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-primary transition-colors duration-300">
+                        <span class="text-3xl group-hover:scale-110 transition-transform">🗺️</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-900">خريطة الكنز الجسدية</h3>
+                    <p class="text-gray-600 leading-relaxed">اكتشاف "أزرار" الإثارة الخفية في جسم زوجك، واستخدام اللمس لتحويله إلى بركان بين يديكِ.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 group">
+                    <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-primary transition-colors duration-300">
+                        <span class="text-3xl group-hover:scale-110 transition-transform">✨</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-900">سحر الإثارة الذهنية</h3>
+                    <p class="text-gray-600 leading-relaxed">تعلم فنون التمهيد والإغواء طوال اليوم، وكيف تجعلينه يهلوِس باسمك وهو في قمة انشغاله.</p>
+                </div>
+            </div>
+            
+            <!-- Feature 7 Centered -->
+            <div class="mt-6 max-w-2xl mx-auto glass-panel p-8 rounded-2xl border-r-4 border-l-0 border-brand-primary">
+                 <div class="flex items-center gap-4 mb-3">
+                     <span class="text-4xl">👑</span>
+                     <h3 class="text-2xl font-bold text-gray-900">لغة الهيمنة والدلع</h3>
+                 </div>
+                 <p class="text-gray-600 leading-relaxed text-lg font-medium">كسر حاجز الخجل تماماً، واحتراف طلب ما يمتعك بثقة تجعله ينفذ رغباتك وهو مبهور بكِ وبأنوثتك الطاغية.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-white relative">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl md:text-5xl font-black mb-4 text-gray-900">🔥 إيه اللي هتاخديه بالظبط النهاردة؟</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Main Product -->
+                <div class="col-span-1 lg:col-span-2 glass-panel border-brand-primary/30 border-2 p-8 rounded-3xl relative overflow-hidden bg-pink-50/50 shadow-xl flex flex-col md:flex-row items-center gap-6 text-center md:text-right">
+                    <div class="absolute top-0 right-0 bg-brand-primary text-white text-xs font-bold px-4 py-2 rounded-bl-xl shadow-sm">الكتاب الأساسي</div>
+                    <div class="text-6xl drop-shadow-md shrink-0">📘</div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2 text-brand-primary">شفرة الرجالة</h3>
+                        <p class="text-gray-700 leading-relaxed font-medium text-lg">
+                            دليلك الشامل عشان تفكي شفرة دماغ جوزك، وتكتشفي خريطة الكنز في جسمه، ومهارات "الأستاذة" اللي هتغنيه عن أي حاجة بره.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Bonus 1 -->
+                <div class="glass-panel p-6 rounded-3xl relative overflow-hidden border border-brand-gold/50 bg-yellow-50/30">
+                    <div class="absolute top-0 right-0 bg-brand-gold text-white text-xs font-bold px-3 py-1 rounded-bl-lg shadow-sm">هدية 1 (قيمتها 150 ج.م)</div>
+                    <div class="text-4xl mb-3 mt-4 drop-shadow-md">🎁</div>
+                    <h3 class="text-lg font-bold mb-2 text-gray-900">دليل هندسة اللذة - أسرار "زوايا الحوض" <span class="text-brand-primary font-black text-xl">لعلاقة بدون ألم</span></h3>
+                    <p class="text-gray-600 text-sm leading-relaxed font-medium">
+                        بتحسي بوجع أو ضيق بيقفل مودك و متحسيش بأي رعشة ؟ الوجع مش طبيعي! الدليل ده هيعلمك تعدلي زاوية جسمك بالمللي (بأدوات بسيطة) عشان تمنعي الاحتكاك العظمي وتوجهي العلاقة لنقاط المتعة العميقة (G-Spot). تخلصي من الوجع للأبد.
+                    </p>
+                </div>
+
+                <!-- Bonus 2 -->
+                <div class="glass-panel p-6 rounded-3xl relative overflow-hidden border border-brand-gold/50 bg-yellow-50/30">
+                    <div class="absolute top-0 right-0 bg-brand-gold text-white text-xs font-bold px-3 py-1 rounded-bl-lg shadow-sm">هدية 2 (قيمتها 250 ج.م)</div>
+                    <div class="text-4xl mb-3 mt-4 drop-shadow-md">🔥</div>
+                    <h3 class="text-lg font-bold mb-2 text-gray-900">كتيب "<span class="text-brand-primary font-black text-xl">وداعا لتمثيل الرعشة</span> مرة اخري" - خريطة "النشوة المزدوجة"</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed font-medium">
+                        بتمثلي إنك خلصتي عشان تناموا؟ أنسي التمثيل. هذا الدليل يعلمكِ تكنيكات التحكم لضمان وصولك للرعشة الحقيقية والانفجار المشترك مع زوجك في نفس اللحظة.
+                    </p>
+                </div>
+
+                <!-- Bonus 3 -->
+                <div class="glass-panel p-6 rounded-3xl relative overflow-hidden border border-brand-gold/50 bg-yellow-50/30">
+                    <div class="absolute top-0 right-0 bg-brand-gold text-white text-xs font-bold px-3 py-1 rounded-bl-lg shadow-sm">هدية 3 (قيمتها 300 ج.م)</div>
+                    <div class="text-4xl mb-3 mt-4 drop-shadow-md">⏱️</div>
+                    <h3 class="text-lg font-bold mb-2 text-gray-900">بونص التحكم - كتالوج "الفرملة اللذيذة" لـ<span class="text-brand-primary font-black text-xl">علاج سرعة القذف</span></h3>
+                    <p class="text-gray-600 text-sm leading-relaxed font-medium">
+                        بيخلص في 5 دقايق وبيسيبك على نارك و محبطة ؟ البونص ده هيعلمك إزاي تبقي "المايسترو". تكنيكات (زي الضغط الحلقي والصدمة الحرارية) بتوقف قذفه في اللحظة الأخيرة، عشان تطولي الليلة لـ 45 دقيقة وتنقذي كبرياءه.
+                    </p>
+                </div>
+
+                <!-- Bonus 4 -->
+                <div class="glass-panel p-6 rounded-3xl relative overflow-hidden border border-brand-gold/50 bg-yellow-50/30">
+                    <div class="absolute top-0 right-0 bg-brand-gold text-white text-xs font-bold px-3 py-1 rounded-bl-lg shadow-sm">هدية 4 (قيمتها 200 ج.م)</div>
+                    <div class="text-4xl mb-3 mt-4 drop-shadow-md">🗺️</div>
+                    <h3 class="text-lg font-bold mb-2 text-gray-900">خريطة أوضاع الابتكار</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed font-medium">
+                        الدليل العملي عشان تكسروا الملل وتجددوا طاقتكم <span class="text-brand-primary font-black text-base">بأوضاع مريحة ومبتكرة</span>، وتحولي أي مكان في البيت للوكيشن يجنن للعلاقة الحميمة.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Conclusion Box -->
+            <div class="mt-12 bg-pink-100/50 p-8 rounded-2xl border border-pink-200 text-center shadow-inner">
+                <span class="text-3xl mb-4 block drop-shadow-sm">💎</span>
+                <h4 class="text-2xl font-bold mb-2 text-gray-900">الخلاصة:</h4>
+                <p class="text-lg text-brand-primary font-bold">
+                    هتتحولي لزوجة واثقة، محترفة، وفاهمة رغبات جوزها بالمللي، وهتكسري الروتين وتخليه يبصلك بشكل مختلف تماماً.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gray-50 border-t border-gray-200" id="buy-section">
+        <div class="container mx-auto px-4 max-w-4xl">
+            
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-black mb-4 text-gray-900">⚡ احصلي على نسختك الآن بسعر <span class="text-brand-primary">297 ج.م</span> فقط</h2>
+                <p class="text-gray-600">أدخلي بياناتك لطلب الكتاب واستلامه فوراً</p>
+            </div>
+
+            <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+                
+                <div class="p-8">
+                    <!-- Success Message (Hidden by default) -->
+                    <div id="success-message" class="hidden h-full flex flex-col items-center justify-center text-center animate-fade-in py-10 bg-white rounded-2xl">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-6">🎉 شكرًا من قلب "و مددناها"!</h2>
+                        
+                        <h3 class="text-xl font-bold text-pink-500 mb-8">💕 طلبك الجميل وصلنا،</h3>
+                        
+                        <p class="text-lg font-bold text-gray-800 mb-4">
+                            يرجي ارسال صورة التحويل علي <span class="text-green-600">الواتساب</span> من خلال اللينك الاتي
+                        </p>
+                        
+                        <a href="https://wa.me/201553089928" target="_blank" class="text-blue-600 underline text-xl font-bold mb-8 hover:text-blue-800 transition-colors" dir="ltr">
+                            https://wa.me/201553089928
+                        </a>
+                        
+                        <p class="text-lg font-medium text-gray-800 mb-8">
+                            و سيتم ارسال الكتاب لحضرتك <span class="font-bold">فورا</span> عند مشاهدة الرسالة
+                        </p>
+                        
+                        <p class="text-lg font-medium text-gray-800 mb-8">
+                            هتلاقي الكتاب ان شاء الله في <span class="text-red-600 font-bold">الايميل</span> عند حضرتك في المبيعات ان شاء الله
+                        </p>
+                        
+                        <p class="text-base font-bold text-gray-900 mt-4 leading-loose border-t border-gray-200 pt-6">
+                            🚚 <span class="text-purple-600">وقت التوصيل:</span> الكتاب بيوصل لحضرتك بشكل تلقائي فورا علي الايميل<br>
+                            و بيوصل علي <span class="text-green-600">الواتساب</span> في خلال 24 ساعة بحد اقصي بإذن الله
+                        </p>
+                    </div>
+
+                    <!-- The Form -->
+                    <form id="checkout-form" class="space-y-6">
+                        
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">الاسم <span class="text-red-500">*</span></label>
+                            <input type="text" id="user-name" required placeholder="اكتبي اسمك هنا" class="form-input">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">رقم الواتساب <span class="text-red-500">*</span></label>
+                            <input type="tel" id="whatsapp-number" required placeholder="مثال: 01xxxxxxxxx" dir="ltr" class="form-input text-right">
+                            <p class="text-xs text-gray-500 mt-1">سنتواصل معكِ على هذا الرقم لإرسال الكتاب.</p>
+                        </div>
+
+                        <div class="mb-4 pt-2">
+                            <label class="block text-sm font-bold text-gray-700 mb-2">طريقة الدفع</label>
+                            <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-4 bg-gray-50 border border-gray-200 rounded-xl p-4">
+                                <div class="text-right w-full flex flex-col items-end">
+                                    <p class="text-gray-700 font-medium text-sm leading-relaxed mb-3 w-full text-right">
+                                        متاح التحويل من خلال الرقم الاتي علي انستا باي و محافظ الكتروني
+                                    </p>
+                                    
+                                    <!-- قسم النسخ الجديد -->
+                                    <div class="mb-3 w-full max-w-sm flex justify-end">
+                                        <div onclick="copyNumber()" class="inline-flex cursor-pointer overflow-hidden rounded-lg border border-brand-primary/30 shadow-sm transition-all hover:shadow-md w-full sm:w-auto" title="اضغط لنسخ الرقم">
+                                            
+                                            <!-- زر النسخ المستقل بصرياً -->
+                                            <div class="bg-brand-light text-brand-primary px-4 py-3 flex items-center justify-center gap-2 border-r border-brand-primary/20 transition-colors hover:bg-pink-100">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                                                <span class="text-base font-bold">نسخ</span>
+                                            </div>
+                                            
+                                            <!-- الرقم في مربع مستقل بصرياً -->
+                                            <div class="bg-white px-5 py-3 flex items-center justify-center flex-grow">
+                                                <span id="payment-number" class="text-xl tracking-widest font-black text-gray-800" dir="ltr">01093637678</span>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-gray-900 font-bold text-sm w-full text-right">
+                                        يرجي نسخ الرقم و ارفاق صورة التحويل
+                                    </p>
+                                </div>
+                                
+                                <!-- Payment Logos -->
+                                <div class="flex items-center justify-center shrink-0 w-full md:w-auto mt-4 md:mt-0">
+                                    <img src="images/wallets.jpg" alt="طرق الدفع" width="236" height="66" class="object-contain rounded-lg">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">صورة إيصال التحويل <span class="text-red-500">*</span></label>
+                            <div class="relative flex items-center justify-center w-full">
+                                <label for="receipt-upload" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                        <svg aria-hidden="true" class="w-8 h-8 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">اضغطي هنا لرفع الصورة</span></p>
+                                        <p class="text-xs text-gray-500" id="file-name-display">PNG, JPG</p>
+                                    </div>
+                                    <input id="receipt-upload" type="file" accept="image/*" class="hidden" required onchange="updateFileName(this)" />
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Warning Box before Final CTA -->
+                        <div class="mt-2 p-4 border border-red-200 bg-red-50 rounded-xl">
+                            <h4 class="font-bold text-sm text-red-600 mb-1 flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                تنبيه هام ⚠️
+                            </h4>
+                            <p class="text-xs text-gray-700 font-medium">يرجى التأكد من كتابة رقم الواتساب بشكل صحيح لضمان وصول الكتاب إليكِ. المحتوى مخصص للمتزوجات فقط.</p>
+                        </div>
+
+                        <button type="submit" id="submit-btn" class="w-full bg-brand-primary hover:bg-red-800 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition-all mt-4 flex items-center justify-center gap-2">
+                            تأكيد الطلب واستلام الكتاب
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </button>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 py-8 border-t border-gray-800 text-center text-sm text-gray-400">
+        <div class="container mx-auto px-4">
+            <p>جميع الحقوق محفوظة © 2024</p>
+            <p class="mt-2 text-xs opacity-70">هذا الموقع لا يتبع فيسبوك أو شركة ميتا.</p>
+        </div>
+    </footer>
+
+    <!-- Mobile Sticky CTA -->
+    <div class="fixed bottom-0 left-0 w-full p-4 bg-white/90 backdrop-blur-md border-t border-gray-200 md:hidden z-50">
+        <button onclick="scrollToCheckout()" class="block w-full bg-brand-primary text-white text-center font-bold text-lg py-3 rounded-xl shadow-lg flex items-center justify-center gap-2">
+            <span>اطلبي الكتالوج السري الآن</span>
+            <span class="bg-white/20 px-2 py-0.5 rounded text-sm">297 ج.م</span>
+        </button>
+    </div>
+
+    <!-- Custom Toast Message -->
+    <div id="toast">تم نسخ الرقم بنجاح!</div>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var swiper = new Swiper(".indexSwiper", {
+                effect: "slide", // قمت بتغيير التأثير من coverflow إلى slide العادي
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: "auto",
+                spaceBetween: -30, // جعل الصور تتداخل قليلاً
+                initialSlide: 0,
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                // لضمان تحديث الأنماط عند السحب
+                on: {
+                    slideChange: function () {
+                        // Swiper handles the active class automatically
+                    }
+                }
+            });
+        });
+
+        // Smooth scroll to checkout form
+        function scrollToCheckout() {
+            document.getElementById('buy-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Copy number to clipboard (Using execCommand directly to avoid iframe permission errors)
+        function copyNumber() {
+            const text = document.getElementById('payment-number').innerText;
+            const tempInput = document.createElement("input");
+            tempInput.value = text;
+            
+            // Make the input hidden but still selectable
+            tempInput.style.position = "fixed";
+            tempInput.style.left = "-9999px";
+            tempInput.style.top = "0";
+            
+            document.body.appendChild(tempInput);
+            
+            try {
+                // Focus and select the text
+                tempInput.focus();
+                tempInput.select();
+                
+                // For mobile devices specifically
+                tempInput.setSelectionRange(0, 99999);
+                
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showToast('تم نسخ الرقم: ' + text);
+                } else {
+                    console.error('Fallback copy command was unsuccessful');
+                    showToast('تعذر النسخ، يرجى النسخ يدوياً');
+                }
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+                showToast('تعذر النسخ، يرجى النسخ يدوياً');
+            } finally {
+                // Clean up the DOM
+                document.body.removeChild(tempInput);
+            }
+        }
+
+        // Show Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            toast.innerText = message;
+            toast.className = "show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        // Update file name display when a file is selected
+        function updateFileName(input) {
+            const display = document.getElementById('file-name-display');
+            if (input.files && input.files[0]) {
+                display.innerText = 'تم اختيار: ' + input.files[0].name;
+                display.classList.add('text-green-600', 'font-bold');
+            } else {
+                display.innerText = 'PNG, JPG';
+                display.classList.remove('text-green-600', 'font-bold');
+            }
+        }
+
+        // --- المزامنة المباشرة (Live Sync) ---
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbx0jdlGbW-rRSTI9B2GTvDDiUgorHOMRS2V_0B2-vWfoZIY6kny4572GjZz5mjCY-Qi/exec';
+        let globalOrderId = 'ORD-' + Date.now(); // إنشاء رقم طلب فريد عند تحميل الصفحة وربطه بكل التحديثات
+
+        function liveSyncData() {
+            const phone = document.getElementById('whatsapp-number').value;
+            const name = document.getElementById('user-name').value;
+            
+            // تتم المزامنة بمجرد كتابة الرقم (بافتراض أن طول الرقم أكبر من 10 لضمان أنه رقم صالح مبدئياً)
+            if (phone && phone.length >= 10) {
+                const initiatePayload = {
+                    action: 'initiate',
+                    orderId: globalOrderId,
+                    name: name || "عميلة محتملة",
+                    phone: phone,
+                    email: ""
+                };
+                
+                // إرسال البيانات في الخلفية بدون تعطيل الصفحة وبدون انتظار الرد
+                fetch(scriptUrl, {
+                    method: 'POST',
+                    body: JSON.stringify(initiatePayload)
+                }).catch(err => console.log('Live sync error:', err));
+            }
+        }
+
+        // إرسال البيانات بمجرد خروج المؤشر (blur) من خانة الواتساب
+        document.getElementById('whatsapp-number').addEventListener('blur', liveSyncData);
+        // تحديث البيانات إذا غيرت الاسم بعد كتابة الرقم
+        document.getElementById('user-name').addEventListener('blur', liveSyncData);
+
+
+        // Handle Form Submission & Meta Pixel Purchase Event
+        let purchaseTracked = false;
+        
+        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent actual form submission for this demo
+            
+            const submitBtn = document.getElementById('submit-btn');
+            
+            // Prevent double submission
+            if(purchaseTracked) return;
+            
+            // Generate a Unique Event ID for Pixel Deduplication
+            const uniqueEventId = 'pur_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            
+            // Track Purchase Event via Meta Pixel
+            if(typeof fbq === 'function') {
+                fbq('track', 'Purchase', {
+                    currency: 'EGP',
+                    value: 0.00, // You can replace 0.00 with the actual book price if needed
+                    content_name: 'شفرة الرجالة - الكتالوج السري',
+                    content_type: 'product'
+                }, { eventID: uniqueEventId });
+                console.log('Purchase Event Fired with ID:', uniqueEventId);
+            }
+            
+            purchaseTracked = true;
+            
+            // Update UI to show processing state
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+            submitBtn.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                جاري رفع صورة التحويل...
+            `;
+            
+            // جلب البيانات من الفورم
+            const name = document.getElementById('user-name').value;
+            const phone = document.getElementById('whatsapp-number').value;
+            const fileInput = document.getElementById('receipt-upload');
+            const file = fileInput.files[0];
+            
+            if(!file) {
+                showToast("يرجى اختيار صورة الإيصال أولاً");
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                submitBtn.innerHTML = 'تأكيد الطلب واستلام الكتاب';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = async function() {
+                const base64String = reader.result.split(',')[1];
+                const mimeType = file.type;
+
+                const initiatePayload = {
+                    action: 'initiate',
+                    orderId: globalOrderId, // استخدام نفس المعرف الذي تم إنشاؤه عند تحميل الصفحة
+                    name: name,
+                    phone: phone,
+                    email: ""
+                };
+
+                const uploadPayload = {
+                    action: 'upload',
+                    orderId: globalOrderId,
+                    name: name,
+                    email: "",
+                    base64Data: base64String,
+                    mimeType: mimeType
+                };
+
+                try {
+                    // الخطوة الأولى: تأكيد البيانات المبدئية والاسم النهائي
+                    await fetch(scriptUrl, {
+                        method: 'POST',
+                        body: JSON.stringify(initiatePayload)
+                    });
+
+                    // الخطوة الثانية: رفع صورة الإيصال
+                    await fetch(scriptUrl, {
+                        method: 'POST',
+                        body: JSON.stringify(uploadPayload)
+                    });
+
+                    // إظهار رسالة النجاح
+                    showToast('تم الرفع بنجاح! 🚀');
+                    document.getElementById('checkout-form').classList.add('hidden');
+                    document.getElementById('success-message').classList.remove('hidden');
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    showToast('حدث خطأ في الشبكة أو أثناء الرفع، يرجى المحاولة مرة أخرى.');
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                    submitBtn.innerHTML = 'تأكيد الطلب واستلام الكتاب';
+                }
+            };
+            
+            reader.onerror = function() {
+                 showToast('حدث خطأ في قراءة الصورة من جهازك.');
+                 submitBtn.disabled = false;
+                 submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                 submitBtn.innerHTML = 'تأكيد الطلب واستلام الكتاب';
+            };
+            
+            // بدء قراءة ملف الصورة
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>
