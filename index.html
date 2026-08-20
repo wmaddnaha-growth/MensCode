@@ -561,85 +561,118 @@
                         </p>
                     </div>
 
-                    <!-- The Form -->
+                    <!-- The Form (2-Step Process) -->
                     <form id="checkout-form" class="space-y-6">
                         
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">الاسم <span class="text-red-500">*</span></label>
-                            <input type="text" id="user-name" required placeholder="اكتبي اسمك هنا" class="form-input">
+                        <!-- Step Progress Indicator -->
+                        <div class="flex items-center justify-between border-b border-gray-100 pb-4 mb-2">
+                            <div id="step-indicator-1" class="flex items-center gap-2 font-bold text-brand-primary">
+                                <span id="step-badge-1" class="w-7 h-7 rounded-full bg-brand-primary text-white flex items-center justify-center text-sm">1</span>
+                                <span class="text-sm md:text-base">البيانات الأساسية</span>
+                            </div>
+                            <div class="h-0.5 bg-gray-200 flex-grow mx-3"></div>
+                            <div id="step-indicator-2" class="flex items-center gap-2 font-bold text-gray-400">
+                                <span id="step-badge-2" class="w-7 h-7 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-sm">2</span>
+                                <span class="text-sm md:text-base">الدفع والتأكيد</span>
+                            </div>
                         </div>
 
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">رقم الواتساب <span class="text-red-500">*</span></label>
-                            <input type="tel" id="whatsapp-number" required placeholder="مثال: 01xxxxxxxxx" dir="ltr" class="form-input text-right">
-                            <p class="text-xs text-gray-500 mt-1">سنتواصل معكِ على هذا الرقم لإرسال الكتاب.</p>
+                        <!-- Step 1: User Data -->
+                        <div id="checkout-step-1" class="space-y-5">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">الاسم <span class="text-red-500">*</span></label>
+                                <input type="text" id="user-name" required placeholder="اكتبي اسمك هنا" class="form-input">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">رقم الواتساب <span class="text-red-500">*</span></label>
+                                <input type="tel" id="whatsapp-number" required placeholder="مثال: 01xxxxxxxxx" dir="ltr" class="form-input text-right">
+                                <p class="text-xs text-gray-500 mt-1">سنتواصل معكِ على هذا الرقم لإرسال الكتاب.</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">البريد الإلكتروني <span class="text-xs font-normal text-gray-500">(اختياري)</span></label>
+                                <input type="email" id="user-email" placeholder="مثال: name@example.com" dir="ltr" class="form-input text-right">
+                                <p class="text-xs text-gray-500 mt-1">(في حالة الرغبة في الاستلام علي الايميل بجانب الواتساب)</p>
+                            </div>
+
+                            <button type="button" id="next-step-btn" onclick="goToStep2()" class="w-full bg-brand-primary hover:bg-red-800 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition-all mt-4 flex items-center justify-center gap-2">
+                                الخطوة الاخيرة لاتمام الطلب ➔
+                            </button>
                         </div>
 
-                        <div class="mb-4 pt-2">
-                            <label class="block text-sm font-bold text-gray-700 mb-2">طريقة الدفع</label>
-                            <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-4 bg-gray-50 border border-gray-200 rounded-xl p-4">
-                                <div class="text-right w-full flex flex-col items-end">
-                                    <p class="text-gray-700 font-medium text-sm leading-relaxed mb-3 w-full text-right">
-                                        متاح التحويل من خلال الرقم الاتي علي انستا باي و محافظ الكتروني
-                                    </p>
-                                    
-                                    <!-- قسم النسخ الجديد -->
-                                    <div class="mb-3 w-full max-w-sm flex justify-end">
-                                        <div onclick="copyNumber()" class="inline-flex cursor-pointer overflow-hidden rounded-lg border border-brand-primary/30 shadow-sm transition-all hover:shadow-md w-full sm:w-auto" title="اضغط لنسخ الرقم">
-                                            
-                                            <!-- زر النسخ المستقل بصرياً -->
-                                            <div class="bg-brand-light text-brand-primary px-4 py-3 flex items-center justify-center gap-2 border-r border-brand-primary/20 transition-colors hover:bg-pink-100">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
-                                                <span class="text-base font-bold">نسخ</span>
+                        <!-- Step 2: Payment Details & Receipt Upload (Hidden initially) -->
+                        <div id="checkout-step-2" class="hidden space-y-6">
+                            <div class="mb-4 pt-2">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">طريقة الدفع</label>
+                                <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-4 bg-gray-50 border border-gray-200 rounded-xl p-4">
+                                    <div class="text-right w-full flex flex-col items-end">
+                                        <p class="text-gray-700 font-medium text-sm leading-relaxed mb-3 w-full text-right">
+                                            متاح التحويل من خلال الرقم الاتي علي انستا باي و محافظ الكتروني
+                                        </p>
+                                        
+                                        <!-- قسم النسخ -->
+                                        <div class="mb-3 w-full max-w-sm flex justify-end">
+                                            <div onclick="copyNumber()" class="inline-flex cursor-pointer overflow-hidden rounded-lg border border-brand-primary/30 shadow-sm transition-all hover:shadow-md w-full sm:w-auto" title="اضغط لنسخ الرقم">
+                                                
+                                                <!-- زر النسخ المستقل بصرياً -->
+                                                <div class="bg-brand-light text-brand-primary px-4 py-3 flex items-center justify-center gap-2 border-r border-brand-primary/20 transition-colors hover:bg-pink-100">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                                                    <span class="text-base font-bold">نسخ</span>
+                                                </div>
+                                                
+                                                <!-- الرقم في مربع مستقل بصرياً -->
+                                                <div class="bg-white px-5 py-3 flex items-center justify-center flex-grow">
+                                                    <span id="payment-number" class="text-xl tracking-widest font-black text-gray-800" dir="ltr">01093637678</span>
+                                                </div>
+                                                
                                             </div>
-                                            
-                                            <!-- الرقم في مربع مستقل بصرياً -->
-                                            <div class="bg-white px-5 py-3 flex items-center justify-center flex-grow">
-                                                <span id="payment-number" class="text-xl tracking-widest font-black text-gray-800" dir="ltr">01093637678</span>
-                                            </div>
-                                            
                                         </div>
+                                        
+                                        <p class="text-gray-900 font-bold text-sm w-full text-right">
+                                            يرجي نسخ الرقم و ارفاق صورة التحويل
+                                        </p>
                                     </div>
                                     
-                                    <p class="text-gray-900 font-bold text-sm w-full text-right">
-                                        يرجي نسخ الرقم و ارفاق صورة التحويل
-                                    </p>
-                                </div>
-                                
-                                <!-- Payment Logos -->
-                                <div class="flex items-center justify-center shrink-0 w-full md:w-auto mt-4 md:mt-0">
-                                    <img src="images/wallets.jpg" alt="طرق الدفع" width="236" height="66" class="object-contain rounded-lg">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">صورة إيصال التحويل <span class="text-red-500">*</span></label>
-                            <div class="relative flex items-center justify-center w-full">
-                                <label for="receipt-upload" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
-                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                        <svg aria-hidden="true" class="w-8 h-8 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">اضغطي هنا لرفع الصورة</span></p>
-                                        <p class="text-xs text-gray-500" id="file-name-display">PNG, JPG</p>
+                                    <!-- Payment Logos -->
+                                    <div class="flex items-center justify-center shrink-0 w-full md:w-auto mt-4 md:mt-0">
+                                        <img src="images/wallets.jpg" alt="طرق الدفع" width="236" height="66" class="object-contain rounded-lg">
                                     </div>
-                                    <input id="receipt-upload" type="file" accept="image/*" class="hidden" required onchange="updateFileName(this)" />
-                                </label>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Warning Box before Final CTA -->
-                        <div class="mt-2 p-4 border border-red-200 bg-red-50 rounded-xl">
-                            <h4 class="font-bold text-sm text-red-600 mb-1 flex items-center gap-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                                تنبيه هام ⚠️
-                            </h4>
-                            <p class="text-xs text-gray-700 font-medium">يرجى التأكد من كتابة رقم الواتساب بشكل صحيح لضمان وصول الكتاب إليكِ. المحتوى مخصص للمتزوجات فقط.</p>
-                        </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">صورة إيصال التحويل <span class="text-red-500">*</span></label>
+                                <div class="relative flex items-center justify-center w-full">
+                                    <label for="receipt-upload" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+                                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                            <svg aria-hidden="true" class="w-8 h-8 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                            <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">اضغطي هنا لرفع الصورة</span></p>
+                                            <p class="text-xs text-gray-500" id="file-name-display">PNG, JPG</p>
+                                        </div>
+                                        <input id="receipt-upload" type="file" accept="image/*" class="hidden" onchange="updateFileName(this)" />
+                                    </label>
+                                </div>
+                            </div>
 
-                        <button type="submit" id="submit-btn" class="w-full bg-brand-primary hover:bg-red-800 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition-all mt-4 flex items-center justify-center gap-2">
-                            تأكيد الطلب واستلام الكتاب
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        </button>
+                            <!-- Warning Box before Final CTA -->
+                            <div class="mt-2 p-4 border border-red-200 bg-red-50 rounded-xl">
+                                <h4 class="font-bold text-sm text-red-600 mb-1 flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                    تنبيه هام ⚠️
+                                </h4>
+                                <p class="text-xs text-gray-700 font-medium">يرجى التأكد من كتابة رقم الواتساب بشكل صحيح لضمان وصول الكتاب إليكِ. المحتوى مخصص للمتزوجات فقط.</p>
+                            </div>
+
+                            <button type="submit" id="submit-btn" class="w-full bg-brand-primary hover:bg-red-800 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition-all mt-4 flex items-center justify-center gap-2">
+                                تأكيد الطلب واستلام الكتاب
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            </button>
+
+                            <button type="button" onclick="goToStep1()" class="w-full text-center text-sm font-bold text-gray-500 hover:text-gray-700 pt-2 block">
+                                ➔ العودة لتعديل البيانات
+                            </button>
+                        </div>
                         
                     </form>
                 </div>
@@ -690,18 +723,50 @@
             });
         });
 
-        // Smooth scroll to checkout form
+        // --- 1. تتبع حدث AddToCart (عند الوصول لقسم الشراء) ---
+        let addToCartTracked = false;
+
+        function trackAddToCart() {
+            if (addToCartTracked) return;
+            addToCartTracked = true;
+            const atcEventId = 'atc_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            if (typeof fbq === 'function') {
+                fbq('track', 'AddToCart', {
+                    currency: 'EGP',
+                    value: 325.00,
+                    content_name: 'شفرة الرجالة - الكتالوج السري',
+                    content_type: 'product'
+                }, { eventID: atcEventId });
+                console.log('AddToCart Event Fired with ID:', atcEventId);
+            }
+        }
+
+        // Smooth scroll to checkout form & track AddToCart
         function scrollToCheckout() {
+            trackAddToCart();
             document.getElementById('buy-section').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Copy number to clipboard (Using execCommand directly to avoid iframe permission errors)
+        // مراقبة الوصول إلى قسم الشراء لتشغيل AddToCart تلقائياً
+        document.addEventListener('DOMContentLoaded', function() {
+            const buySection = document.getElementById('buy-section');
+            if (buySection && 'IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            trackAddToCart();
+                        }
+                    });
+                }, { threshold: 0.2 });
+                observer.observe(buySection);
+            }
+        });
+
+        // --- 2. نسخ رقم التحويل وتتبع حدث CopyPaymentMethod ---
         function copyNumber() {
             const text = document.getElementById('payment-number').innerText;
             const tempInput = document.createElement("input");
             tempInput.value = text;
-            
-            // Make the input hidden but still selectable
             tempInput.style.position = "fixed";
             tempInput.style.left = "-9999px";
             tempInput.style.top = "0";
@@ -709,16 +774,35 @@
             document.body.appendChild(tempInput);
             
             try {
-                // Focus and select the text
                 tempInput.focus();
                 tempInput.select();
-                
-                // For mobile devices specifically
                 tempInput.setSelectionRange(0, 99999);
                 
                 const successful = document.execCommand('copy');
                 if (successful) {
                     showToast('تم نسخ الرقم: ' + text);
+                    
+                    // تحديث الحالة في الجوجل شيت إلى "نسخ رقم الدفع"
+                    const copyStatusPayload = {
+                        action: 'updateStatus',
+                        orderId: globalOrderId,
+                        status: "نسخ رقم الدفع"
+                    };
+                    fetch(scriptUrl, {
+                        method: 'POST',
+                        body: JSON.stringify(copyStatusPayload)
+                    }).catch(err => console.log('Copy status update error:', err));
+
+                    // إرسال حدث مخصص CopyPaymentMethod للبيكسل بـ Event ID فريد
+                    const copyEventId = 'copy_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                    if (typeof fbq === 'function') {
+                        fbq('trackCustom', 'CopyPaymentMethod', {
+                            currency: 'EGP',
+                            value: 325.00,
+                            content_name: 'شفرة الرجالة - الكتالوج السري'
+                        }, { eventID: copyEventId });
+                        console.log('CopyPaymentMethod Event Fired with ID:', copyEventId);
+                    }
                 } else {
                     console.error('Fallback copy command was unsuccessful');
                     showToast('تعذر النسخ، يرجى النسخ يدوياً');
@@ -727,7 +811,6 @@
                 console.error('Fallback: Oops, unable to copy', err);
                 showToast('تعذر النسخ، يرجى النسخ يدوياً');
             } finally {
-                // Clean up the DOM
                 document.body.removeChild(tempInput);
             }
         }
@@ -752,101 +835,209 @@
             }
         }
 
-        // --- المزامنة المباشرة (Live Sync) و تتبع InitiateCheckout ---
+        // --- 3. المزامنة المباشرة لجوجل شيت (Live Sync) في صف واحد ---
         const scriptUrl = 'https://script.google.com/macros/s/AKfycbx0jdlGbW-rRSTI9B2GTvDDiUgorHOMRS2V_0B2-vWfoZIY6kny4572GjZz5mjCY-Qi/exec';
-        let globalOrderId = 'ORD-' + Date.now(); // إنشاء رقم طلب فريد عند تحميل الصفحة وربطه بكل التحديثات
+        let globalOrderId = 'ORD-' + Date.now(); // معرف فريد ثنائي للجلسة لضمان التعديل على نفس الصف
         let initiateCheckoutTracked = false; // لضمان إرسال إيفنت InitiateCheckout مرة واحدة فقط للمستخدم الواحد
+        let lastSyncedData = ""; // كاش لمنع إرسال نفس البيانات كرراراً
+        let liveSyncTimeout = null;
 
         function liveSyncData() {
-            const phone = document.getElementById('whatsapp-number').value;
-            const name = document.getElementById('user-name').value;
+            const phone = document.getElementById('whatsapp-number').value.trim();
+            const name = document.getElementById('user-name').value.trim();
+            const email = document.getElementById('user-email') ? document.getElementById('user-email').value.trim() : "";
             
-            // تتم المزامنة بمجرد كتابة الرقم (بافتراض أن طول الرقم أكبر من 10 لضمان أنه رقم صالح مبدئياً)
             if (phone && phone.length >= 10) {
-                // إرسال إيفنت InitiateCheckout لبيكسل فيسبوك مرة واحدة فقط لكل يوزر مع Event ID فريد
-                if (!initiateCheckoutTracked) {
-                    initiateCheckoutTracked = true;
-                    const icEventId = 'ic_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                    
-                    if (typeof fbq === 'function') {
-                        fbq('track', 'InitiateCheckout', {
-                            currency: 'EGP',
-                            value: 325.00,
-                            content_name: 'شفرة الرجالة - الكتالوج السري',
-                            content_type: 'product'
-                        }, { eventID: icEventId });
-                        console.log('InitiateCheckout Event Fired with ID:', icEventId);
-                    }
-                }
+                const currentDataKey = `${globalOrderId}_${name}_${phone}_${email}`;
+                // إذا لم تتغير البيانات عن آخر مزامنة ناجحة، لا ترسل طلب جديد
+                if (currentDataKey === lastSyncedData) return;
+                
+                lastSyncedData = currentDataKey;
 
                 const initiatePayload = {
                     action: 'initiate',
                     orderId: globalOrderId,
                     name: name || "عميلة محتملة",
                     phone: phone,
-                    email: ""
+                    email: email || "",
+                    status: "📝 تسجيل الرقم"
                 };
                 
-                // إرسال البيانات في الخلفية بدون تعطيل الصفحة وبدون انتظار الرد
                 fetch(scriptUrl, {
                     method: 'POST',
                     body: JSON.stringify(initiatePayload)
-                }).catch(err => console.log('Live sync error:', err));
+                }).catch(err => {
+                    console.log('Live sync error:', err);
+                    lastSyncedData = ""; // إعادة تعيين في حالة الخطأ لإعادة المحاولة
+                });
             }
         }
 
-        // إرسال البيانات بمجرد خروج المؤشر (blur) أو الكتابة في خانة الواتساب
-        document.getElementById('whatsapp-number').addEventListener('blur', liveSyncData);
-        document.getElementById('whatsapp-number').addEventListener('input', liveSyncData);
-        // تحديث البيانات إذا غيرت الاسم بعد كتابة الرقم
-        document.getElementById('user-name').addEventListener('blur', liveSyncData);
+        // المزامنة مع تأخير بسيط لمنع الإرسال مع كل حرف (Debounce)
+        function debouncedLiveSync() {
+            clearTimeout(liveSyncTimeout);
+            liveSyncTimeout = setTimeout(liveSyncData, 600);
+        }
 
-        // تتبع النقر على رابط الواتساب (Contact Event) مع Event ID فريد
-        const waLink = document.getElementById('whatsapp-link');
-        if (waLink) {
-            waLink.addEventListener('click', function() {
-                const waEventId = 'wa_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        // ربط أحداث المزامنة المباشرة
+        document.addEventListener('DOMContentLoaded', function() {
+            const phoneInput = document.getElementById('whatsapp-number');
+            const nameInput = document.getElementById('user-name');
+            const emailInput = document.getElementById('user-email');
+
+            if (phoneInput) {
+                phoneInput.addEventListener('blur', liveSyncData);
+                phoneInput.addEventListener('input', debouncedLiveSync);
+            }
+            if (nameInput) nameInput.addEventListener('blur', liveSyncData);
+            if (emailInput) emailInput.addEventListener('blur', liveSyncData);
+        });
+
+        // --- 4. التنقل بين الخطوتين وتتبع InitiateCheckout ---
+        function goToStep2() {
+            const name = document.getElementById('user-name').value.trim();
+            const phone = document.getElementById('whatsapp-number').value.trim();
+            const emailInput = document.getElementById('user-email');
+            const email = emailInput ? emailInput.value.trim() : "";
+
+            if (!name) {
+                showToast("يرجى كتابة الاسم أولاً");
+                document.getElementById('user-name').focus();
+                return;
+            }
+            if (!phone || phone.length < 10) {
+                showToast("يرجى كتابة رقم واتساب صحيح (10 أرقام على الأقل)");
+                document.getElementById('whatsapp-number').focus();
+                return;
+            }
+            if (email && !email.includes('@')) {
+                showToast("يرجى كتابة بريد إلكتروني صحيح");
+                if(emailInput) emailInput.focus();
+                return;
+            }
+
+            // مزامنة أحدث البيانات المكتوبة فوراً في الشيت وتغيير الحالة لـ "🟡 بدأت الدفع"
+            liveSyncData();
+            
+            const step2StatusPayload = {
+                action: 'updateStatus',
+                orderId: globalOrderId,
+                name: name,
+                phone: phone,
+                email: email,
+                status: "🟡 بدأت الدفع"
+            };
+            fetch(scriptUrl, {
+                method: 'POST',
+                body: JSON.stringify(step2StatusPayload)
+            }).catch(err => console.log('Status update error:', err));
+
+            // إرسال حدث InitiateCheckout مرة واحدة فقط وبـ Event ID فريد
+            if (!initiateCheckoutTracked) {
+                initiateCheckoutTracked = true;
+                const icEventId = 'ic_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                
                 if (typeof fbq === 'function') {
-                    fbq('track', 'Contact', {
+                    fbq('track', 'InitiateCheckout', {
                         currency: 'EGP',
                         value: 325.00,
                         content_name: 'شفرة الرجالة - الكتالوج السري',
                         content_type: 'product'
-                    }, { eventID: waEventId });
-                    console.log('Contact (WhatsApp Link) Event Fired with ID:', waEventId);
+                    }, { eventID: icEventId });
+                    console.log('InitiateCheckout Event Fired with ID:', icEventId);
                 }
-            });
+            }
+
+            // إخفاء الخطوة الأولى وإظهار الخطوة الثانية
+            document.getElementById('checkout-step-1').classList.add('hidden');
+            document.getElementById('checkout-step-2').classList.remove('hidden');
+
+            // تحديث شريط المؤشر ببراعة
+            const ind1 = document.getElementById('step-indicator-1');
+            const ind2 = document.getElementById('step-indicator-2');
+            const badge1 = document.getElementById('step-badge-1');
+            const badge2 = document.getElementById('step-badge-2');
+
+            ind1.className = "flex items-center gap-2 font-bold text-gray-400";
+            badge1.className = "w-7 h-7 rounded-full bg-green-500 text-white flex items-center justify-center text-sm";
+            badge1.innerHTML = "✓";
+
+            ind2.className = "flex items-center gap-2 font-bold text-brand-primary";
+            badge2.className = "w-7 h-7 rounded-full bg-brand-primary text-white flex items-center justify-center text-sm";
         }
 
+        function goToStep1() {
+            document.getElementById('checkout-step-2').classList.add('hidden');
+            document.getElementById('checkout-step-1').classList.remove('hidden');
 
-        // Handle Form Submission & Meta Pixel Purchase Event
+            const ind1 = document.getElementById('step-indicator-1');
+            const ind2 = document.getElementById('step-indicator-2');
+            const badge1 = document.getElementById('step-badge-1');
+            const badge2 = document.getElementById('step-badge-2');
+
+            ind1.className = "flex items-center gap-2 font-bold text-brand-primary";
+            badge1.className = "w-7 h-7 rounded-full bg-brand-primary text-white flex items-center justify-center text-sm";
+            badge1.innerHTML = "1";
+
+            ind2.className = "flex items-center gap-2 font-bold text-gray-400";
+            badge2.className = "w-7 h-7 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-sm";
+        }
+
+        // --- 5. حدث Purchase وتحديث الحالة إلى "🟢 تم التسليم" عند النقر على رابط الواتساب ---
         let purchaseTracked = false;
-        
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const waLink = document.getElementById('whatsapp-link');
+            if (waLink) {
+                waLink.addEventListener('click', function() {
+                    // تحديث الحالة في الجوجل شيت إلى "🟢 تم التسليم"
+                    const deliveredPayload = {
+                        action: 'updateStatus',
+                        orderId: globalOrderId,
+                        status: "🟢 تم التسليم "
+                    };
+                    fetch(scriptUrl, {
+                        method: 'POST',
+                        body: JSON.stringify(deliveredPayload)
+                    }).catch(err => console.log('Delivered status update error:', err));
+
+                    if (purchaseTracked) return;
+                    purchaseTracked = true;
+
+                    const purEventId = 'pur_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                    if (typeof fbq === 'function') {
+                        fbq('track', 'Purchase', {
+                            currency: 'EGP',
+                            value: 325.00,
+                            content_name: 'شفرة الرجالة - الكتالوج السري',
+                            content_type: 'product'
+                        }, { eventID: purEventId });
+                        console.log('Purchase Event Fired on WhatsApp click with ID:', purEventId);
+                    }
+                });
+            }
+        });
+
+        // --- 6. تأكيد النموذج ورفع الإيصال في الخطوة 2 (الحالة: 🔵 رفع الإيصال) ---
         document.getElementById('checkout-form').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent actual form submission for this demo
+            e.preventDefault();
             
             const submitBtn = document.getElementById('submit-btn');
             
-            // Prevent double submission
-            if(purchaseTracked) return;
+            // جلب البيانات من الفورم
+            const name = document.getElementById('user-name').value.trim();
+            const phone = document.getElementById('whatsapp-number').value.trim();
+            const emailInput = document.getElementById('user-email');
+            const email = emailInput ? emailInput.value.trim() : "";
+            const fileInput = document.getElementById('receipt-upload');
+            const file = fileInput ? fileInput.files[0] : null;
             
-            // Generate a Unique Event ID for Pixel Deduplication
-            const uniqueEventId = 'pur_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-            
-            // Track Purchase Event via Meta Pixel
-            if(typeof fbq === 'function') {
-                fbq('track', 'Purchase', {
-                    currency: 'EGP',
-                    value: 325.00,
-                    content_name: 'شفرة الرجالة - الكتالوج السري',
-                    content_type: 'product'
-                }, { eventID: uniqueEventId });
-                console.log('Purchase Event Fired with ID:', uniqueEventId);
+            if(!file) {
+                showToast("يرجى اختيار صورة الإيصال أولاً");
+                return;
             }
-            
-            purchaseTracked = true;
-            
-            // Update UI to show processing state
+
+            // إظهار حالة التحميل
             submitBtn.disabled = true;
             submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
             submitBtn.innerHTML = `
@@ -856,20 +1047,6 @@
                 </svg>
                 جاري رفع صورة التحويل...
             `;
-            
-            // جلب البيانات من الفورم
-            const name = document.getElementById('user-name').value;
-            const phone = document.getElementById('whatsapp-number').value;
-            const fileInput = document.getElementById('receipt-upload');
-            const file = fileInput.files[0];
-            
-            if(!file) {
-                showToast("يرجى اختيار صورة الإيصال أولاً");
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
-                submitBtn.innerHTML = 'تأكيد الطلب واستلام الكتاب';
-                return;
-            }
 
             const reader = new FileReader();
             reader.onload = async function() {
@@ -878,19 +1055,21 @@
 
                 const initiatePayload = {
                     action: 'initiate',
-                    orderId: globalOrderId, // استخدام نفس المعرف الذي تم إنشاؤه عند تحميل الصفحة
+                    orderId: globalOrderId,
                     name: name,
                     phone: phone,
-                    email: ""
+                    email: email,
+                    status: "🔵 رفع الإيصال"
                 };
 
                 const uploadPayload = {
                     action: 'upload',
                     orderId: globalOrderId,
                     name: name,
-                    email: "",
+                    email: email,
                     base64Data: base64String,
-                    mimeType: mimeType
+                    mimeType: mimeType,
+                    status: "🔵 رفع الإيصال"
                 };
 
                 try {
@@ -926,7 +1105,6 @@
                  submitBtn.innerHTML = 'تأكيد الطلب واستلام الكتاب';
             };
             
-            // بدء قراءة ملف الصورة
             reader.readAsDataURL(file);
         });
     </script>
