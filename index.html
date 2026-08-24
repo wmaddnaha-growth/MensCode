@@ -25,7 +25,6 @@
         'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '2204793433653923');
         fbq('track', 'PageView');
-
     </script>
     <noscript><img height="1" width="1" style="display:none"
         src="https://www.facebook.com/tr?id=2204793433653923&ev=PageView&noscript=1"
@@ -939,37 +938,40 @@
 
         // دالة موحدة وموثوقة لإرسال أحداث Meta Pixel
         function firePixelEvent(eventName, isCustom = false, customData = {}) {
-                 try {
-              if (eventName === 'Purchase') {
-                  if (sessionStorage.getItem('meta_purchase_fired') === 'true') {
-                      return;
-                  }
-                  sessionStorage.setItem('meta_purchase_fired', 'true');
-              }
+            try {
+                // منع تكرار حدث Purchase في نفس الجلسة (إرسال مرة واحدة فقط per session)
+                if (eventName === 'Purchase') {
+                    if (sessionStorage.getItem('meta_purchase_fired') === 'true') {
+                        console.log('[Meta Pixel] Purchase event already fired once in this session. Skipping duplicate.');
+                        return;
+                    }
+                    sessionStorage.setItem('meta_purchase_fired', 'true');
+                }
 
-              const payload = {
-                  currency: 'EGP',
-                  value: 325.00,
-                  content_name: 'شفرة الرجالة - الكتالوج السري',
-                  content_type: 'product',
-                  ...customData
-              };
+                const payload = {
+                    currency: 'EGP',
+                    value: 325.00,
+                    content_name: 'شفرة الرجالة - الكتالوج السري',
+                    content_type: 'product',
+                    ...customData
+                };
 
-              const eventId = (eventName.toLowerCase().substr(0, 3)) + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-              
-              // إرسال الـ eventID فقط في الخيارات
-              const options = { eventID: eventId };
+                const eventId = (eventName.toLowerCase().substr(0, 3)) + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                const options = { eventID: eventId };
 
-              const pixelFn = window.fbq || (typeof fbq === 'function' ? fbq : null);
-              if (typeof pixelFn === 'function') {
-                  if (isCustom) {
-                      pixelFn('trackCustom', eventName, payload, options);
-                  } else {
-                      pixelFn('track', eventName, payload, options);
-                  }
-              }
-          } catch (err) {
-                      console.error(`[Meta Pixel Error]`, err);
+                const pixelFn = window.fbq || (typeof fbq === 'function' ? fbq : null);
+                if (typeof pixelFn === 'function') {
+                    if (isCustom) {
+                        pixelFn('trackCustom', eventName, payload, options);
+                    } else {
+                        pixelFn('track', eventName, payload, options);
+                    }
+                    console.log(`[Meta Pixel Success] ${eventName} (${isCustom ? 'Custom' : 'Standard'}) Fired successfully! EventID: ${eventId}`, payload);
+                } else {
+                    console.warn(`[Meta Pixel Warning] fbq is not defined or blocked by client. Could not fire ${eventName}`);
+                }
+            } catch (err) {
+                console.error(`[Meta Pixel Error] Failed to fire ${eventName}:`, err);
             }
         }
 
