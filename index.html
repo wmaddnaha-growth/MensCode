@@ -902,26 +902,48 @@
         let lastSyncedData = "";
         let liveSyncTimeout = null;
 
+        // تحديث بيانات المستخدم في البيكسل لتحسين المطابقة (Advanced Matching)
+        function updatePixelUserData(email, phone) {
+            try {
+                const pixelFn = window.fbq || (typeof fbq === 'function' ? fbq : null);
+                if (typeof pixelFn === 'function') {
+                    const userData = {};
+                    if (email) userData.em = email.toLowerCase().trim();
+                    if (phone) userData.ph = phone.replace(/\D/g, '');
+                    if (Object.keys(userData).length > 0) {
+                        pixelFn('init', '2204793433653923', userData);
+                    }
+                }
+            } catch (e) {
+                console.warn('[Meta Pixel] User data update failed:', e);
+            }
+        }
+
         // دالة موحدة وموثوقة لإرسال أحداث Meta Pixel
         function firePixelEvent(eventName, isCustom = false, customData = {}) {
-            const payload = {
-                currency: 'EGP',
-                value: 325.00,
-                content_name: 'شفرة الرجالة - الكتالوج السري',
-                content_type: 'product',
-                ...customData
-            };
-            const eventId = (eventName.toLowerCase().substr(0, 3)) + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-            
-            if (typeof window.fbq === 'function') {
-                if (isCustom) {
-                    window.fbq('trackCustom', eventName, payload, { eventID: eventId });
+            try {
+                const payload = {
+                    currency: 'EGP',
+                    value: 325.00,
+                    content_name: 'شفرة الرجالة - الكتالوج السري',
+                    content_type: 'product',
+                    ...customData
+                };
+                const eventId = (eventName.toLowerCase().substr(0, 3)) + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                
+                const pixelFn = window.fbq || (typeof fbq === 'function' ? fbq : null);
+                if (typeof pixelFn === 'function') {
+                    if (isCustom) {
+                        pixelFn('trackCustom', eventName, payload, { eventID: eventId });
+                    } else {
+                        pixelFn('track', eventName, payload, { eventID: eventId });
+                    }
+                    console.log(`[Meta Pixel Success] ${eventName} (${isCustom ? 'Custom' : 'Standard'}) Fired successfully! EventID: ${eventId}`, payload);
                 } else {
-                    window.fbq('track', eventName, payload, { eventID: eventId });
+                    console.warn(`[Meta Pixel Warning] fbq is not defined or blocked by client. Could not fire ${eventName}`);
                 }
-                console.log(`[Meta Pixel] ${eventName} (${isCustom ? 'Custom' : 'Standard'}) Fired successfully! EventID:`, eventId);
-            } else {
-                console.warn(`[Meta Pixel] fbq is not defined. Could not fire ${eventName}`);
+            } catch (err) {
+                console.error(`[Meta Pixel Error] Failed to fire ${eventName}:`, err);
             }
         }
 
@@ -969,59 +991,70 @@
         });
 
         // --- 2. نسخ رقم التحويل وتتبع حدث CopyPaymentMethod ---
-        function copyNumber() {
-            const text = document.getElementById('payment-number').innerText;
-            const tempInput = document.createElement("input");
-            tempInput.value = text;
-            tempInput.style.position = "fixed";
-            tempInput.style.left = "-9999px";
-            tempInput.style.top = "0";
-            
-            document.body.appendChild(tempInput);
-            
-            try {
-                tempInput.focus();
-                tempInput.select();
-                tempInput.setSelectionRange(0, 99999);
-                
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    showToast('تم نسخ الرقم: ' + text);
-                    
-                    // إظهار مربع الـ hint للاستلام قبل الدفع عند الضغط على نسخ
-                    const payFirstHint = document.getElementById('pay-first-hint');
-                    if (payFirstHint) {
-                        payFirstHint.classList.remove('hidden');
-                    }
-                    
-                    // إرسال حدث CopyPaymentMethod للبيكسل فوراً
-                    firePixelEvent('CopyPaymentMethod', true);
+        async function copyNumber() {
+            const textEl = document.getElementById('payment-number');
+            const text = textEl ? textEl.innerText.trim() : "";
+            let copied = false;
 
-                    // تحديث الحالة في الجوجل شيت إلى "نسخ رقم الدفع"
-                    const copyStatusPayload = {
-                        action: 'updateStatus',
-                        orderId: globalOrderId,
-                        status: "نسخ رقم الدفع"
-                    };
-                    fetch(scriptUrl, {
-                        method: 'POST',
-                        body: JSON.stringify(copyStatusPayload)
-                    }).catch(err => console.log('Copy status update error:', err));
-                } else {
-                    console.error('Fallback copy command was unsuccessful');
-                    showToast('تعذر النسخ، يرجى النسخ يدوياً');
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                try {
+                    await navigator.clipboard.writeText(text);
+                    copied = true;
+                } catch (e) {
+                    copied = false;
                 }
-            } catch (err) {
-                console.error('Fallback: Oops, unable to copy', err);
-                showToast('تعذر النسخ، يرجى النسخ يدوياً');
-            } finally {
-                document.body.removeChild(tempInput);
             }
+
+            if (!copied && text) {
+                const tempInput = document.createElement("input");
+                tempInput.value = text;
+                tempInput.style.position = "fixed";
+                tempInput.style.left = "-9999px";
+                tempInput.style.top = "0";
+                document.body.appendChild(tempInput);
+                try {
+                    tempInput.focus();
+                    tempInput.select();
+                    tempInput.setSelectionRange(0, 99999);
+                    copied = document.execCommand('copy');
+                } catch (err) {
+                    copied = false;
+                } finally {
+                    document.body.removeChild(tempInput);
+                }
+            }
+
+            if (copied) {
+                showToast('تم نسخ الرقم: ' + text);
+            } else {
+                showToast('يرجى نسخ الرقم يدوياً: ' + text);
+            }
+
+            // إظهار مربع الـ hint للاستلام قبل الدفع عند الضغط على نسخ
+            const payFirstHint = document.getElementById('pay-first-hint');
+            if (payFirstHint) {
+                payFirstHint.classList.remove('hidden');
+            }
+
+            // إرسال حدث CopyPaymentMethod للبيكسل فوراً
+            firePixelEvent('CopyPaymentMethod', true);
+
+            // تحديث الحالة في الجوجل شيت إلى "نسخ رقم الدفع"
+            const copyStatusPayload = {
+                action: 'updateStatus',
+                orderId: globalOrderId,
+                status: "نسخ رقم الدفع"
+            };
+            fetch(scriptUrl, {
+                method: 'POST',
+                body: JSON.stringify(copyStatusPayload)
+            }).catch(err => console.log('Copy status update error:', err));
         }
 
         // تتبع النقر على رابط الواتساب (للاستلام قبل الدفع)
         function trackWhatsAppClick() {
             firePixelEvent('WhatsApp', true);
+            firePixelEvent('Contact'); // إرسال حدث القياسي Contact أيضاً
 
             const deliveredPayload = {
                 action: 'updateStatus',
@@ -1069,6 +1102,9 @@
                 if (currentDataKey === lastSyncedData) return;
                 
                 lastSyncedData = currentDataKey;
+
+                // تحديث المطابقة في البيكسل بمجرد توفر البيانات
+                updatePixelUserData(email, phone);
 
                 const initiatePayload = {
                     action: 'initiate',
@@ -1132,6 +1168,9 @@
                 if (emailInput) emailInput.focus();
                 return;
             }
+
+            // تحديث بيانات Advanced Matching في البيكسل
+            updatePixelUserData(email, phone);
 
             // إرسال حدث InitiateCheckout فوراً ومباشرة للبيكسل عند الضغط على زر الانتقال للخطوة 2
             firePixelEvent('InitiateCheckout');
@@ -1199,6 +1238,7 @@
             if (waLink) {
                 waLink.addEventListener('click', function() {
                     firePixelEvent('WhatsApp', true);
+                    firePixelEvent('Contact');
 
                     const deliveredPayload = {
                         action: 'updateStatus',
@@ -1233,6 +1273,9 @@
                     showToast("يرجى اختيار صورة الإيصال أولاً");
                     return;
                 }
+
+                // تحديث بيانات Advanced Matching في البيكسل
+                updatePixelUserData(email, phone);
 
                 // إرسال حدث Purchase فوراً ومباشرة للبيكسل عند ضغط زر تأكيد الطلب
                 firePixelEvent('Purchase');
