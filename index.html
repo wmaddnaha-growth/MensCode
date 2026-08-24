@@ -971,7 +971,6 @@
                     testCode = urlParams.get('test_event_code') || sessionStorage.getItem('test_event_code') || 'TEST22899';
                     if (testCode) {
                         sessionStorage.setItem('test_event_code', testCode);
-                        payload.test_event_code = testCode;
                     }
                 } catch (e) {}
 
