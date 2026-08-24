@@ -24,7 +24,20 @@
         s.parentNode.insertBefore(t,s)}(window, document,'script',
         'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '2204793433653923');
-        fbq('track', 'PageView');
+
+        // الربط التلقائي بـ Test Events من فيسبوك عند وجود ?test_event_code= في الرابط
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            const testCodeFromUrl = urlParams.get('test_event_code');
+            if (testCodeFromUrl) {
+                fbq('set', 'testEventCode', testCodeFromUrl);
+                fbq('track', 'PageView', {}, { test_event_code: testCodeFromUrl });
+            } else {
+                fbq('track', 'PageView');
+            }
+        } catch (e) {
+            fbq('track', 'PageView');
+        }
     </script>
     <noscript><img height="1" width="1" style="display:none"
         src="https://www.facebook.com/tr?id=2204793433653923&ev=PageView&noscript=1"
@@ -929,14 +942,32 @@
                     content_type: 'product',
                     ...customData
                 };
+
+                let testCode = null;
+                try {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    testCode = urlParams.get('test_event_code');
+                    if (testCode) {
+                        payload.test_event_code = testCode;
+                    }
+                } catch (e) {}
+
                 const eventId = (eventName.toLowerCase().substr(0, 3)) + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
                 
+                const options = { eventID: eventId };
+                if (testCode) {
+                    options.test_event_code = testCode;
+                }
+
                 const pixelFn = window.fbq || (typeof fbq === 'function' ? fbq : null);
                 if (typeof pixelFn === 'function') {
+                    if (testCode) {
+                        pixelFn('set', 'testEventCode', testCode);
+                    }
                     if (isCustom) {
-                        pixelFn('trackCustom', eventName, payload, { eventID: eventId });
+                        pixelFn('trackCustom', eventName, payload, options);
                     } else {
-                        pixelFn('track', eventName, payload, { eventID: eventId });
+                        pixelFn('track', eventName, payload, options);
                     }
                     console.log(`[Meta Pixel Success] ${eventName} (${isCustom ? 'Custom' : 'Standard'}) Fired successfully! EventID: ${eventId}`, payload);
                 } else {
