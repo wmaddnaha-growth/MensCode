@@ -25,13 +25,18 @@
         'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '2204793433653923');
 
-        // الربط التلقائي بـ Test Events من فيسبوك عند وجود ?test_event_code= في الرابط
+        // الربط التلقائي بـ Test Events من فيسبوك والحفظ في الجلسة (sessionStorage)
         try {
             const urlParams = new URLSearchParams(window.location.search);
-            const testCodeFromUrl = urlParams.get('test_event_code');
+            let testCodeFromUrl = urlParams.get('test_event_code');
+            if (testCodeFromUrl) {
+                sessionStorage.setItem('test_event_code', testCodeFromUrl);
+            } else {
+                testCodeFromUrl = sessionStorage.getItem('test_event_code') || 'TEST22899';
+            }
             if (testCodeFromUrl) {
                 fbq('set', 'testEventCode', testCodeFromUrl);
-                fbq('track', 'PageView', {}, { test_event_code: testCodeFromUrl });
+                fbq('track', 'PageView', { test_event_code: testCodeFromUrl }, { test_event_code: testCodeFromUrl });
             } else {
                 fbq('track', 'PageView');
             }
@@ -531,6 +536,14 @@
                  </div>
                  <p class="text-gray-600 leading-relaxed text-lg font-medium">كسر حاجز الخجل تماماً، واحتراف طلب ما يمتعك بثقة تجعله ينفذ رغباتك وهو مبهور بكِ وبأنوثتك الطاغية.</p>
             </div>
+
+            <!-- CTA Button after Features -->
+            <div class="mt-10 flex justify-center">
+                <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
+                    احصلي على نسختك الآن
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                </button>
+            </div>
         </div>
     </section>
 
@@ -935,6 +948,15 @@
         // دالة موحدة وموثوقة لإرسال أحداث Meta Pixel
         function firePixelEvent(eventName, isCustom = false, customData = {}) {
             try {
+                // منع تكرار حدث Purchase في نفس الجلسة (إرسال مرة واحدة فقط per session)
+                if (eventName === 'Purchase') {
+                    if (sessionStorage.getItem('meta_purchase_fired') === 'true') {
+                        console.log('[Meta Pixel] Purchase event already fired once in this session. Skipping duplicate.');
+                        return;
+                    }
+                    sessionStorage.setItem('meta_purchase_fired', 'true');
+                }
+
                 const payload = {
                     currency: 'EGP',
                     value: 325.00,
@@ -946,8 +968,9 @@
                 let testCode = null;
                 try {
                     const urlParams = new URLSearchParams(window.location.search);
-                    testCode = urlParams.get('test_event_code');
+                    testCode = urlParams.get('test_event_code') || sessionStorage.getItem('test_event_code') || 'TEST22899';
                     if (testCode) {
+                        sessionStorage.setItem('test_event_code', testCode);
                         payload.test_event_code = testCode;
                     }
                 } catch (e) {}
@@ -994,16 +1017,17 @@
             });
         });
 
-        // --- 1. تتبع حدث AddToCart (عند الوصول لقسم الشراء) ---
+        // --- 1. تتبع حدث AddToCart (عند الوصول لقسم الشراء أو الضغط على زر الشراء) ---
         function trackAddToCart() {
-            if (addToCartTracked) return;
-            addToCartTracked = true;
             firePixelEvent('AddToCart');
         }
 
         function scrollToCheckout() {
             trackAddToCart();
-            document.getElementById('buy-section').scrollIntoView({ behavior: 'smooth' });
+            const buySection = document.getElementById('buy-section');
+            if (buySection) {
+                buySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
 
         // مراقبة الوصول إلى قسم الشراء لتشغيل AddToCart تلقائياً
