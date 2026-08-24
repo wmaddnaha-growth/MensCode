@@ -998,9 +998,18 @@
 
         function scrollToCheckout() {
             trackAddToCart();
-            const buySection = document.getElementById('buy-section');
-            if (buySection) {
-                buySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const checkoutForm = document.getElementById('checkout-form') || document.getElementById('user-name') || document.getElementById('buy-section');
+            if (checkoutForm) {
+                const yOffset = -20;
+                const y = checkoutForm.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+                
+                const nameInput = document.getElementById('user-name');
+                if (nameInput) {
+                    setTimeout(() => {
+                        nameInput.focus();
+                    }, 350);
+                }
             }
         }
 
