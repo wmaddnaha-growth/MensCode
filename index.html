@@ -895,46 +895,59 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
+        // --- الثوابت والمتغيرات العامة ---
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbx0jdlGbW-rRSTI9B2GTvDDiUgorHOMRS2V_0B2-vWfoZIY6kny4572GjZz5mjCY-Qi/exec';
+        let globalOrderId = 'ORD-' + Date.now();
+        let addToCartTracked = false;
+        let lastSyncedData = "";
+        let liveSyncTimeout = null;
+
+        // دالة موحدة وموثوقة لإرسال أحداث Meta Pixel
+        function firePixelEvent(eventName, isCustom = false, customData = {}) {
+            const payload = {
+                currency: 'EGP',
+                value: 325.00,
+                content_name: 'شفرة الرجالة - الكتالوج السري',
+                content_type: 'product',
+                ...customData
+            };
+            const eventId = (eventName.toLowerCase().substr(0, 3)) + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            
+            if (typeof window.fbq === 'function') {
+                if (isCustom) {
+                    window.fbq('trackCustom', eventName, payload, { eventID: eventId });
+                } else {
+                    window.fbq('track', eventName, payload, { eventID: eventId });
+                }
+                console.log(`[Meta Pixel] ${eventName} (${isCustom ? 'Custom' : 'Standard'}) Fired successfully! EventID:`, eventId);
+            } else {
+                console.warn(`[Meta Pixel] fbq is not defined. Could not fire ${eventName}`);
+            }
+        }
+
+        // Swiper Carousel Initialization
         document.addEventListener('DOMContentLoaded', function() {
             var swiper = new Swiper(".indexSwiper", {
-                effect: "slide", // قمت بتغيير التأثير من coverflow إلى slide العادي
+                effect: "slide",
                 grabCursor: true,
                 centeredSlides: true,
                 slidesPerView: "auto",
-                spaceBetween: -30, // جعل الصور تتداخل قليلاً
+                spaceBetween: -30,
                 initialSlide: 0,
                 pagination: {
                     el: ".swiper-pagination",
                     clickable: true,
-                },
-                // لضمان تحديث الأنماط عند السحب
-                on: {
-                    slideChange: function () {
-                        // Swiper handles the active class automatically
-                    }
                 }
             });
         });
 
         // --- 1. تتبع حدث AddToCart (عند الوصول لقسم الشراء) ---
-        let addToCartTracked = false;
-
         function trackAddToCart() {
             if (addToCartTracked) return;
             addToCartTracked = true;
-            const atcEventId = 'atc_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-            if (typeof fbq === 'function') {
-                fbq('track', 'AddToCart', {
-                    currency: 'EGP',
-                    value: 325.00,
-                    content_name: 'شفرة الرجالة - الكتالوج السري',
-                    content_type: 'product'
-                }, { eventID: atcEventId });
-                console.log('AddToCart Event Fired with ID:', atcEventId);
-            }
+            firePixelEvent('AddToCart');
         }
 
-        // Smooth scroll to checkout form & track AddToCart
         function scrollToCheckout() {
             trackAddToCart();
             document.getElementById('buy-section').scrollIntoView({ behavior: 'smooth' });
@@ -981,6 +994,9 @@
                         payFirstHint.classList.remove('hidden');
                     }
                     
+                    // إرسال حدث CopyPaymentMethod للبيكسل فوراً
+                    firePixelEvent('CopyPaymentMethod', true);
+
                     // تحديث الحالة في الجوجل شيت إلى "نسخ رقم الدفع"
                     const copyStatusPayload = {
                         action: 'updateStatus',
@@ -991,17 +1007,6 @@
                         method: 'POST',
                         body: JSON.stringify(copyStatusPayload)
                     }).catch(err => console.log('Copy status update error:', err));
-
-                    // إرسال حدث مخصص CopyPaymentMethod للبيكسل بـ Event ID فريد
-                    const copyEventId = 'copy_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                    if (typeof fbq === 'function') {
-                        fbq('trackCustom', 'CopyPaymentMethod', {
-                            currency: 'EGP',
-                            value: 325.00,
-                            content_name: 'شفرة الرجالة - الكتالوج السري'
-                        }, { eventID: copyEventId });
-                        console.log('CopyPaymentMethod Event Fired with ID:', copyEventId);
-                    }
                 } else {
                     console.error('Fallback copy command was unsuccessful');
                     showToast('تعذر النسخ، يرجى النسخ يدوياً');
@@ -1016,6 +1021,8 @@
 
         // تتبع النقر على رابط الواتساب (للاستلام قبل الدفع)
         function trackWhatsAppClick() {
+            firePixelEvent('WhatsApp', true);
+
             const deliveredPayload = {
                 action: 'updateStatus',
                 orderId: globalOrderId,
@@ -1025,16 +1032,6 @@
                 method: 'POST',
                 body: JSON.stringify(deliveredPayload)
             }).catch(err => console.log('Delivered status update error:', err));
-
-            const waEventId = 'wa_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-            if (typeof fbq === 'function') {
-                fbq('trackCustom', 'WhatsApp', {
-                    currency: 'EGP',
-                    value: 325.00,
-                    content_name: 'شفرة الرجالة - الكتالوج السري'
-                }, { eventID: waEventId });
-                console.log('WhatsApp Custom Event Fired on click with ID:', waEventId);
-            }
         }
 
         // Show Toast Notification
@@ -1057,21 +1054,18 @@
             }
         }
 
-        // --- 3. المزامنة المباشرة لجوجل شيت (Live Sync) في صف واحد ---
-        const scriptUrl = 'https://script.google.com/macros/s/AKfycbx0jdlGbW-rRSTI9B2GTvDDiUgorHOMRS2V_0B2-vWfoZIY6kny4572GjZz5mjCY-Qi/exec';
-        let globalOrderId = 'ORD-' + Date.now(); // معرف فريد ثنائي للجلسة لضمان التعديل على نفس الصف
-        let initiateCheckoutTracked = false; // لضمان إرسال إيفنت InitiateCheckout مرة واحدة فقط للمستخدم الواحد
-        let lastSyncedData = ""; // كاش لمنع إرسال نفس البيانات كرراراً
-        let liveSyncTimeout = null;
-
+        // --- 3. المزامنة المباشرة لجوجل شيت (Live Sync) ---
         function liveSyncData() {
-            const phone = document.getElementById('whatsapp-number').value.trim();
-            const name = document.getElementById('user-name').value.trim();
-            const email = document.getElementById('user-email') ? document.getElementById('user-email').value.trim() : "";
+            const phoneInput = document.getElementById('whatsapp-number');
+            const nameInput = document.getElementById('user-name');
+            const emailInput = document.getElementById('user-email');
+
+            const phone = phoneInput ? phoneInput.value.trim() : "";
+            const name = nameInput ? nameInput.value.trim() : "";
+            const email = emailInput ? emailInput.value.trim() : "";
             
             if (phone && phone.length >= 10) {
                 const currentDataKey = `${globalOrderId}_${name}_${phone}_${email}`;
-                // إذا لم تتغير البيانات عن آخر مزامنة ناجحة، لا ترسل طلب جديد
                 if (currentDataKey === lastSyncedData) return;
                 
                 lastSyncedData = currentDataKey;
@@ -1090,18 +1084,16 @@
                     body: JSON.stringify(initiatePayload)
                 }).catch(err => {
                     console.log('Live sync error:', err);
-                    lastSyncedData = ""; // إعادة تعيين في حالة الخطأ لإعادة المحاولة
+                    lastSyncedData = "";
                 });
             }
         }
 
-        // المزامنة مع تأخير بسيط لمنع الإرسال مع كل حرف (Debounce)
         function debouncedLiveSync() {
             clearTimeout(liveSyncTimeout);
             liveSyncTimeout = setTimeout(liveSyncData, 600);
         }
 
-        // ربط أحداث المزامنة المباشرة
         document.addEventListener('DOMContentLoaded', function() {
             const phoneInput = document.getElementById('whatsapp-number');
             const nameInput = document.getElementById('user-name');
@@ -1117,61 +1109,54 @@
 
         // --- 4. التنقل بين الخطوتين وتتبع InitiateCheckout ---
         function goToStep2() {
-            const name = document.getElementById('user-name').value.trim();
-            const phone = document.getElementById('whatsapp-number').value.trim();
+            const nameInput = document.getElementById('user-name');
+            const phoneInput = document.getElementById('whatsapp-number');
             const emailInput = document.getElementById('user-email');
+
+            const name = nameInput ? nameInput.value.trim() : "";
+            const phone = phoneInput ? phoneInput.value.trim() : "";
             const email = emailInput ? emailInput.value.trim() : "";
 
             if (!name) {
                 showToast("يرجى كتابة الاسم أولاً");
-                document.getElementById('user-name').focus();
+                if (nameInput) nameInput.focus();
                 return;
             }
             if (!phone || phone.length < 10) {
                 showToast("يرجى كتابة رقم واتساب صحيح (10 أرقام على الأقل)");
-                document.getElementById('whatsapp-number').focus();
+                if (phoneInput) phoneInput.focus();
                 return;
             }
             if (email && !email.includes('@')) {
                 showToast("يرجى كتابة بريد إلكتروني صحيح");
-                if(emailInput) emailInput.focus();
+                if (emailInput) emailInput.focus();
                 return;
             }
 
-            // إرسال حدث InitiateCheckout فوراً ومباشرة للبيكسل عند استكمال بيانات الخطوة الأولى
-            if (!initiateCheckoutTracked) {
-                initiateCheckoutTracked = true;
-                const icEventId = 'ic_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                
-                if (typeof fbq === 'function') {
-                    fbq('track', 'InitiateCheckout', {
-                        currency: 'EGP',
-                        value: 325.00,
-                        content_name: 'شفرة الرجالة - الكتالوج السري',
-                        content_type: 'product'
-                    }, { eventID: icEventId });
-                    console.log('InitiateCheckout Event Fired with ID:', icEventId);
-                }
-            }
+            // إرسال حدث InitiateCheckout فوراً ومباشرة للبيكسل عند الضغط على زر الانتقال للخطوة 2
+            firePixelEvent('InitiateCheckout');
 
             // إخفاء الخطوة الأولى وإظهار الخطوة الثانية
             document.getElementById('checkout-step-1').classList.add('hidden');
             document.getElementById('checkout-step-2').classList.remove('hidden');
 
-            // تحديث شريط المؤشر ببراعة
+            // تحديث مؤشر الخطوات
             const ind1 = document.getElementById('step-indicator-1');
             const ind2 = document.getElementById('step-indicator-2');
             const badge1 = document.getElementById('step-badge-1');
             const badge2 = document.getElementById('step-badge-2');
 
-            ind1.className = "flex items-center gap-2 font-bold text-gray-400";
-            badge1.className = "w-7 h-7 rounded-full bg-green-500 text-white flex items-center justify-center text-sm";
-            badge1.innerHTML = "✓";
+            if (ind1 && badge1) {
+                ind1.className = "flex items-center gap-2 font-bold text-gray-400";
+                badge1.className = "w-7 h-7 rounded-full bg-green-500 text-white flex items-center justify-center text-sm";
+                badge1.innerHTML = "✓";
+            }
+            if (ind2 && badge2) {
+                ind2.className = "flex items-center gap-2 font-bold text-brand-primary";
+                badge2.className = "w-7 h-7 rounded-full bg-brand-primary text-white flex items-center justify-center text-sm";
+            }
 
-            ind2.className = "flex items-center gap-2 font-bold text-brand-primary";
-            badge2.className = "w-7 h-7 rounded-full bg-brand-primary text-white flex items-center justify-center text-sm";
-
-            // مزامنة البيانات في الشيت في الخلفية دون تعطيل الإيفنت
+            // مزامنة البيانات في جوجل شيت في الخلفية
             liveSyncData();
             
             const step2StatusPayload = {
@@ -1197,20 +1182,24 @@
             const badge1 = document.getElementById('step-badge-1');
             const badge2 = document.getElementById('step-badge-2');
 
-            ind1.className = "flex items-center gap-2 font-bold text-brand-primary";
-            badge1.className = "w-7 h-7 rounded-full bg-brand-primary text-white flex items-center justify-center text-sm";
-            badge1.innerHTML = "1";
-
-            ind2.className = "flex items-center gap-2 font-bold text-gray-400";
-            badge2.className = "w-7 h-7 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-sm";
+            if (ind1 && badge1) {
+                ind1.className = "flex items-center gap-2 font-bold text-brand-primary";
+                badge1.className = "w-7 h-7 rounded-full bg-brand-primary text-white flex items-center justify-center text-sm";
+                badge1.innerHTML = "1";
+            }
+            if (ind2 && badge2) {
+                ind2.className = "flex items-center gap-2 font-bold text-gray-400";
+                badge2.className = "w-7 h-7 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-sm";
+            }
         }
 
-        // --- 5. حدث WhatsApp وتحديث الحالة إلى "🟢 تم التسليم" عند النقر على رابط الواتساب ---
+        // --- 5. حدث WhatsApp وتحديث الحالة إلى "🟢 تم التسليم" ---
         document.addEventListener('DOMContentLoaded', function() {
             const waLink = document.getElementById('whatsapp-link');
             if (waLink) {
                 waLink.addEventListener('click', function() {
-                    // تحديث الحالة في الجوجل شيت إلى "🟢 تم التسليم"
+                    firePixelEvent('WhatsApp', true);
+
                     const deliveredPayload = {
                         action: 'updateStatus',
                         orderId: globalOrderId,
@@ -1220,126 +1209,107 @@
                         method: 'POST',
                         body: JSON.stringify(deliveredPayload)
                     }).catch(err => console.log('Delivered status update error:', err));
-
-                    // إرسال حدث مخصص WhatsApp للبيكسل عند الضغط على الواتساب
-                    const waEventId = 'wa_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                    if (typeof fbq === 'function') {
-                        fbq('trackCustom', 'WhatsApp', {
-                            currency: 'EGP',
-                            value: 325.00,
-                            content_name: 'شفرة الرجالة - الكتالوج السري'
-                        }, { eventID: waEventId });
-                        console.log('WhatsApp Custom Event Fired on click with ID:', waEventId);
-                    }
                 });
             }
         });
 
-        // --- 6. تأكيد النموذج ورفع الإيصال في الخطوة 2 وإرسال حدث Purchase (الحالة: 🔵 رفع الإيصال) ---
-        let purchaseTracked = false;
+        // --- 6. تأكيد النموذج ورفع الإيصال في الخطوة 2 وإرسال حدث Purchase ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkoutForm = document.getElementById('checkout-form');
+            if (!checkoutForm) return;
 
-        document.getElementById('checkout-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submit-btn');
-            
-            // جلب البيانات من الفورم
-            const name = document.getElementById('user-name').value.trim();
-            const phone = document.getElementById('whatsapp-number').value.trim();
-            const emailInput = document.getElementById('user-email');
-            const email = emailInput ? emailInput.value.trim() : "";
-            const fileInput = document.getElementById('receipt-upload');
-            const file = fileInput ? fileInput.files[0] : null;
-            
-            if(!file) {
-                showToast("يرجى اختيار صورة الإيصال أولاً");
-                return;
-            }
-
-            // إرسال حدث Purchase فوراً ومباشرة للبيكسل عند الضغط على زر تأكيد الطلب
-            if (!purchaseTracked) {
-                purchaseTracked = true;
-                const purEventId = 'pur_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                if (typeof fbq === 'function') {
-                    fbq('track', 'Purchase', {
-                        currency: 'EGP',
-                        value: 325.00,
-                        content_name: 'شفرة الرجالة - الكتالوج السري',
-                        content_type: 'product'
-                    }, { eventID: purEventId });
-                    console.log('Purchase Event Fired on Form Submit with ID:', purEventId);
+            checkoutForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const submitBtn = document.getElementById('submit-btn');
+                const name = document.getElementById('user-name').value.trim();
+                const phone = document.getElementById('whatsapp-number').value.trim();
+                const emailInput = document.getElementById('user-email');
+                const email = emailInput ? emailInput.value.trim() : "";
+                const fileInput = document.getElementById('receipt-upload');
+                const file = fileInput ? fileInput.files[0] : null;
+                
+                if (!file) {
+                    showToast("يرجى اختيار صورة الإيصال أولاً");
+                    return;
                 }
-            }
 
-            // إظهار حالة التحميل
-            submitBtn.disabled = true;
-            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
-            submitBtn.innerHTML = `
-                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                جاري رفع صورة التحويل...
-            `;
+                // إرسال حدث Purchase فوراً ومباشرة للبيكسل عند ضغط زر تأكيد الطلب
+                firePixelEvent('Purchase');
 
-            const reader = new FileReader();
-            reader.onload = async function() {
-                const base64String = reader.result.split(',')[1];
-                const mimeType = file.type;
-
-                const initiatePayload = {
-                    action: 'initiate',
-                    orderId: globalOrderId,
-                    name: name,
-                    phone: phone,
-                    email: email,
-                    status: "🔵 رفع الإيصال"
-                };
-
-                const uploadPayload = {
-                    action: 'upload',
-                    orderId: globalOrderId,
-                    name: name,
-                    email: email,
-                    base64Data: base64String,
-                    mimeType: mimeType,
-                    status: "🔵 رفع الإيصال"
-                };
-
-                try {
-                    // الخطوة الأولى: تأكيد البيانات المبدئية والاسم النهائي
-                    await fetch(scriptUrl, {
-                        method: 'POST',
-                        body: JSON.stringify(initiatePayload)
-                    });
-
-                    // الخطوة الثانية: رفع صورة الإيصال
-                    await fetch(scriptUrl, {
-                        method: 'POST',
-                        body: JSON.stringify(uploadPayload)
-                    });
-
-                    // إظهار رسالة النجاح
-                    showToast('تم الرفع بنجاح! 🚀');
-                    document.getElementById('checkout-form').classList.add('hidden');
-                    document.getElementById('success-message').classList.remove('hidden');
-                } catch (error) {
-                    console.error('Error submitting form:', error);
-                    showToast('حدث خطأ في الشبكة أو أثناء الرفع، يرجى المحاولة مرة أخرى.');
-                    submitBtn.disabled = false;
-                    submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
-                    submitBtn.innerHTML = 'تأكيد الطلب واستلام الكتاب';
+                // إظهار حالة التحميل
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+                    submitBtn.innerHTML = `
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        جاري رفع صورة التحويل...
+                    `;
                 }
-            };
-            
-            reader.onerror = function() {
-                 showToast('حدث خطأ في قراءة الصورة من جهازك.');
-                 submitBtn.disabled = false;
-                 submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
-                 submitBtn.innerHTML = 'تأكيد الطلب واستلام الكتاب';
-            };
-            
-            reader.readAsDataURL(file);
+
+                const reader = new FileReader();
+                reader.onload = async function() {
+                    const base64String = reader.result.split(',')[1];
+                    const mimeType = file.type;
+
+                    const initiatePayload = {
+                        action: 'initiate',
+                        orderId: globalOrderId,
+                        name: name,
+                        phone: phone,
+                        email: email,
+                        status: "🔵 رفع الإيصال"
+                    };
+
+                    const uploadPayload = {
+                        action: 'upload',
+                        orderId: globalOrderId,
+                        name: name,
+                        email: email,
+                        base64Data: base64String,
+                        mimeType: mimeType,
+                        status: "🔵 رفع الإيصال"
+                    };
+
+                    try {
+                        await fetch(scriptUrl, {
+                            method: 'POST',
+                            body: JSON.stringify(initiatePayload)
+                        });
+
+                        await fetch(scriptUrl, {
+                            method: 'POST',
+                            body: JSON.stringify(uploadPayload)
+                        });
+
+                        showToast('تم الرفع بنجاح! 🚀');
+                        document.getElementById('checkout-form').classList.add('hidden');
+                        document.getElementById('success-message').classList.remove('hidden');
+                    } catch (error) {
+                        console.error('Error submitting form:', error);
+                        showToast('حدث خطأ في الشبكة أو أثناء الرفع، يرجى المحاولة مرة أخرى.');
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                            submitBtn.innerHTML = 'تأكيد الطلب واستلام الكتاب';
+                        }
+                    }
+                };
+                
+                reader.onerror = function() {
+                    showToast('حدث خطأ في قراءة الصورة من جهازك.');
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                        submitBtn.innerHTML = 'تأكيد الطلب واستلام الكتاب';
+                    }
+                };
+                
+                reader.readAsDataURL(file);
+            });
         });
     </script>
 </body>
