@@ -162,58 +162,79 @@
             opacity: 1;
         }
 
-        /* Swiper Carousel CSS */
-        .indexSwiper {
+        /* Swiper Carousel CSS - High Definition & Native Aspect Ratios */
+        .swiper {
             width: 100%;
-            padding-top: 40px;
-            padding-bottom: 60px;
-            overflow: visible; /* السماح بظهور الظلال خارج الحاوية */
+            padding-top: 20px;
+            padding-bottom: 55px;
+            overflow: visible;
         }
         
-        /* ضبط حجم الشريحة الأساسي */
-        .indexSwiper .swiper-slide {
-            width: 260px; /* Base width for mobile */
-            aspect-ratio: 9/16; /* 9:16 Ratio */
+        /* ضبط حجم الشريحة والأبعاد الأصلية */
+        .swiper-slide {
+            width: 88vw;
+            max-width: 350px;
             background-color: #ffffff;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            border-radius: 1rem;
-            border: 2px solid rgba(139, 28, 43, 0.1);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            justify-content: flex-start;
+            border-radius: 1.25rem;
+            border: 2px solid rgba(139, 28, 43, 0.12);
+            box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.1);
             
-            /* هنا السحر: تصغير كل الصور بشكل افتراضي إلى 75% وجعلها باهتة */
-            opacity: 0.4; 
-            transform: scale(0.75);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* حركة ناعمة */
-            transform-origin: center center; /* لضمان التكبير من المنتصف */
+            opacity: 0.6; 
+            transform: scale(0.96);
+            transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            transform-origin: center center;
             overflow: hidden;
+            user-select: none;
+            cursor: pointer;
+            height: auto;
         }
-        @media (min-width: 768px) {
-            .indexSwiper .swiper-slide {
-                width: 320px;
+        
+        @media (min-width: 640px) {
+            .swiper-slide {
+                width: 420px;
+                max-width: 420px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .swiper-slide {
+                width: 520px;
+                max-width: 520px;
             }
         }
         
         /* الصورة المنتصفية النشطة */
-        .indexSwiper .swiper-slide-active {
+        .swiper-slide-active {
             opacity: 1;
-            /* إعادة الصورة النشطة لحجمها الطبيعي (100%) */
             transform: scale(1);
-            border: 4px solid #8b1c2b; /* فريم مميز وأسمك للصورة الواضحة */
-            box-shadow: 0 25px 50px -12px rgba(139, 28, 43, 0.4); /* ظل أقوى يبرز الصورة للخارج */
-            z-index: 10; /* لضمان ظهورها فوق الصور الأخرى */
+            border: 3px solid #8b1c2b;
+            box-shadow: 0 20px 45px -10px rgba(139, 28, 43, 0.4);
+            z-index: 10;
+        }
+        
+        .swiper-slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            border-radius: 0.85rem;
         }
         
         .swiper-pagination-bullet-active {
             background: #8b1c2b !important;
+            width: 24px !important;
+            border-radius: 12px !important;
         }
     </style>
 </head>
 <body class="antialiased selection:bg-brand-primary selection:text-white pb-20 md:pb-0">
 
     <div class="bg-red-900 text-white text-center py-2 px-4 text-sm md:text-base font-semibold tracking-wide shadow-md relative z-20">
-        🚨 تنبيه هام: هذا المحتوى جريء جداً (+18) ومخصص للمتزوجات فقط.
+        🚨 تنبيه مهم: المحتوى ده جريء جداً (+18) ومخصص للمتزوجات فقط.
     </div>
 
     <header class="relative pt-12 pb-20 overflow-hidden bg-gradient-to-b from-white to-pink-50">
@@ -227,7 +248,7 @@
                 <!-- 1. Tag & Title Block (Top on Mobile, Top Right on Desktop) -->
                 <div class="w-full text-center lg:text-right order-1 lg:order-1 lg:col-start-1 lg:row-start-1">
                     <span class="inline-block py-1 px-4 rounded-full bg-pink-100 text-brand-primary border border-pink-200 text-sm font-bold mb-4">
-                        الإصدار السري والأكثر جرأة 🤫
+                        النسخة السرية الأكثر جرأة 🤫
                     </span>
                     
                     <h1 class="text-4xl md:text-6xl font-black mb-2 lg:mb-4 leading-tight text-gray-900">
@@ -240,7 +261,7 @@
                     
                     <!-- Book Cover & +18 Badge -->
                     <div class="animate-float relative w-64 md:w-72">
-                        <img src="images/book-cover.jpg" alt="غلاف كتاب شفرة الرجالة" class="w-full h-auto rounded-lg shadow-2xl" onerror="this.src='https://placehold.co/400x600/4a0e17/ffffff?text=+18+كتاب+شفرة+الرجالة'">
+                        <img src="images/book-cover.jpg" alt="غلاف كتاب شفرة الرجالة" class="w-full h-auto rounded-lg shadow-2xl cursor-pointer hover:scale-102 transition-transform" onclick="openImageModal(this.src, this.alt)" onerror="this.src='https://placehold.co/400x600/4a0e17/ffffff?text=+18+كتاب+شفرة+الرجالة'">
                         
                         <!-- +18 Badge at bottom of book image -->
                         <div class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 z-20">
@@ -259,7 +280,7 @@
                 <!-- 3. Subtitle, Bullet Points & CTA (Bottom on Mobile, Bottom Right on Desktop) -->
                 <div class="w-full text-center lg:text-right order-3 lg:order-3 lg:col-start-1 lg:row-start-2">
                     <h2 class="text-lg md:text-xl font-medium mb-5 text-gray-600 leading-relaxed">
-                        الدليل الجريء للزوجات لتعلم فنون و اسرار <span class="font-bold text-gray-900">الديرتي توك</span> و <span class="font-bold text-gray-900">البلوجوب</span> و <span class="font-bold text-gray-900">الهاندجوب</span> اللي بيجننوا الرجالة و <span class="font-bold text-gray-900">يخلي جوزك يدمنك</span>.
+                        الدليل الجريء لكل زوجة عاوزة تظبط جوزها، وتتعلم فنون وأسرار <span class="font-bold text-gray-900">الديرتي توك</span>، <span class="font-bold text-gray-900">البلوجوب</span>، و <span class="font-bold text-gray-900">الهاندجوب</span> اللي بيجننوا أي راجل و <span class="font-bold text-gray-900">يخلوه يدمنك وميشوفش غيرك</span>.
                     </h2>
                     
                     <!-- PDF Note Badge -->
@@ -269,25 +290,25 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
                         </span>
-                        <span>كتاب إلكتروني (PDF) - يقرأ على الموبايل بخصوصية تامة</span>
+                        <span>كتاب إلكتروني (PDF) - تفتحيه وتقري منه من موبايلك بمنتهى الخصوصية</span>
                     </div>
                     
                     <ul class="text-base md:text-lg mb-12 space-y-5 text-right w-full">
                         <li class="flex items-start gap-3 text-gray-600">
                             <span class="shrink-0 mt-0.5 text-xl">✅</span>
-                            <p class="leading-relaxed"><span class="font-bold text-gray-900">تطبيق عملي ومباشر:</span> بعيد عن التنظير وكلام التنمية البشرية.</p>
+                            <p class="leading-relaxed"><span class="font-bold text-gray-900">خطوات عملية ومباشرة:</span> من غير رغي ولا كلام تنمية بشرية مش بيأكل عيش.</p>
                         </li>
                         <li class="flex items-start gap-3 text-gray-600">
                             <span class="shrink-0 mt-0.5 text-xl">🔞</span>
-                            <p class="leading-relaxed"><span class="font-bold text-gray-900">للمتزوجات فقط:</span> كتالوج جريء ومكشوف لأسرار غرفة النوم.</p>
+                            <p class="leading-relaxed"><span class="font-bold text-gray-900">للمتزوجات فقط:</span> دليل جريء ومفتح على أسرار غرفة النوم بجد.</p>
                         </li>
                         <li class="flex items-start gap-3 text-gray-600">
                             <span class="shrink-0 mt-0.5 text-xl">🧠</span>
-                            <p class="leading-relaxed"><span class="font-bold text-gray-900">فك شفرة دماغ جوزك:</span> واكتشفي أعمق رغباته العميقة.</p>
+                            <p class="leading-relaxed"><span class="font-bold text-gray-900">فك شفرة دماغ جوزك:</span> اعرفي إزاي بيُفكر واكتشفي مفاتيح رغباته صح.</p>
                         </li>
                         <li class="flex items-start gap-3 text-gray-600">
                             <span class="shrink-0 mt-0.5 text-xl">👠</span>
-                            <p class="leading-relaxed"><span class="font-bold text-gray-900">فنون الإثارة:</span> تقنيات المداعبة، والـ Dirty Talk اللي بيكهرب أعصابه.</p>
+                            <p class="leading-relaxed"><span class="font-bold text-gray-900">فنون الدلع والإثارة:</span> تكنيكات المداعبة والـ Dirty Talk اللي تظبط دماغه وتولع الشغف بينكم.</p>
                         </li>
                     </ul>
                     
@@ -301,7 +322,7 @@
 
                         <div class="flex justify-center lg:justify-start">
                             <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
-                                احصلي على نسختك الآن
+                                اطلبي نسختك دلوقتي
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                             </button>
                         </div>
@@ -310,11 +331,11 @@
                         <div class="mt-6 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-6 text-sm text-gray-600 font-medium">
                             <div class="flex items-center gap-1.5">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
-                                استلام فوري (واتساب/ايميل)
+                                استلام فوري واتساب وإيميل
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
-                                خصوصية 100%
+                                خصوصية وأمان 100%
                             </div>
                         </div>
                     </div>
@@ -330,15 +351,15 @@
             <div class="glass-panel p-8 md:p-10 rounded-3xl border-2 border-brand-primary/20 shadow-xl bg-white/90 text-center relative overflow-hidden">
                 <!-- Badge Header -->
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-100 text-brand-primary text-xs md:text-sm font-bold mb-4 border border-pink-200 shadow-sm">
-                    💡 لماذا قمنا بتقديم هذا الدليل؟
+                    💡 ليه عملنا الدليل ده بالتحديد؟
                 </div>
 
                 <h2 class="text-2xl md:text-3xl font-black mb-4 leading-relaxed text-gray-900">
-                    لأن للأسف المصدر الوحيد للأسرار الجريئة دلوقتي هي <span class="text-brand-primary underline decoration-pink-300 decoration-4">"الأفلام الوحشة"</span>...
+                    علشان للأسف المصدر الوحيد للأسرار الجريئة اليومين دول هي <span class="text-brand-primary underline decoration-pink-300 decoration-4">"الأفلام الوحشة"</span>...
                 </h2>
 
                 <p class="text-base md:text-lg text-gray-700 leading-relaxed font-medium max-w-3xl mx-auto">
-                    قررنا نعملك دليل كامل يغنيكي عن ده، يحميكي من أي إدمان إحنا في غنى عنه، ويعلمك الاحترافية بطريقة بسيطة وسهلة، تخليه ميشوفش غيرك وتخليكم تستنوا العلاقة كل يوم بشغف جديد.
+                    عشان كده عملنالك دليل كامل يغنيكي تماماً عن الحاجات دي، ويحميكي ويحمي بيتك، ويعلمك الأناقة والاحترافية بطريقة سهلة وبسيطة.. تخلي جوزك ميشوفش غيرك، وتخليكم مستنيين الوقت اللي يجمعكم بشغف زي أول أيام الجواز.
                 </p>
             </div>
         </div>
@@ -349,13 +370,13 @@
         <div class="container mx-auto px-4 max-w-6xl">
             <!-- Headline & Subheadline -->
             <div class="text-center mb-10">
-                <h2 class="text-3xl md:text-4xl font-black mb-4 text-gray-900">📖 نظرة خاطفة من الداخل... <span class="text-brand-primary">(الفهرس)</span></h2>
+                <h2 class="text-3xl md:text-4xl font-black mb-4 text-gray-900">📖 خدي بصة من جوة... <span class="text-brand-primary">(فهرس الكتاب)</span></h2>
                 <p class="text-lg text-gray-600 font-medium max-w-2xl mx-auto leading-relaxed">
-                    الشفافية الكاملة هي شعارنا. تصفحي فهرس "شفرة الرجالة" وتعرفي على الأسرار والمواضيع الجريئة التي تنتظرك قبل خطوة الشراء.
+                    إحنا بنحب الصراحة والوضوح. قَرَبي وقلبي في فهرس "شفرة الرجالة" واعرفي الأسرار والمواضيع الجريئة اللي مستنياكي جوة قبل ما تشتري.
                 </p>
                 <div class="mt-6 inline-flex items-center gap-2 bg-pink-100 text-brand-primary font-bold px-6 py-3 rounded-full animate-pulse shadow-sm border border-pink-200 cursor-default">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" /></svg>
-                    <span>اسحبي الصور لليمين لرؤية فهرس الكتاب كامل</span>
+                    <span>اسحبي الصور شمال ويمين علشان تشوف فهرس الكتاب كامل</span>
                 </div>
             </div>
 
@@ -363,20 +384,20 @@
             <div class="swiper indexSwiper">
                 <div class="swiper-wrapper">
                     <!-- Slides (Images 9:16) -->
-                    <div class="swiper-slide">
-                        <img src="images/index-1.jpg" alt="الفهرس 1" class="w-full h-full object-contain" loading="lazy">
+                    <div class="swiper-slide cursor-pointer">
+                        <img src="images/index-1.jpg" alt="الفهرس 1" class="w-full h-auto block object-contain" loading="lazy">
                     </div>
-                    <div class="swiper-slide">
-                        <img src="images/index-2.jpg" alt="الفهرس 2" class="w-full h-full object-contain" loading="lazy">
+                    <div class="swiper-slide cursor-pointer">
+                        <img src="images/index-2.jpg" alt="الفهرس 2" class="w-full h-auto block object-contain" loading="lazy">
                     </div>
-                    <div class="swiper-slide">
-                        <img src="images/index-3.jpg" alt="الفهرس 3" class="w-full h-full object-contain" loading="lazy">
+                    <div class="swiper-slide cursor-pointer">
+                        <img src="images/index-3.jpg" alt="الفهرس 3" class="w-full h-auto block object-contain" loading="lazy">
                     </div>
-                    <div class="swiper-slide">
-                        <img src="images/index-4.jpg" alt="الفهرس 4" class="w-full h-full object-contain" loading="lazy">
+                    <div class="swiper-slide cursor-pointer">
+                        <img src="images/index-4.jpg" alt="الفهرس 4" class="w-full h-auto block object-contain" loading="lazy">
                     </div>
-                    <div class="swiper-slide">
-                        <img src="images/index-5.jpg" alt="الفهرس 5" class="w-full h-full object-contain" loading="lazy">
+                    <div class="swiper-slide cursor-pointer">
+                        <img src="images/index-5.jpg" alt="الفهرس 5" class="w-full h-auto block object-contain" loading="lazy">
                     </div>
                 </div>
                 <!-- Pagination Dots -->
@@ -386,7 +407,7 @@
             <!-- CTA Button after Index -->
             <div class="mt-10 flex justify-center">
                 <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
-                    احصلي على نسختك الآن
+                    اطلبي نسختك دلوقتي
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                 </button>
             </div>
@@ -394,54 +415,155 @@
     </section>
     <!-- Carousel Section End -->
 
-    <!-- Proof of Delivery Section Start -->
-    <section class="py-16 bg-white border-y border-pink-100 relative">
+    <!-- Book Sample / First 2 Lessons Section Start -->
+    <section class="py-16 bg-gradient-to-b from-pink-50/60 to-white relative border-t border-pink-100 overflow-hidden">
         <div class="container mx-auto px-4 max-w-6xl">
-            <div class="text-center mb-12">
-                <span class="inline-block py-1.5 px-4 rounded-full bg-green-100 text-green-800 text-sm font-bold mb-3 border border-green-200">
-                    📦 مصداقية وإثبات تسليم 100%
+            <div class="text-center mb-10">
+                <span class="inline-block py-1.5 px-4 rounded-full bg-brand-primary/10 text-brand-primary text-sm font-bold mb-3 border border-brand-primary/20">
+                    📖 عينة مجانية حقيقية من داخل الكتاب
                 </span>
                 <h2 class="text-3xl md:text-4xl font-black mb-4 text-gray-900">
-                    إيصالات التحويل وحجم الكتاب الواقعي 📖
+                    اقرئي عينة حقيقية من أول درسين 📜
                 </h2>
                 <p class="text-lg text-gray-600 font-medium max-w-2xl mx-auto leading-relaxed">
-                    تأكدي بنفسكِ من سهولة الاستلام الفوري عبر الواتساب والإيميل، وحجم الكتاب الغني بالمعلومات والصفحات المقروءة بسلاسة على الموبايل.
+                    علشان تتأكدي إن الكتاب حقيقي وتكتشفي أسلوب الكتابة السلس والتكنيكات المباشرة قبل الشراء، دي لقطات حية ومباشرة من الدرس الأول والدرس الثاني.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Proof Card 1 -->
-                <div class="glass-panel p-4 rounded-2xl border border-pink-100 shadow-md hover:shadow-xl transition-all group">
-                    <div class="overflow-hidden rounded-xl bg-gray-100 aspect-[3/4] flex items-center justify-center relative mb-4">
-                        <img src="images/proofBook1.png" alt="إثبات استلام 1" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
+            <!-- Lessons Swiper Container -->
+            <div class="swiper lessonsSwiper">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="swiper-slide p-3">
+                        <div class="w-full overflow-hidden rounded-xl bg-gray-50 mb-3">
+                            <img src="images/1st lesson.png" alt="الدرس الأول من الكتاب" class="w-full h-auto object-contain" loading="lazy">
+                        </div>
+                        <div class="text-center p-2">
+                            <span class="bg-brand-primary text-white font-bold text-xs px-3.5 py-1 rounded-full shadow-xs">الدرس الأول 📄</span>
+                            <h4 class="font-bold text-gray-900 text-base mt-2.5 mb-1">أسلوب الطرح والمقدمة العملية</h4>
+                            <p class="text-xs text-gray-500 font-medium leading-relaxed">نموذج حقيقي يوضح البساطة والعمق في صياغة المعلومات والحلول</p>
+                        </div>
                     </div>
-                    <div class="text-center">
-                        <h4 class="font-bold text-gray-900 text-base mb-1">تأكيد الاستلام وحجم المحتوى</h4>
-                        <p class="text-xs text-gray-500 font-medium">استلام فوري وصور تبرز وضوح وتنسيق صفحات الكتاب</p>
-                    </div>
-                </div>
 
-                <!-- Proof Card 2 -->
-                <div class="glass-panel p-4 rounded-2xl border border-pink-100 shadow-md hover:shadow-xl transition-all group">
-                    <div class="overflow-hidden rounded-xl bg-gray-100 aspect-[3/4] flex items-center justify-center relative mb-4">
-                        <img src="images/proofBook2.png" alt="إثبات استلام 2" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
-                    </div>
-                    <div class="text-center">
-                        <h4 class="font-bold text-gray-900 text-base mb-1">سهولة القراءة من الهاتف</h4>
-                        <p class="text-xs text-gray-500 font-medium">خط واضح وتصميم مريح للعين لقرائية تامة بخصوصية</p>
+                    <!-- Slide 2 -->
+                    <div class="swiper-slide p-3">
+                        <div class="w-full overflow-hidden rounded-xl bg-gray-50 mb-3">
+                            <img src="images/2nd lesson.png" alt="الدرس الثاني من الكتاب" class="w-full h-auto object-contain" loading="lazy">
+                        </div>
+                        <div class="text-center p-2">
+                            <span class="bg-brand-primary text-white font-bold text-xs px-3.5 py-1 rounded-full shadow-xs">الدرس الثاني 📄</span>
+                            <h4 class="font-bold text-gray-900 text-base mt-2.5 mb-1">الخطوات والتطبيقات المباشرة</h4>
+                            <p class="text-xs text-gray-500 font-medium leading-relaxed">توضيح أسلوب الإرشادات المباشرة وسهولة التطبيق في الحياة الزوجية</p>
+                        </div>
                     </div>
                 </div>
+                <div class="swiper-pagination"></div>
+            </div>
 
-                <!-- Proof Card 3 -->
-                <div class="glass-panel p-4 rounded-2xl border border-pink-100 shadow-md hover:shadow-xl transition-all group">
-                    <div class="overflow-hidden rounded-xl bg-gray-100 aspect-[3/4] flex items-center justify-center relative mb-4">
-                        <img src="images/proofBook3.png" alt="إثبات استلام 3" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
+            <!-- CTA Button after Lessons -->
+            <div class="mt-8 flex justify-center">
+                <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
+                    اطلبي نسختك دلوقتي
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- Book Sample Section End -->
+
+    <!-- Proof of Delivery Section Start -->
+    <section class="py-16 bg-white border-y border-pink-100 relative overflow-hidden">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="text-center mb-10">
+                <span class="inline-block py-1.5 px-4 rounded-full bg-green-100 text-green-800 text-sm font-bold mb-3 border border-green-200">
+                    📦 ناس قبلك اشترت ووصلهم الكتاب
+                </span>
+                <h2 class="text-3xl md:text-4xl font-black mb-4 text-gray-900">
+                    ناس قبلك اشترت و ايه اللي بيستلموه بالظبط 📖
+                </h2>
+                <p class="text-lg text-gray-600 font-medium max-w-2xl mx-auto leading-relaxed">
+                    شوف بنفسك إثباتات الاستلام على الواتساب والإيميل، ووضوح صفحة الكتاب وحجمه المناسب للقراءة من الموبايل بمنتهى السهولة والخصوصية.
+                </p>
+            </div>
+
+            <!-- Proof Swiper Container -->
+            <div class="swiper proofSwiper">
+                <div class="swiper-wrapper">
+                    <!-- Proof Slide 1 -->
+                    <div class="swiper-slide p-3">
+                        <div class="w-full overflow-hidden rounded-xl bg-gray-50 mb-3">
+                            <img src="images/proofBook1.png" alt="إثبات استلام 1" class="w-full h-auto object-contain" loading="lazy">
+                        </div>
+                        <div class="text-center p-2">
+                            <h4 class="font-bold text-gray-900 text-base mb-1">تأكيد الاستلام وحجم المحتوى</h4>
+                            <p class="text-xs text-gray-500 font-medium">استلام فوري وصور بتوضح تنسيق ووضوح الكتاب</p>
+                        </div>
                     </div>
-                    <div class="text-center">
-                        <h4 class="font-bold text-gray-900 text-base mb-1">سرعة الإرسال على الواتساب</h4>
-                        <p class="text-xs text-gray-500 font-medium">مراسلات وتأكيدات فورية للعميلات بعد التحويل مباشرة</p>
+
+                    <!-- Proof Slide 2 -->
+                    <div class="swiper-slide p-3">
+                        <div class="w-full overflow-hidden rounded-xl bg-gray-50 mb-3">
+                            <img src="images/proofBook2.png" alt="إثبات استلام 2" class="w-full h-auto object-contain" loading="lazy">
+                        </div>
+                        <div class="text-center p-2">
+                            <h4 class="font-bold text-gray-900 text-base mb-1">سهولة القراءة من الموبايل</h4>
+                            <p class="text-xs text-gray-500 font-medium">خط واضح ومريح للعين بقرائية تامة بخصوصية</p>
+                        </div>
+                    </div>
+
+                    <!-- Proof Slide 3 -->
+                    <div class="swiper-slide p-3">
+                        <div class="w-full overflow-hidden rounded-xl bg-gray-50 mb-3">
+                            <img src="images/proofBook3.png" alt="إثبات استلام 3" class="w-full h-auto object-contain" loading="lazy">
+                        </div>
+                        <div class="text-center p-2">
+                            <h4 class="font-bold text-gray-900 text-base mb-1">سرعة الإرسال على الواتساب</h4>
+                            <p class="text-xs text-gray-500 font-medium">متابعة وتأكيدات فورية للعميلات بعد التحويل مباشرة</p>
+                        </div>
+                    </div>
+
+                    <!-- Proof Slide 4 -->
+                    <div class="swiper-slide p-3">
+                        <div class="w-full overflow-hidden rounded-xl bg-gray-50 mb-3">
+                            <img src="images/proofBook4.png" alt="إثبات استلام 4" class="w-full h-auto object-contain" loading="lazy">
+                        </div>
+                        <div class="text-center p-2">
+                            <h4 class="font-bold text-gray-900 text-base mb-1">استلام النسخة الإلكترونية</h4>
+                            <p class="text-xs text-gray-500 font-medium">تأكيد إرسال رابط التحميل والإيميل في نفس اللحظة</p>
+                        </div>
+                    </div>
+
+                    <!-- Proof Slide 5 -->
+                    <div class="swiper-slide p-3">
+                        <div class="w-full overflow-hidden rounded-xl bg-gray-50 mb-3">
+                            <img src="images/proofBook5.png" alt="إثبات استلام 5" class="w-full h-auto object-contain" loading="lazy">
+                        </div>
+                        <div class="text-center p-2">
+                            <h4 class="font-bold text-gray-900 text-base mb-1">شكل الكتاب الحقيقي والتنسيق</h4>
+                            <p class="text-xs text-gray-500 font-medium">استعراض واضح لصفحات الكتاب والمحتوى الداخلي</p>
+                        </div>
+                    </div>
+
+                    <!-- Proof Slide 6 -->
+                    <div class="swiper-slide p-3">
+                        <div class="w-full overflow-hidden rounded-xl bg-gray-50 mb-3">
+                            <img src="images/proofBook6.png" alt="إثبات استلام 6" class="w-full h-auto object-contain" loading="lazy">
+                        </div>
+                        <div class="text-center p-2">
+                            <h4 class="font-bold text-gray-900 text-base mb-1">سرعة الرد والتأكيد</h4>
+                            <p class="text-xs text-gray-500 font-medium">رسائل واضحة ومباشرة لتأكيد الاستلام دون أي تأخير</p>
+                        </div>
                     </div>
                 </div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <!-- CTA Button after Proof -->
+            <div class="mt-8 flex justify-center">
+                <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
+                    اطلبي نسختك دلوقتي
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                </button>
             </div>
         </div>
     </section>
@@ -450,8 +572,8 @@
     <section class="py-20 relative bg-pink-50/50">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-black mb-4 text-gray-900">🔥 ماذا سيكشف لكِ "الكتالوج السري"؟</h2>
-                <p class="text-xl text-brand-primary font-semibold">أسرار وتطبيقات لا تُدرس إلا في الغرف المغلقة</p>
+                <h2 class="text-3xl md:text-4xl font-black mb-4 text-gray-900">🔥 إيه الأسرار اللي هتعرفيها جوة الكتاب؟</h2>
+                <p class="text-xl text-brand-primary font-semibold">تكنيكات وأسرار عملية هتفرق معاكي في حياتك الزوجية جداً</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -460,8 +582,8 @@
                     <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-primary transition-colors duration-300">
                         <span class="text-3xl group-hover:scale-110 transition-transform">🧠</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-gray-900">سيكولوجية الرجل</h3>
-                    <p class="text-gray-600 leading-relaxed">فهم الأسباب الخفية التي تجعل الرجل يحتاج للعلاقة كملجأ للأمان وتجديد الثقة، وليس فقط كمتعة جسدية.</p>
+                    <h3 class="text-xl font-bold mb-3 text-gray-900">دماغ الراجل وتركيبته</h3>
+                    <p class="text-gray-600 leading-relaxed">فهم الدوافع النفسية اللي بتخلي الراجل يشوف العلاقة ملجأ أمان وراحة وهدوء أعصاب، مش مجرد حركات وخلاص.</p>
                 </div>
 
                 <!-- Feature 2 -->
@@ -469,8 +591,8 @@
                     <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-primary transition-colors duration-300">
                         <span class="text-3xl group-hover:scale-110 transition-transform">👄</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-gray-900">دليل الـ Dirty Talk</h3>
-                    <p class="text-gray-600 leading-relaxed">إتقان فنون الكلام الجريء والهمسات التي ترفع معدل الأدرينالين لديه وتجعلك العشيقة التي لا يشبع منها.</p>
+                    <h3 class="text-xl font-bold mb-3 text-gray-900">فن الـ Dirty Talk والهمس</h3>
+                    <p class="text-gray-600 leading-relaxed">إزاي تقولي الكلام الجريء والهمسات اللي تظبط دماغه وتخليه ملهوف عليكِ ومش قادر يستغنى عنك.</p>
                 </div>
 
                 <!-- Feature 3 -->
@@ -478,8 +600,8 @@
                     <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-primary transition-colors duration-300">
                         <span class="text-3xl group-hover:scale-110 transition-transform">👩‍🏫</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-gray-900">مهارات الأستاذة</h3>
-                    <p class="text-gray-600 leading-relaxed">تكنيكات عملية وجريئة (يدوية وفموية) مشروحة خطوة بخطوة، لتكوني المحترفة التي تملأ عينيه.</p>
+                    <h3 class="text-xl font-bold mb-3 text-gray-900">حركات "الأستاذة" المحترفة</h3>
+                    <p class="text-gray-600 leading-relaxed">خطوات عملية وجريئة (يدوية وفموية) مشروحة بالتفصيل، علشان تكوني الزوجة المحترفة اللي تملى عينيه.</p>
                 </div>
 
                 <!-- Feature 4 -->
@@ -487,8 +609,8 @@
                     <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-primary transition-colors duration-300">
                         <span class="text-3xl group-hover:scale-110 transition-transform">🎪</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-gray-900">أوضاع الابتكار والجنون</h3>
-                    <p class="text-gray-600 leading-relaxed">التخلص من روتين السرير، وتحويل أي مساحة في منزلك إلى مسرح متجدد للمتعة والارتباط الروحي.</p>
+                    <h3 class="text-xl font-bold mb-3 text-gray-900">تجديد الأوضاع وكسر الروتين</h3>
+                    <p class="text-gray-600 leading-relaxed">إنهاء الملل تماماً، وحركات مريحة تكسر الروتين وتخلي أي مكان في البيت لوكيشن يجنن للمتعة والتقارب بينكم.</p>
                 </div>
 
                 <!-- Feature 5 -->
@@ -496,8 +618,8 @@
                     <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-primary transition-colors duration-300">
                         <span class="text-3xl group-hover:scale-110 transition-transform">🗺️</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-gray-900">خريطة الكنز الجسدية</h3>
-                    <p class="text-gray-600 leading-relaxed">اكتشاف "أزرار" الإثارة الخفية في جسم زوجك، واستخدام اللمس لتحويله إلى بركان بين يديكِ.</p>
+                    <h3 class="text-xl font-bold mb-3 text-gray-900">خريطة مفاتيح جسمه</h3>
+                    <p class="text-gray-600 leading-relaxed">اعرفي أزرار ومناطق الإثارة المستخبية في جسم جوزك، وإزاي بلمسات صح تولعي الشغف عنده.</p>
                 </div>
 
                 <!-- Feature 6 -->
@@ -505,8 +627,8 @@
                     <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-primary transition-colors duration-300">
                         <span class="text-3xl group-hover:scale-110 transition-transform">✨</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-gray-900">سحر الإثارة الذهنية</h3>
-                    <p class="text-gray-600 leading-relaxed">تعلم فنون التمهيد والإغواء طوال اليوم، وكيف تجعلينه يهلوِس باسمك وهو في قمة انشغاله.</p>
+                    <h3 class="text-xl font-bold mb-3 text-gray-900">فنون التهيئة والدلع طول اليوم</h3>
+                    <p class="text-gray-600 leading-relaxed">إزاي تجهزي المود طول اليوم برسايل وحركات تخليه يفكر فيكي طول ما هو في الشغل ومستني يرجع البيت بفارغ الصبر.</p>
                 </div>
             </div>
             
@@ -514,15 +636,15 @@
             <div class="mt-6 max-w-2xl mx-auto glass-panel p-8 rounded-2xl border-r-4 border-l-0 border-brand-primary">
                  <div class="flex items-center gap-4 mb-3">
                      <span class="text-4xl">👑</span>
-                     <h3 class="text-2xl font-bold text-gray-900">لغة الهيمنة والدلع</h3>
+                     <h3 class="text-2xl font-bold text-gray-900">الثقة والدلع من غير خجل</h3>
                  </div>
-                 <p class="text-gray-600 leading-relaxed text-lg font-medium">كسر حاجز الخجل تماماً، واحتراف طلب ما يمتعك بثقة تجعله ينفذ رغباتك وهو مبهور بكِ وبأنوثتك الطاغية.</p>
+                 <p class="text-gray-600 leading-relaxed text-lg font-medium">اكسري الخجل والتكلف تماماً، واعرفي إزاي تطلبي اللي يمتعك بثقة ودلع تخليه ينفذ رغباتك وهو مبسوط ومبهور بيكي.</p>
             </div>
 
             <!-- CTA Button after Features -->
             <div class="mt-10 flex justify-center">
                 <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
-                    احصلي على نسختك الآن
+                    اطلبي نسختك دلوقتي
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                 </button>
             </div>
@@ -532,60 +654,108 @@
     <!-- Testimonials Section Start -->
     <section class="py-20 bg-gradient-to-b from-pink-50/60 to-white relative overflow-hidden">
         <div class="container mx-auto px-4 max-w-6xl">
-            <div class="text-center mb-14">
+            <div class="text-center mb-10">
                 <span class="inline-block py-1.5 px-4 rounded-full bg-pink-100 text-brand-primary text-sm font-bold mb-3 border border-pink-200">
                     💬 نتائج وتجارب حقيقية
                 </span>
                 <h2 class="text-3xl md:text-5xl font-black mb-4 text-gray-900">
-                    آراء وانطباعات الزوجات 💕
+                    تجارب وآراء الزوجات اللي جربوا 💕
                 </h2>
                 <p class="text-lg text-gray-600 font-medium max-w-2xl mx-auto leading-relaxed">
-                    اقرئي ما قالته الزوجات بعد قراءة "شفرة الرجالة" وكيف أحدث المحتوى الجريء والعملي فارقاً ملموساً في حياتهن الزوجية.
+                    اقري الكلام اللي كتبوه الزوجات بعد ما قريوا "شفرة الرجالة"، وإزاي المحتوى الفرق معاهم في حياتهم الزوجية.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Testimonial 1 -->
-                <div class="glass-panel p-4 rounded-2xl border border-pink-200/80 shadow-lg hover:-translate-y-1 transition-all duration-300">
-                    <div class="flex items-center gap-1 text-amber-400 mb-3 px-2 pt-2">
-                        ★★★★★
-                        <span class="text-xs font-bold text-gray-600 mr-2">تقييم 5/5</span>
+            <!-- Testimonials Swiper Container -->
+            <div class="swiper testimonialsSwiper">
+                <div class="swiper-wrapper">
+                    <!-- Testimonial Slide 1 -->
+                    <div class="swiper-slide p-3">
+                        <div class="flex items-center justify-center text-amber-400 mb-2">
+                            ★★★★★ <span class="text-xs font-bold text-gray-600 mr-1">تقييم 5/5</span>
+                        </div>
+                        <div class="w-full overflow-hidden rounded-xl bg-gray-50 mb-3">
+                            <img src="images/testomonial1.png" alt="رأي قارئة 1" class="w-full h-auto object-contain" loading="lazy">
+                        </div>
+                        <div class="text-center p-1">
+                            <p class="text-xs font-bold text-brand-primary">"فرق شاسع في المعاملة والتجربة حقيقية!"</p>
+                        </div>
                     </div>
-                    <div class="overflow-hidden rounded-xl bg-gray-50 mb-3">
-                        <img src="images/testomonial1.png" alt="رأي قارئة 1" class="w-full h-auto object-contain hover:scale-102 transition-transform" loading="lazy">
-                    </div>
-                    <div class="p-2 text-right">
-                        <p class="text-xs font-bold text-brand-primary">"فرق شاسع في المعاملة والتجربة حقيقية!"</p>
-                    </div>
-                </div>
 
-                <!-- Testimonial 2 -->
-                <div class="glass-panel p-4 rounded-2xl border border-pink-200/80 shadow-lg hover:-translate-y-1 transition-all duration-300">
-                    <div class="flex items-center gap-1 text-amber-400 mb-3 px-2 pt-2">
-                        ★★★★★
-                        <span class="text-xs font-bold text-gray-600 mr-2">تقييم 5/5</span>
+                    <!-- Testimonial Slide 2 -->
+                    <div class="swiper-slide p-3">
+                        <div class="flex items-center justify-center text-amber-400 mb-2">
+                            ★★★★★ <span class="text-xs font-bold text-gray-600 mr-1">تقييم 5/5</span>
+                        </div>
+                        <div class="w-full overflow-hidden rounded-xl bg-gray-50 mb-3">
+                            <img src="images/testomonial2.png" alt="رأي قارئة 2" class="w-full h-auto object-contain" loading="lazy">
+                        </div>
+                        <div class="text-center p-1">
+                            <p class="text-xs font-bold text-brand-primary">"تغيير التفكير وتكنيكات عملت مفعول سحري"</p>
+                        </div>
                     </div>
-                    <div class="overflow-hidden rounded-xl bg-gray-50 mb-3">
-                        <img src="images/testomonial2.png" alt="رأي قارئة 2" class="w-full h-auto object-contain hover:scale-102 transition-transform" loading="lazy">
-                    </div>
-                    <div class="p-2 text-right">
-                        <p class="text-xs font-bold text-brand-primary">"تغيير التفكير وتكنيكات عملت مفعول سحري"</p>
-                    </div>
-                </div>
 
-                <!-- Testimonial 3 -->
-                <div class="glass-panel p-4 rounded-2xl border border-pink-200/80 shadow-lg hover:-translate-y-1 transition-all duration-300">
-                    <div class="flex items-center gap-1 text-amber-400 mb-3 px-2 pt-2">
-                        ★★★★★
-                        <span class="text-xs font-bold text-gray-600 mr-2">تقييم 5/5</span>
+                    <!-- Testimonial Slide 3 -->
+                    <div class="swiper-slide p-3">
+                        <div class="flex items-center justify-center text-amber-400 mb-2">
+                            ★★★★★ <span class="text-xs font-bold text-gray-600 mr-1">تقييم 5/5</span>
+                        </div>
+                        <div class="w-full overflow-hidden rounded-xl bg-gray-50 mb-3">
+                            <img src="images/testomonial3.png" alt="رأي قارئة 3" class="w-full h-auto object-contain" loading="lazy">
+                        </div>
+                        <div class="text-center p-1">
+                            <p class="text-xs font-bold text-brand-primary">"المعلومات مفيدة جداً والتطبيق كان أسهل مما توقعت"</p>
+                        </div>
                     </div>
-                    <div class="overflow-hidden rounded-xl bg-gray-50 mb-3">
-                        <img src="images/testomonial3.png" alt="رأي قارئة 3" class="w-full h-auto object-contain hover:scale-102 transition-transform" loading="lazy">
+
+                    <!-- Testimonial Slide 4 -->
+                    <div class="swiper-slide p-3">
+                        <div class="flex items-center justify-center text-amber-400 mb-2">
+                            ★★★★★ <span class="text-xs font-bold text-gray-600 mr-1">تقييم 5/5</span>
+                        </div>
+                        <div class="w-full overflow-hidden rounded-xl bg-gray-50 mb-3">
+                            <img src="images/testomonial4.png" alt="رأي قارئة 4" class="w-full h-auto object-contain" loading="lazy">
+                        </div>
+                        <div class="text-center p-1">
+                            <p class="text-xs font-bold text-brand-primary">"نتائج ممتازة واستجابة سريعة وغير متوقعة"</p>
+                        </div>
                     </div>
-                    <div class="p-2 text-right">
-                        <p class="text-xs font-bold text-brand-primary">"المعلومات مفيدة جداً والتطبيق كان أسهل مما توقعت"</p>
+
+                    <!-- Testimonial Slide 5 -->
+                    <div class="swiper-slide p-3">
+                        <div class="flex items-center justify-center text-amber-400 mb-2">
+                            ★★★★★ <span class="text-xs font-bold text-gray-600 mr-1">تقييم 5/5</span>
+                        </div>
+                        <div class="w-full overflow-hidden rounded-xl bg-gray-50 mb-3">
+                            <img src="images/testomonial5.png" alt="رأي قارئة 5" class="w-full h-auto object-contain" loading="lazy">
+                        </div>
+                        <div class="text-center p-1">
+                            <p class="text-xs font-bold text-brand-primary">"التكنيكات عمليّة ومباشرة في حل المشكلات"</p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial Slide 6 -->
+                    <div class="swiper-slide p-3">
+                        <div class="flex items-center justify-center text-amber-400 mb-2">
+                            ★★★★★ <span class="text-xs font-bold text-gray-600 mr-1">تقييم 5/5</span>
+                        </div>
+                        <div class="w-full overflow-hidden rounded-xl bg-gray-50 mb-3">
+                            <img src="images/testomonial6.png" alt="رأي قارئة 6" class="w-full h-auto object-contain" loading="lazy">
+                        </div>
+                        <div class="text-center p-1">
+                            <p class="text-xs font-bold text-brand-primary">"تأثير إيجابي كبير وتغيير حقيقي في الحياة الزوجية"</p>
+                        </div>
                     </div>
                 </div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <!-- CTA Button after Testimonials -->
+            <div class="mt-8 flex justify-center">
+                <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
+                    اطلبي نسختك دلوقتي
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                </button>
             </div>
         </div>
     </section>
@@ -655,50 +825,79 @@
             <div class="mt-12 bg-pink-100/50 p-8 rounded-2xl border border-pink-200 text-center shadow-inner">
                 <span class="text-3xl mb-4 block drop-shadow-sm">💎</span>
                 <h4 class="text-2xl font-bold mb-2 text-gray-900">الخلاصة:</h4>
-                <p class="text-lg text-brand-primary font-bold">
+                <p class="text-lg text-brand-primary font-bold mb-6">
                     هتتحولي لزوجة واثقة، محترفة، وفاهمة رغبات جوزها بالمللي، وهتكسري الروتين وتخليه يبصلك بشكل مختلف تماماً.
                 </p>
+                <div class="flex justify-center">
+                    <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
+                        اطلبي نسختك دلوقتي
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Loyal Customers Section Start -->
-    <section class="py-16 bg-gradient-to-b from-white to-pink-50 relative border-t border-pink-100">
-        <div class="container mx-auto px-4 max-w-5xl">
-            <div class="text-center mb-12">
+    <section class="py-16 bg-gradient-to-b from-white to-pink-50 relative border-t border-pink-100 overflow-hidden">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="text-center mb-10">
                 <span class="inline-block py-1.5 px-4 rounded-full bg-amber-100 text-amber-800 text-sm font-bold mb-3 border border-amber-200">
                     👑 ثقة تتجدد
                 </span>
                 <h2 class="text-3xl md:text-4xl font-black mb-4 text-gray-900">
-                    عميلات يطلبن إصداراتنا مجدداً 🤝
+                    عميلات رجعوا يطلبوا كتبنا التانية كمان 🤝
                 </h2>
                 <p class="text-lg text-gray-600 font-medium max-w-2xl mx-auto leading-relaxed">
-                    أكبر دليل على جودة محتوانا هو عودة الزوجات اللاتي جربن كتبنا السابقة لطلب أحدث كتبنا للتعامل الثاني والثالث.
+                    أحلى حاجة بتفرحنا هي لما الزوجات اللي اشتروا كتبنا القديمة يرجعوا يطلبوا الكتب الجديدة والكتالوجات التانية لثقتهم في المحتوى.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <!-- Loyal Card 1 -->
-                <div class="glass-panel p-5 rounded-3xl border border-amber-200/70 shadow-lg hover:shadow-xl transition-all">
-                    <div class="overflow-hidden rounded-2xl bg-white mb-3">
-                        <img src="images/loyal1.png" alt="عميلة مخلصة 1" class="w-full h-auto object-contain" loading="lazy">
+            <!-- Loyal Swiper Container -->
+            <div class="swiper loyalSwiper">
+                <div class="swiper-wrapper">
+                    <!-- Loyal Slide 1 -->
+                    <div class="swiper-slide p-4">
+                        <div class="w-full overflow-hidden rounded-xl bg-white mb-3">
+                            <img src="images/loyal1.png" alt="عميلة مخلصة 1" class="w-full h-auto object-contain" loading="lazy">
+                        </div>
+                        <div class="text-center pt-1">
+                            <span class="bg-amber-100 text-amber-900 font-bold text-xs px-3 py-1 rounded-full">تعامل متكرر ⭐</span>
+                            <p class="text-xs font-bold text-gray-800 mt-2">سؤال واهتمام بطلب الكتب الجديدة بعد تجربة سابقة ناجحة</p>
+                        </div>
                     </div>
-                    <div class="text-center pt-2">
-                        <span class="bg-amber-100 text-amber-900 font-bold text-xs px-3 py-1 rounded-full">تعامل متكرر ⭐</span>
-                        <p class="text-sm font-bold text-gray-800 mt-2">سؤال واهتمام بطلب الكتب الجديدة بعد تجربة سابقة ناجحة</p>
-                    </div>
-                </div>
 
-                <!-- Loyal Card 2 -->
-                <div class="glass-panel p-5 rounded-3xl border border-amber-200/70 shadow-lg hover:shadow-xl transition-all">
-                    <div class="overflow-hidden rounded-2xl bg-white mb-3">
-                        <img src="images/loyal2.png" alt="عميلة مخلصة 2" class="w-full h-auto object-contain" loading="lazy">
+                    <!-- Loyal Slide 2 -->
+                    <div class="swiper-slide p-4">
+                        <div class="w-full overflow-hidden rounded-xl bg-white mb-3">
+                            <img src="images/loyal2.png" alt="عميلة مخلصة 2" class="w-full h-auto object-contain" loading="lazy">
+                        </div>
+                        <div class="text-center pt-1">
+                            <span class="bg-amber-100 text-amber-900 font-bold text-xs px-3 py-1 rounded-full">ثقة مستمرة ⭐</span>
+                            <p class="text-xs font-bold text-gray-800 mt-2">طلب مباشر لإصدارات إضافية نتيجة الرضا الكامل عن النتائج</p>
+                        </div>
                     </div>
-                    <div class="text-center pt-2">
-                        <span class="bg-amber-100 text-amber-900 font-bold text-xs px-3 py-1 rounded-full">ثقة مستمرة ⭐</span>
-                        <p class="text-sm font-bold text-gray-800 mt-2">طلب مباشر لإصدارات إضافية نتيجة الرضا الكامل عن النتائج</p>
+
+                    <!-- Loyal Slide 3 -->
+                    <div class="swiper-slide p-4">
+                        <div class="w-full overflow-hidden rounded-xl bg-white mb-3">
+                            <img src="images/loyal3.png" alt="عميلة مخلصة 3" class="w-full h-auto object-contain" loading="lazy">
+                        </div>
+                        <div class="text-center pt-1">
+                            <span class="bg-amber-100 text-amber-900 font-bold text-xs px-3 py-1 rounded-full">توصية ورضا تام ⭐</span>
+                            <p class="text-xs font-bold text-gray-800 mt-2">طلب متكرر وتوصية بالكتب لأهميتها وفائدتها الملموسة</p>
+                        </div>
                     </div>
                 </div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <!-- CTA Button after Loyal Customers -->
+            <div class="mt-8 flex justify-center">
+                <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
+                    اطلبي نسختك دلوقتي
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                </button>
             </div>
         </div>
     </section>
@@ -778,6 +977,15 @@
                                 <p class="text-xs text-gray-500 mt-1">(في حالة الرغبة في الاستلام علي الايميل بجانب الواتساب)</p>
                             </div>
 
+                            <!-- Warning Box moved to Step 1 -->
+                            <div class="mt-2 p-4 border border-red-200 bg-red-50 rounded-xl">
+                                <h4 class="font-bold text-sm text-red-600 mb-1 flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                    تنبيه هام ⚠️
+                                </h4>
+                                <p class="text-xs text-gray-700 font-medium">يرجى التأكد من كتابة رقم الواتساب بشكل صحيح لضمان وصول الكتاب إليكِ. المحتوى مخصص للمتزوجات فقط.</p>
+                            </div>
+
                             <button type="button" id="next-step-btn" onclick="goToStep2()" class="w-full bg-brand-primary hover:bg-red-800 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition-all mt-4 flex items-center justify-center gap-2">
                                 الخطوة الاخيرة لاتمام الطلب ➔
                             </button>
@@ -832,20 +1040,25 @@
                                 </div>
 
                                 <!-- Hint Box shown upon Copy -->
-                                <div id="pay-first-hint" class="hidden p-4 bg-emerald-50 border border-emerald-200 rounded-xl animate-fade-in text-right">
+                                <div id="pay-first-hint" class="hidden p-4 sm:p-5 bg-emerald-50 border-2 border-emerald-300 rounded-2xl animate-fade-in text-right space-y-3 shadow-xs">
                                     <div class="flex items-start gap-3">
-                                        <span class="text-2xl shrink-0">🤝</span>
+                                        <span class="text-3xl shrink-0">📸</span>
                                         <div class="space-y-3 w-full">
-                                            <p class="text-sm font-bold text-emerald-950 leading-relaxed">
-                                                لو وصلتي لهنا ولسة قلقانة من فكرة عدم إرسال الكتاب بعد التحويل، تواصلي معانا على الواتساب من الزرار ده وهنبعتلك الكتاب الأول وبعدها ادفعي!
-                                            </p>
-                                            <a href="https://wa.me/201553089928?text=%D9%83%D9%86%D8%AA%20%D8%A8%D8%B3%D8%A7%D9%84%20%D8%B9%D9%84%D9%8A%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%84%D8%A7%D9%85%20%D9%82%D8%A8%D9%84%20%D8%A7%D9%84%D8%AF%D9%81%D8%B9" target="_blank" onclick="trackWhatsAppClick()" class="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm py-3 px-5 rounded-xl shadow transition-all w-full sm:w-auto">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                                                <span>تواصل معنا على الواتساب واستلم قبل الدفع</span>
-                                            </a>
-                                            <p class="text-xs md:text-sm font-bold text-emerald-950 mt-1">
-                                                ( أو حولي مباشرة دلوقتي و ارفعي الصورة و الكتاب هيوصل لحضرتك فورا واتساب )
-                                            </p>
+                                            <div class="bg-white p-4 rounded-xl border border-emerald-200 shadow-2xs space-y-3">
+                                                <p class="text-sm sm:text-base font-extrabold text-emerald-950 leading-relaxed">
+                                                    💡 علشان لو الصفحة تاهت منك او حصل اي مشكلة :
+                                                </p>
+                                                <p class="text-xs sm:text-sm font-bold text-emerald-900 leading-relaxed">
+                                                    تقدري تتواصلي معانا واتساب مباشرة و<br>تبعتبلنا سكرين الدفع وتستلمي الكتاب فوراً!
+                                                </p>
+                                                <div class="flex flex-wrap items-center justify-between gap-2 bg-emerald-50/80 p-2.5 rounded-lg border border-emerald-200/60">
+                                                    <span class="text-xs sm:text-sm font-bold text-emerald-900">رقم واتساب الصفحة للتواصل والاستلام:</span>
+                                                    <span class="text-lg sm:text-xl font-black text-emerald-700 bg-white px-3 py-1 rounded-md border border-emerald-300 tracking-wider" dir="ltr">01553089928</span>
+                                                </div>
+                                                <p class="text-xs sm:text-sm font-extrabold text-emerald-800 pt-1">
+                                                    💡 يفضل أخذ سكرين شوت لرقمنا ع الواتساب احتياطياً:
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -863,15 +1076,6 @@
                                         <input id="receipt-upload" type="file" accept="image/*" class="hidden" onchange="updateFileName(this)" />
                                     </label>
                                 </div>
-                            </div>
-
-                            <!-- Warning Box before Final CTA -->
-                            <div class="mt-2 p-4 border border-red-200 bg-red-50 rounded-xl">
-                                <h4 class="font-bold text-sm text-red-600 mb-1 flex items-center gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                                    تنبيه هام ⚠️
-                                </h4>
-                                <p class="text-xs text-gray-700 font-medium">يرجى التأكد من كتابة رقم الواتساب بشكل صحيح لضمان وصول الكتاب إليكِ. المحتوى مخصص للمتزوجات فقط.</p>
                             </div>
 
                             <button type="submit" id="submit-btn" class="w-full bg-brand-primary hover:bg-red-800 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition-all mt-4 flex items-center justify-center gap-2">
@@ -908,10 +1112,57 @@
     <!-- Custom Toast Message -->
     <div id="toast">تم نسخ الرقم بنجاح!</div>
 
+    <!-- Image Zoom Modal / Lightbox -->
+    <div id="image-modal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300 select-none">
+        <button onclick="closeImageModal()" class="absolute top-4 right-4 bg-white/20 hover:bg-white/40 text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold transition-all z-10 focus:outline-none cursor-pointer" title="إغلاق (Esc)">
+            ✕
+        </button>
+        <div class="relative max-w-4xl max-h-[90vh] w-full flex items-center justify-center overflow-auto p-2" onclick="event.stopPropagation()">
+            <img id="modal-image" src="" alt="صورة مكبرة" class="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl transition-transform duration-300">
+        </div>
+    </div>
+
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
+        // --- فتح وإغلاق صور المودال بجودة عالية ---
+        function openImageModal(src, alt) {
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-image');
+            if (modal && modalImg) {
+                modalImg.src = src;
+                modalImg.alt = alt || 'صورة مكبرة';
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('image-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('image-modal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeImageModal();
+                    }
+                });
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
+        });
+
         // --- الثوابت والمتغيرات العامة ---
         const scriptUrl = 'https://script.google.com/macros/s/AKfycbx0jdlGbW-rRSTI9B2GTvDDiUgorHOMRS2V_0B2-vWfoZIY6kny4572GjZz5mjCY-Qi/exec';
         let globalOrderId = 'ORD-' + Date.now();
@@ -975,20 +1226,45 @@
             }
         }
 
-        // Swiper Carousel Initialization
+        // Swiper Carousels Initialization with Active vs Inactive Click-to-Zoom logic
         document.addEventListener('DOMContentLoaded', function() {
-            var swiper = new Swiper(".indexSwiper", {
-                effect: "slide",
-                grabCursor: true,
-                centeredSlides: true,
-                slidesPerView: "auto",
-                spaceBetween: -30,
-                initialSlide: 0,
-                pagination: {
-                    el: ".swiper-pagination",
-                    clickable: true,
-                }
-            });
+            function initSwiperWithModal(selector) {
+                return new Swiper(selector, {
+                    effect: "slide",
+                    grabCursor: true,
+                    centeredSlides: true,
+                    slidesPerView: "auto",
+                    spaceBetween: 15,
+                    initialSlide: 0,
+                    pagination: {
+                        el: selector + " .swiper-pagination",
+                        clickable: true,
+                    },
+                    on: {
+                        click: function(swiper, event) {
+                            const clickedSlide = swiper.clickedSlide;
+                            if (!clickedSlide) return;
+
+                            const img = clickedSlide.querySelector('img');
+                            if (!img) return;
+
+                            if (clickedSlide.classList.contains('swiper-slide-active')) {
+                                // Active slide clicked -> Open modal!
+                                openImageModal(img.src, img.alt);
+                            } else {
+                                // Inactive slide clicked -> Make active first!
+                                swiper.slideTo(swiper.clickedIndex);
+                            }
+                        }
+                    }
+                });
+            }
+
+            initSwiperWithModal(".indexSwiper");
+            initSwiperWithModal(".lessonsSwiper");
+            initSwiperWithModal(".proofSwiper");
+            initSwiperWithModal(".testimonialsSwiper");
+            initSwiperWithModal(".loyalSwiper");
         });
 
         // --- 1. تتبع حدث AddToCart (عند الوصول لقسم الشراء أو الضغط على زر الشراء) ---
@@ -998,18 +1274,40 @@
 
         function scrollToCheckout() {
             trackAddToCart();
-            const checkoutForm = document.getElementById('checkout-form') || document.getElementById('user-name') || document.getElementById('buy-section');
-            if (checkoutForm) {
-                const yOffset = -20;
-                const y = checkoutForm.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                window.scrollTo({ top: y, behavior: 'smooth' });
-                
-                const nameInput = document.getElementById('user-name');
-                if (nameInput) {
-                    setTimeout(() => {
-                        nameInput.focus();
-                    }, 350);
+
+            // إرجاع الفورم للخطوة الأولى فوراً إذا كانت الخطوة الثانية هي الظاهرة
+            const step2 = document.getElementById('checkout-step-2');
+            if (step2 && !step2.classList.contains('hidden')) {
+                if (typeof goToStep1 === 'function') {
+                    goToStep1();
                 }
+            }
+
+            const nameInput = document.getElementById('user-name');
+            const targetElement = nameInput || document.getElementById('checkout-form') || document.getElementById('buy-section');
+
+            if (targetElement) {
+                // التوجه المباشر لخانة الاسم من الضغطة الأولى مع إزاحة مناسبة 120px
+                const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = elementPosition - 120;
+
+                window.scrollTo({
+                    top: Math.max(0, offsetPosition),
+                    behavior: 'smooth'
+                });
+            }
+
+            if (nameInput) {
+                // التركيز الفوري لإظهار الكيبورد مباشرة من الضغطة الأولى
+                nameInput.focus();
+                
+                setTimeout(() => {
+                    nameInput.focus();
+                    nameInput.classList.add('ring-4', 'ring-brand-primary/40');
+                    setTimeout(() => {
+                        nameInput.classList.remove('ring-4', 'ring-brand-primary/40');
+                    }, 2000);
+                }, 300);
             }
         }
 
