@@ -924,8 +924,8 @@
                             يرجي ارسال صورة التحويل علي <span class="text-green-600">الواتساب</span> من خلال اللينك الاتي
                         </p>
                         
-                        <a href="https://wa.me/201142079160" id="whatsapp-link" target="_blank" class="text-blue-600 underline text-xl font-bold mb-8 hover:text-blue-800 transition-colors" dir="ltr">
-                            https://wa.me/201142079160
+                        <a href="https://wa.me/201553089928" id="whatsapp-link" target="_blank" class="text-blue-600 underline text-xl font-bold mb-8 hover:text-blue-800 transition-colors" dir="ltr">
+                            https://wa.me/201553089928
                         </a>
                         
                         <p class="text-lg font-medium text-gray-800 mb-8">
@@ -1053,7 +1053,7 @@
                                                 </p>
                                                 <div class="flex flex-wrap items-center justify-between gap-2 bg-emerald-50/80 p-2.5 rounded-lg border border-emerald-200/60">
                                                     <span class="text-xs sm:text-sm font-bold text-emerald-900">رقم واتساب الصفحة للتواصل والاستلام:</span>
-                                                    <span class="text-lg sm:text-xl font-black text-emerald-700 bg-white px-3 py-1 rounded-md border border-emerald-300 tracking-wider" dir="ltr">01142079160</span>
+                                                    <span class="text-lg sm:text-xl font-black text-emerald-700 bg-white px-3 py-1 rounded-md border border-emerald-300 tracking-wider" dir="ltr">01553089928</span>
                                                 </div>
                                                 <p class="text-xs sm:text-sm font-extrabold text-emerald-800 pt-1">
                                                     💡 يفضل أخذ سكرين شوت لرقمنا ع الواتساب احتياطياً:
@@ -1427,6 +1427,11 @@
             setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
         }
 
+        // --- إدارة الرفع الفوري للصورة وشريط الحالة ---
+        let activeUploadId = 0;
+        let uploadState = 'idle'; // 'idle', 'uploading', 'success', 'error'
+        let activeUploadPromise = null;
+
         // Update file name display when a file is selected
         function updateFileName(input) {
             const display = document.getElementById('file-name-display');
@@ -1437,6 +1442,64 @@
                 display.innerText = 'PNG, JPG';
                 display.classList.remove('text-green-600', 'font-bold');
             }
+        }
+
+        function handleImageSelection(input) {
+            updateFileName(input);
+        }
+
+        // دالة تضغط الصورة تلقائياً لسرعة وسلاسة الرفع في الخلفية
+        function compressImage(file) {
+            return new Promise((resolve) => {
+                if (!file || !file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve({
+                        base64Data: reader.result ? reader.result.split(',')[1] : "",
+                        mimeType: file ? file.type : "image/jpeg"
+                    });
+                    reader.onerror = () => resolve(null);
+                    reader.readAsDataURL(file);
+                    return;
+                }
+
+                const img = new Image();
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    img.onload = () => {
+                        let width = img.width;
+                        let height = img.height;
+                        const maxDim = 1200;
+
+                        if (width > maxDim || height > maxDim) {
+                            if (width > height) {
+                                height = Math.round((height * maxDim) / width);
+                                width = maxDim;
+                            } else {
+                                width = Math.round((width * maxDim) / height);
+                                height = maxDim;
+                            }
+                        }
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        const mimeType = 'image/jpeg';
+                        const dataUrl = canvas.toDataURL(mimeType, 0.75);
+                        const base64Data = dataUrl.split(',')[1];
+                        resolve({ base64Data, mimeType });
+                    };
+                    img.onerror = () => {
+                        const base64Data = e.target.result.split(',')[1];
+                        resolve({ base64Data, mimeType: file.type });
+                    };
+                    img.src = e.target.result;
+                };
+                reader.onerror = () => resolve(null);
+                reader.readAsDataURL(file);
+            });
         }
 
         // --- 3. المزامنة المباشرة لجوجل شيت (Live Sync) ---
@@ -1605,7 +1668,7 @@
             }
         });
 
-        // --- 6. تأكيد النموذج ورفع الإيصال في الخطوة 2 وإرسال حدث Purchase ---
+        // --- 6. تأكيد النموذج والتوجيه المباشر للواتساب واستكمال الرفع في الخلفية ---
         document.addEventListener('DOMContentLoaded', function() {
             const checkoutForm = document.getElementById('checkout-form');
             if (!checkoutForm) return;
@@ -1613,7 +1676,6 @@
             checkoutForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                const submitBtn = document.getElementById('submit-btn');
                 const name = document.getElementById('user-name').value.trim();
                 const phone = document.getElementById('whatsapp-number').value.trim();
                 const emailInput = document.getElementById('user-email');
@@ -1632,78 +1694,59 @@
                 // إرسال حدث Purchase فوراً ومباشرة للبيكسل عند ضغط زر تأكيد الطلب
                 firePixelEvent('Purchase');
 
-                // إظهار حالة التحميل
-                if (submitBtn) {
-                    submitBtn.disabled = true;
-                    submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
-                    submitBtn.innerHTML = `
-                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        جاري رفع صورة التحويل...
-                    `;
+                // إظهار شاشة النجاح فوراً في الصفحة
+                document.getElementById('checkout-form').classList.add('hidden');
+                document.getElementById('success-message').classList.remove('hidden');
+
+                // التوجه المباشر لرابط الواتساب فوراً وبدون أي انتظار
+                const whatsappUrl = "https://wa.me/201553089928";
+                try {
+                    const waWin = window.open(whatsappUrl, '_blank');
+                    if (!waWin || waWin.closed || typeof waWin.closed === 'undefined') {
+                        window.location.href = whatsappUrl;
+                    }
+                } catch (err) {
+                    window.location.href = whatsappUrl;
                 }
 
-                const reader = new FileReader();
-                reader.onload = async function() {
-                    const base64String = reader.result.split(',')[1];
-                    const mimeType = file.type;
-
-                    const initiatePayload = {
-                        action: 'initiate',
-                        orderId: globalOrderId,
-                        name: name,
-                        phone: phone,
-                        email: email,
-                        status: "🔵 رفع الإيصال"
-                    };
-
-                    const uploadPayload = {
-                        action: 'upload',
-                        orderId: globalOrderId,
-                        name: name,
-                        email: email,
-                        base64Data: base64String,
-                        mimeType: mimeType,
-                        status: "🔵 رفع الإيصال"
-                    };
-
+                // رفع الصورة في الخلفية مباشرة وفورياً
+                (async function doBackgroundUpload() {
                     try {
-                        await fetch(scriptUrl, {
+                        const compressed = await compressImage(file);
+                        if (!compressed) return;
+
+                        const initiatePayload = {
+                            action: 'initiate',
+                            orderId: globalOrderId,
+                            name: name,
+                            phone: phone,
+                            email: email,
+                            status: "🔵 رفع الإيصال"
+                        };
+
+                        const uploadPayload = {
+                            action: 'upload',
+                            orderId: globalOrderId,
+                            name: name,
+                            email: email,
+                            base64Data: compressed.base64Data,
+                            mimeType: compressed.mimeType,
+                            status: "🔵 رفع الإيصال"
+                        };
+
+                        fetch(scriptUrl, {
                             method: 'POST',
                             body: JSON.stringify(initiatePayload)
-                        });
+                        }).catch(err => console.log('Initiate payload error:', err));
 
-                        await fetch(scriptUrl, {
+                        fetch(scriptUrl, {
                             method: 'POST',
                             body: JSON.stringify(uploadPayload)
-                        });
-
-                        showToast('تم الرفع بنجاح! 🚀');
-                        document.getElementById('checkout-form').classList.add('hidden');
-                        document.getElementById('success-message').classList.remove('hidden');
-                    } catch (error) {
-                        console.error('Error submitting form:', error);
-                        showToast('حدث خطأ في الشبكة أو أثناء الرفع، يرجى المحاولة مرة أخرى.');
-                        if (submitBtn) {
-                            submitBtn.disabled = false;
-                            submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
-                            submitBtn.innerHTML = 'تأكيد الطلب واستلام الكتاب';
-                        }
+                        }).catch(err => console.log('Upload payload error:', err));
+                    } catch (err) {
+                        console.log('Background upload error:', err);
                     }
-                };
-                
-                reader.onerror = function() {
-                    showToast('حدث خطأ في قراءة الصورة من جهازك.');
-                    if (submitBtn) {
-                        submitBtn.disabled = false;
-                        submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
-                        submitBtn.innerHTML = 'تأكيد الطلب واستلام الكتاب';
-                    }
-                };
-                
-                reader.readAsDataURL(file);
+                })();
             });
         });
     </script>
