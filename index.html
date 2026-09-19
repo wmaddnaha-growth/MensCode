@@ -915,31 +915,57 @@
                 
                 <div class="p-8">
                     <!-- Success Message (Hidden by default) -->
-                    <div id="success-message" class="hidden h-full flex flex-col items-center justify-center text-center animate-fade-in py-10 bg-white rounded-2xl">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-6">🎉 شكرًا من قلب "و مددناها"!</h2>
+                    <div id="success-message" class="hidden h-full flex flex-col items-center justify-center text-center animate-fade-in py-6 px-2 bg-white rounded-2xl">
                         
-                        <h3 class="text-xl font-bold text-pink-500 mb-8">💕 طلبك الجميل وصلنا،</h3>
-                        
-                        <p class="text-lg font-bold text-gray-800 mb-4">
-                            يرجي ارسال صورة التحويل علي <span class="text-green-600">الواتساب</span> من خلال اللينك الاتي
+                        <!-- Header Icon -->
+                        <div class="w-16 h-16 bg-emerald-100/70 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 shadow-xs border border-emerald-200/60">
+                            🎉
+                        </div>
+
+                        <!-- Title & Subtitle -->
+                        <h2 class="text-2xl md:text-3xl font-black text-gray-900 mb-2 flex items-center justify-center gap-1.5 flex-wrap">
+                            <span>شكراً لك! تم استلام طلبك بنجاح</span>
+                            <span class="text-pink-500">💕</span>
+                        </h2>
+                        <p class="text-gray-600 font-medium text-sm md:text-base mb-6">
+                            تم تسجيل بياناتك وإرفاق إيصال التحويل للمراجعة.
                         </p>
-                        
-                        <a href="https://wa.me/201553089928" id="whatsapp-link" target="_blank" class="text-blue-600 underline text-xl font-bold mb-8 hover:text-blue-800 transition-colors" dir="ltr">
-                            https://wa.me/201553089928
-                        </a>
-                        
-                        <p class="text-lg font-medium text-gray-800 mb-8">
-                            و سيتم ارسال الكتاب لحضرتك <span class="font-bold">فورا</span> عند مشاهدة الرسالة
-                        </p>
-                        
-                        <p class="text-lg font-medium text-gray-800 mb-8">
-                            هتلاقي الكتاب ان شاء الله في <span class="text-red-600 font-bold">الايميل</span> عند حضرتك في المبيعات ان شاء الله
-                        </p>
-                        
-                        <p class="text-base font-bold text-gray-900 mt-4 leading-loose border-t border-gray-200 pt-6">
-                            🚚 <span class="text-purple-600">وقت التوصيل:</span> الكتاب بيوصل لحضرتك بشكل تلقائي فورا علي الايميل<br>
-                            و بيوصل علي <span class="text-green-600">الواتساب</span> في خلال 24 ساعة بحد اقصي بإذن الله
-                        </p>
+
+                        <!-- Fast Option Box (Main Action) -->
+                        <div class="w-full bg-emerald-50/40 border-2 border-emerald-300/80 rounded-2xl p-6 md:p-8 text-center space-y-4 shadow-xs mb-6">
+                            <div class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-emerald-200/70 text-emerald-950 font-black text-xs md:text-sm">
+                                ⚡ خيار الاستلام الفوري السريع
+                            </div>
+                            
+                            <p class="text-gray-800 font-bold text-sm md:text-base leading-relaxed max-w-md mx-auto">
+                                لو حابب تستلم المانيوال والكتب <span class="text-emerald-700 font-black">فوراً دلوقتي</span>، اضغط على زرار الواتساب وابعث صورة الإيصال هناك:
+                            </p>
+
+                            <!-- Big Green WhatsApp Button -->
+                            <a href="https://wa.me/201553089928?text=%D8%A3%D8%B1%D9%8A%D8%AF%20%D9%83%D8%AA%D8%A7%D8%A8%20%D8%B4%D9%81%D8%B1%D8%A9%20%D8%A7%D9%84%D8%B1%D8%AC%D8%A7%D9%84%D8%A9%20%D9%88%20%D8%A7%D9%84%D9%87%D8%AF%D8%A7%D9%8A%D8%A7%20%D9%88%20%D8%B3%D8%A3%D9%82%D9%88%D9%85%20%D8%A8%D8%A7%D8%B1%D8%B3%D8%A7%D9%84%20%D8%B5%D9%88%D8%B1%D8%A9%20%D8%A7%D9%84%D8%AA%D8%AD%D9%88%D9%8A%D9%84" id="whatsapp-link" target="_blank" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-black text-base md:text-lg py-4 px-6 rounded-2xl shadow-md transition-all flex items-center justify-center gap-2 group">
+                                <svg class="w-6 h-6 shrink-0 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20.317 4.37A11.83 11.83 0 0 0 12.046 1C5.503 1 .18 6.324.18 12.868c0 2.09.544 4.133 1.579 5.928L.05 23l4.354-1.141a11.815 11.815 0 0 0 5.642 1.438h.005c6.54 0 11.866-5.324 11.866-11.868 0-3.17-1.233-6.15-3.6-8.519zm-8.271 16.924h-.004a9.827 9.827 0 0 1-5.006-1.373l-.358-.214-2.585.678.69-2.522-.234-.373a9.837 9.837 0 0 1-1.507-5.121c0-5.433 4.42-9.852 9.858-9.852 2.632 0 5.106 1.026 6.966 2.888 1.86 1.862 2.883 4.336 2.882 6.97 0 5.435-4.42 9.855-9.856 9.855z"/>
+                                </svg>
+                                <span>اضغط هنا لإرسال الإيصال على الواتساب واستلام الكتب فوراً</span>
+                            </a>
+
+                            <!-- Plain Link Below Button -->
+                            <a href="https://wa.me/201553089928?text=%D8%A3%D8%B1%D9%8A%D8%AF%20%D9%83%D8%AA%D8%A7%D8%A8%20%D8%B4%D9%81%D8%B1%D8%A9%20%D8%A7%D9%84%D8%B1%D8%AC%D8%A7%D9%84%D8%A9%20%D9%88%20%D8%A7%D9%84%D9%87%D8%AF%D8%A7%D9%8A%D8%A7%20%D9%88%20%D8%B3%D8%A3%D9%82%D9%88%D9%85%20%D8%A8%D8%A7%D8%B1%D8%B3%D8%A7%D9%84%20%D8%B5%D9%88%D8%B1%D8%A9%20%D8%A7%D9%84%D8%AA%D8%AD%D9%88%D9%8A%D9%84" target="_blank" class="inline-block text-emerald-800 font-bold text-sm md:text-base underline hover:text-emerald-950 transition-colors mt-2 dir-ltr">
+                                https://wa.me/201553089928
+                            </a>
+                        </div>
+
+                        <!-- Email Fallback Box -->
+                        <div class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 md:p-6 text-right shadow-xs">
+                            <h4 class="font-bold text-sm md:text-base text-gray-900 flex items-center gap-2 mb-2">
+                                <span>📧</span>
+                                <span>في حالة عدم التواصل على الواتساب:</span>
+                            </h4>
+                            <p class="text-xs md:text-sm text-gray-600 leading-relaxed font-medium">
+                                لا تقلق! في حالة عدم إرسال الإيصال على الواتساب، سيتم مراجعة الطلب وإرسال جميع الكتب والمانيوال تلقائياً على <span class="text-red-600 font-bold">الإيميل فقط</span> الذي قمت بتسجيله.
+                            </p>
+                        </div>
+
                     </div>
 
                     <!-- The Form (2-Step Process) -->
@@ -1073,7 +1099,7 @@
                                             <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">اضغطي هنا لرفع الصورة</span></p>
                                             <p class="text-xs text-gray-500" id="file-name-display">PNG, JPG</p>
                                         </div>
-                                        <input id="receipt-upload" type="file" accept="image/*" class="hidden" onchange="updateFileName(this)" />
+                                        <input id="receipt-upload" type="file" accept="image/*" class="hidden" onchange="handleImageSelection(this)" />
                                     </label>
                                 </div>
                             </div>
@@ -1169,6 +1195,7 @@
         let addToCartTracked = false;
         let lastSyncedData = "";
         let liveSyncTimeout = null;
+        let isWhatsAppClicked = false;
 
         // تحديث بيانات المستخدم في البيكسل لتحسين المطابقة (Advanced Matching)
         function updatePixelUserData(email, phone) {
@@ -1381,16 +1408,6 @@
             // إرسال حدث CopyPaymentMethod للبيكسل فوراً
             firePixelEvent('CopyPaymentMethod', true);
 
-            // إرسال حدث Purchase للبيكسل فوراً عند نسخ رقم المحفظة
-            const emailInput = document.getElementById('user-email');
-            const phoneInput = document.getElementById('whatsapp-number');
-            const email = emailInput ? emailInput.value.trim() : "";
-            const phone = phoneInput ? phoneInput.value.trim() : "";
-            if (email || phone) {
-                updatePixelUserData(email, phone);
-            }
-            firePixelEvent('Purchase');
-
             // تحديث الحالة في الجوجل شيت إلى "نسخ رقم الدفع"
             const copyStatusPayload = {
                 action: 'updateStatus',
@@ -1411,7 +1428,7 @@
             const deliveredPayload = {
                 action: 'updateStatus',
                 orderId: globalOrderId,
-                status: "🟢 تواصل واتساب (استلام قبل الدفع)"
+                status: "🟢 تم التسليم"
             };
             fetch(scriptUrl, {
                 method: 'POST',
@@ -1427,12 +1444,11 @@
             setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
         }
 
-        // --- إدارة الرفع الفوري للصورة وشريط الحالة ---
+        // --- إدارة الرفع الفوري للصورة عند الاختيار وتحديث البيانات ---
         let activeUploadId = 0;
-        let uploadState = 'idle'; // 'idle', 'uploading', 'success', 'error'
-        let activeUploadPromise = null;
+        let currentUploadPromise = null;
+        let isReceiptUploaded = false;
 
-        // Update file name display when a file is selected
         function updateFileName(input) {
             const display = document.getElementById('file-name-display');
             if (input.files && input.files[0]) {
@@ -1446,6 +1462,84 @@
 
         function handleImageSelection(input) {
             updateFileName(input);
+
+            const file = input.files && input.files[0];
+            if (!file) return;
+
+            // البدء الفوري لرفع الصورة بمجرد اختيارها من الجهاز
+            startInstantImageUpload(file);
+        }
+
+        // دالة موثوقة لإرسال البيانات عبر fetch (بدون keepalive عند الكتل الكبيرة لتجنب قيد 64KB بالمتصفح)
+        function sendPayload(payload) {
+            const payloadStr = JSON.stringify(payload);
+            const isLarge = payloadStr.length > 50000;
+            const options = {
+                method: 'POST',
+                body: payloadStr,
+                headers: { 'Content-Type': 'text/plain;charset=UTF-8' }
+            };
+            if (!isLarge) {
+                options.keepalive = true;
+            }
+            try {
+                return fetch(scriptUrl, options).catch(err => console.log('Payload fetch error:', err));
+            } catch (e) {
+                console.log('Send payload error:', e);
+            }
+        }
+
+        function startInstantImageUpload(file) {
+            const uploadId = ++activeUploadId;
+            isReceiptUploaded = false;
+
+            const display = document.getElementById('file-name-display');
+            if (display) {
+                display.innerText = '⏳ جاري رفع الإيصال ورابطه للشيت...';
+                display.className = 'text-xs font-bold text-amber-600 animate-pulse';
+            }
+
+            currentUploadPromise = (async function() {
+                try {
+                    const compressed = await compressImage(file);
+                    if (!compressed || activeUploadId !== uploadId) return false;
+
+                    const name = document.getElementById('user-name')?.value.trim() || "عميلة محتملة";
+                    const phone = document.getElementById('whatsapp-number')?.value.trim() || "";
+                    const email = document.getElementById('user-email')?.value.trim() || "";
+
+                    // عدم إرسال حقل status في حمولة رفع الصورة لمنع تغيير أو إعادة حالة الشيت من "تم التسليم" إلى "رفع الإيصال"
+                    const uploadPayload = {
+                        action: 'upload',
+                        orderId: globalOrderId,
+                        name: name,
+                        phone: phone,
+                        email: email,
+                        base64Data: compressed.base64Data,
+                        mimeType: compressed.mimeType
+                    };
+
+                    // إرسال حمولة الصورة فوراً وفي الخلفية لرفعها على الجوجل درايف وتدوين رابطها في الشيت
+                    await sendPayload(uploadPayload);
+                    if (activeUploadId === uploadId) {
+                        isReceiptUploaded = true;
+                        if (display) {
+                            display.innerText = '✅ تم رفع الإيصال وتسجيل الرابط بالشيت!';
+                            display.className = 'text-xs font-bold text-green-600';
+                        }
+                    }
+                    return true;
+                } catch (err) {
+                    console.log('Instant upload error:', err);
+                    if (display && activeUploadId === uploadId) {
+                        display.innerText = '⚠️ حدث خطأ في رفع الإيصال، سيتم إعادة المحاولة';
+                        display.className = 'text-xs font-bold text-red-500';
+                    }
+                    return false;
+                }
+            })();
+
+            return currentUploadPromise;
         }
 
         // دالة تضغط الصورة تلقائياً لسرعة وسلاسة الرفع في الخلفية
@@ -1530,13 +1624,7 @@
                     status: "📝 تسجيل الرقم"
                 };
                 
-                fetch(scriptUrl, {
-                    method: 'POST',
-                    body: JSON.stringify(initiatePayload)
-                }).catch(err => {
-                    console.log('Live sync error:', err);
-                    lastSyncedData = "";
-                });
+                sendPayload(initiatePayload);
             }
         }
 
@@ -1621,10 +1709,7 @@
                 email: email,
                 status: "🟡 بدأت الدفع"
             };
-            fetch(scriptUrl, {
-                method: 'POST',
-                body: JSON.stringify(step2StatusPayload)
-            }).catch(err => console.log('Status update error:', err));
+            sendPayload(step2StatusPayload);
         }
 
         function goToStep1() {
@@ -1647,33 +1732,49 @@
             }
         }
 
-        // --- 5. حدث WhatsApp وتحديث الحالة إلى "🟢 تم التسليم" ---
+        // --- 5. حدث الضغط على زر الواتساب في رسالة الشكر وإرسال حدث Purchase ---
         document.addEventListener('DOMContentLoaded', function() {
-            const waLink = document.getElementById('whatsapp-link');
-            if (waLink) {
-                waLink.addEventListener('click', function() {
-                    firePixelEvent('WhatsApp', true);
-                    firePixelEvent('Contact');
+            const successMsg = document.getElementById('success-message');
+            if (!successMsg) return;
 
-                    const deliveredPayload = {
-                        action: 'updateStatus',
-                        orderId: globalOrderId,
-                        status: "🟢 تم التسليم "
-                    };
-                    fetch(scriptUrl, {
-                        method: 'POST',
-                        body: JSON.stringify(deliveredPayload)
-                    }).catch(err => console.log('Delivered status update error:', err));
-                });
-            }
+            successMsg.addEventListener('click', function(e) {
+                const link = e.target.closest('a[href*="wa.me"]');
+                if (!link) return;
+
+                isWhatsAppClicked = true;
+
+                const emailInput = document.getElementById('user-email');
+                const phoneInput = document.getElementById('whatsapp-number');
+                const email = emailInput ? emailInput.value.trim() : "";
+                const phone = phoneInput ? phoneInput.value.trim() : "";
+
+                if (email || phone) {
+                    updatePixelUserData(email, phone);
+                }
+
+                // إرسال حدث Purchase للبيكسل عند الضغط على زر الواتساب في شاشة الشكر
+                firePixelEvent('Purchase');
+                firePixelEvent('WhatsApp', true);
+                firePixelEvent('Contact');
+
+                const deliveredPayload = {
+                    action: 'updateStatus',
+                    orderId: globalOrderId,
+                    name: document.getElementById('user-name')?.value.trim() || "",
+                    phone: phone,
+                    email: email,
+                    status: "🟢 تم التسليم"
+                };
+                sendPayload(deliveredPayload);
+            });
         });
 
-        // --- 6. تأكيد النموذج والتوجيه المباشر للواتساب واستكمال الرفع في الخلفية ---
+        // --- 6. تأكيد النموذج والإنتقال لشاشة الشكر ---
         document.addEventListener('DOMContentLoaded', function() {
             const checkoutForm = document.getElementById('checkout-form');
             if (!checkoutForm) return;
 
-            checkoutForm.addEventListener('submit', function(e) {
+            checkoutForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
                 const name = document.getElementById('user-name').value.trim();
@@ -1691,62 +1792,48 @@
                 // تحديث بيانات Advanced Matching في البيكسل
                 updatePixelUserData(email, phone);
 
-                // إرسال حدث Purchase فوراً ومباشرة للبيكسل عند ضغط زر تأكيد الطلب
-                firePixelEvent('Purchase');
-
-                // إظهار شاشة النجاح فوراً في الصفحة
-                document.getElementById('checkout-form').classList.add('hidden');
-                document.getElementById('success-message').classList.remove('hidden');
-
-                // التوجه المباشر لرابط الواتساب فوراً وبدون أي انتظار
-                const whatsappUrl = "https://wa.me/201553089928";
-                try {
-                    const waWin = window.open(whatsappUrl, '_blank');
-                    if (!waWin || waWin.closed || typeof waWin.closed === 'undefined') {
-                        window.location.href = whatsappUrl;
-                    }
-                } catch (err) {
-                    window.location.href = whatsappUrl;
+                // التأكد من بدء رفع صورة الإيصال إن لم تكن قد بدأت بالفعل
+                if (file && !currentUploadPromise) {
+                    startInstantImageUpload(file);
                 }
 
-                // رفع الصورة في الخلفية مباشرة وفورياً
-                (async function doBackgroundUpload() {
-                    try {
-                        const compressed = await compressImage(file);
-                        if (!compressed) return;
+                const submitBtn = document.getElementById('submit-btn');
+                const originalBtnContent = submitBtn ? submitBtn.innerHTML : '';
+                if (submitBtn && !isReceiptUploaded) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = 'جاري حفظ الإيصال بالشيت... ⏳';
+                }
 
-                        const initiatePayload = {
-                            action: 'initiate',
-                            orderId: globalOrderId,
-                            name: name,
-                            phone: phone,
-                            email: email,
-                            status: "🔵 رفع الإيصال"
-                        };
+                // الانتظار لحين اكتمال الرفع في الخلفية إن لم يكن قد اكتمل بعد
+                if (currentUploadPromise && !isReceiptUploaded) {
+                    await currentUploadPromise;
+                }
 
-                        const uploadPayload = {
-                            action: 'upload',
-                            orderId: globalOrderId,
-                            name: name,
-                            email: email,
-                            base64Data: compressed.base64Data,
-                            mimeType: compressed.mimeType,
-                            status: "🔵 رفع الإيصال"
-                        };
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnContent;
+                }
 
-                        fetch(scriptUrl, {
-                            method: 'POST',
-                            body: JSON.stringify(initiatePayload)
-                        }).catch(err => console.log('Initiate payload error:', err));
+                // إرسال حالة "رفع الإيصال" إذا لم يضغط المستخدِم على الواتساب بعد
+                if (!isWhatsAppClicked) {
+                    const submitStatusPayload = {
+                        action: 'updateStatus',
+                        orderId: globalOrderId,
+                        name: name,
+                        phone: phone,
+                        email: email,
+                        status: "🔵 رفع الإيصال"
+                    };
+                    sendPayload(submitStatusPayload);
+                }
 
-                        fetch(scriptUrl, {
-                            method: 'POST',
-                            body: JSON.stringify(uploadPayload)
-                        }).catch(err => console.log('Upload payload error:', err));
-                    } catch (err) {
-                        console.log('Background upload error:', err);
-                    }
-                })();
+                // إظهار شاشة رسالة الشكر فوراً في الصفحة
+                document.getElementById('checkout-form').classList.add('hidden');
+                const successMsg = document.getElementById('success-message');
+                if (successMsg) {
+                    successMsg.classList.remove('hidden');
+                    successMsg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             });
         });
     </script>
