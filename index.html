@@ -312,7 +312,8 @@
                         </li>
                     </ul>
                     
-                    <!-- Decision Block (Price + CTA) -->
+                    <!-- Decision Block (
+ + CTA) -->
                     <div class="mt-10">
                         <div class="mb-5 flex justify-center lg:justify-start items-center gap-4">
                             <span class="text-4xl font-black text-brand-primary">310 ج.م</span>
@@ -1191,6 +1192,7 @@
 
         // --- الثوابت والمتغيرات العامة ---
         const scriptUrl = 'https://script.google.com/macros/s/AKfycbx0jdlGbW-rRSTI9B2GTvDDiUgorHOMRS2V_0B2-vWfoZIY6kny4572GjZz5mjCY-Qi/exec';
+        const productPrice = "310";
         let globalOrderId = 'ORD-' + Date.now();
         let addToCartTracked = false;
         let lastSyncedData = "";
@@ -1629,6 +1631,7 @@
                     name: name || "عميلة محتملة",
                     phone: phone,
                     email: email || "",
+                    price: productPrice,
                     status: "📝 تسجيل الرقم"
                 };
                 
