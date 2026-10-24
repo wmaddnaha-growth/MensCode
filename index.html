@@ -233,8 +233,9 @@
 </head>
 <body class="antialiased selection:bg-brand-primary selection:text-white pb-20 md:pb-0">
 
-    <div class="bg-red-900 text-white text-center py-2 px-4 text-sm md:text-base font-semibold tracking-wide shadow-md relative z-20">
-        🚨 تنبيه مهم: المحتوى ده جريء جداً ومخصص للمتزوجات فقط.
+    <div class="bg-gradient-to-r from-emerald-800 via-teal-900 to-emerald-800 text-white text-center py-2.5 px-4 text-xs md:text-sm font-bold tracking-wide shadow-md relative z-20 flex items-center justify-center gap-2">
+        <span class="text-base">🔒</span>
+        <span>خصوصية وسرية تامة 100%: استلام فوري وآمن على الواتساب والإيميل بدون أي إحراج.</span>
     </div>
 
     <header class="relative pt-12 pb-20 overflow-hidden bg-gradient-to-b from-white to-pink-50">
@@ -247,9 +248,20 @@
                 
                 <!-- 1. Tag & Title Block (Top on Mobile, Top Right on Desktop) -->
                 <div class="w-full text-center lg:text-right order-1 lg:order-1 lg:col-start-1 lg:row-start-1">
-                    <span class="inline-block py-1 px-4 rounded-full bg-pink-100 text-brand-primary border border-pink-200 text-sm font-bold mb-4">
-                        كتاب شفرة الرجالة 📖
-                    </span>
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-3.5">
+                        <span class="inline-block py-1 px-3.5 rounded-full bg-pink-100 text-brand-primary border border-pink-200 text-xs md:text-sm font-bold">
+                            كتاب شفرة الرجالة 📖
+                        </span>
+                        <span class="inline-block py-1 px-3 rounded-full bg-rose-50 text-rose-700 border border-rose-200 text-xs md:text-sm font-black">
+                            📦 المجموعة كاملة (الكتاب + 4 هدايا)
+                        </span>
+                        <!-- Social Proof Badge Above-the-Fold (Always visible on mobile & desktop) -->
+                        <div class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full bg-amber-50 text-amber-900 border border-amber-200 text-xs md:text-sm font-extrabold shadow-2xs">
+                            <span class="text-amber-500 text-xs sm:text-sm">⭐⭐⭐⭐⭐</span>
+                            <span class="font-black text-amber-950">4.9/5</span>
+                            <span class="text-amber-900 font-bold text-[11px] sm:text-xs md:text-sm whitespace-nowrap">(أكثر من 1,450+ زوجة اشترت وطبّقت)</span>
+                        </div>
+                    </div>
                     
                     <h1 class="text-3xl md:text-5xl lg:text-6xl font-black mb-2 lg:mb-4 leading-tight text-gray-900">
                         استمتعوا بجد .. من غير وجع ولا تمثيل!
@@ -259,16 +271,37 @@
                 <!-- 2. Hero Image Area (Middle on Mobile, Left Column on Desktop) -->
                 <div class="w-full flex flex-col items-center justify-center my-4 lg:my-0 order-2 lg:order-2 lg:col-start-2 lg:row-start-1 lg:row-span-2 relative">
                     
-                    <!-- Book Cover & Married Only Badge -->
+                    <!-- Bundle Mockup Container -->
                     <div class="animate-float relative w-64 md:w-72">
-                        <img src="images/book-cover.jpg" alt="غلاف كتاب شفرة الرجالة" class="w-full h-auto rounded-lg shadow-2xl cursor-pointer hover:scale-102 transition-transform" onclick="openImageModal(this.src, this.alt)" onerror="this.src='https://placehold.co/400x600/4a0e17/ffffff?text=كتاب+شفرة+الرجالة'">
-                        
-                        <!-- Married Only Badge at bottom of book image -->
-                        <div class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 z-20">
-                            <span class="bg-red-600 text-white font-black text-sm md:text-base px-4 py-1.5 rounded-full border-2 border-white shadow-lg animate-pulse flex items-center gap-1.5 whitespace-nowrap">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                                للمتزوجات فقط
+                        <!-- Top Floating Bundle Badge -->
+                        <div class="absolute -top-3.5 right-1/2 transform translate-x-1/2 md:translate-x-0 md:right-[-10px] z-30 whitespace-nowrap">
+                            <span class="bg-gradient-to-r from-amber-500 to-amber-600 text-white font-black text-xs md:text-sm px-3.5 py-1.5 rounded-full border-2 border-white shadow-md flex items-center gap-1.5">
+                                <span>📦</span>
+                                <span>الباقة الشاملة (الكتاب + 4 هدايا)</span>
                             </span>
+                        </div>
+
+                        <!-- Stacked Bundle Guide 1 (Tilted Left) -->
+                        <div class="absolute -inset-2.5 bg-gradient-to-br from-pink-600 to-brand-primary rounded-xl transform -rotate-6 scale-95 opacity-85 shadow-lg flex items-start justify-start p-2">
+                            <span class="text-[10px] text-white/90 font-bold bg-black/20 px-1.5 py-0.5 rounded">🎁 هدية 1</span>
+                        </div>
+
+                        <!-- Stacked Bundle Guide 2 (Tilted Right) -->
+                        <div class="absolute -inset-1.5 bg-gradient-to-bl from-amber-600 to-amber-700 rounded-xl transform rotate-4 scale-95 opacity-80 shadow-md flex items-start justify-end p-2">
+                            <span class="text-[10px] text-white/90 font-bold bg-black/20 px-1.5 py-0.5 rounded">🔥 هدية 2</span>
+                        </div>
+
+                        <!-- Main Book Cover -->
+                        <div class="relative z-10">
+                            <img src="images/book-cover.jpg" alt="غلاف كتاب شفرة الرجالة - الباقة الكاملة" class="w-full h-auto rounded-lg shadow-2xl cursor-pointer hover:scale-102 transition-transform" onclick="openImageModal(this.src, this.alt)" onerror="this.src='https://placehold.co/400x600/4a0e17/ffffff?text=كتاب+شفرة+الرجالة'">
+                            
+                            <!-- Married Only Badge at bottom of book image -->
+                            <div class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 z-20">
+                                <span class="bg-red-600 text-white font-black text-sm md:text-base px-4 py-1.5 rounded-full border-2 border-white shadow-lg animate-pulse flex items-center gap-1.5 whitespace-nowrap">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                    للمتزوجات فقط
+                                </span>
+                            </div>
                         </div>
 
                         <!-- Book Shadow Effect -->
@@ -315,15 +348,34 @@
                     <!-- Decision Block (
  + CTA) -->
                     <div class="mt-10">
-                        <div class="mb-5 flex justify-center lg:justify-start items-center gap-4">
-                            <span class="text-4xl font-black text-brand-primary">190 ج.م</span>
-                            <span class="text-xl text-gray-400 line-through font-bold">1197 ج.م</span>
-                            <span class="bg-green-100 text-green-700 text-sm font-bold px-3 py-1 rounded-full border border-green-200">لفترة محدودة</span>
+                        <div class="mb-5 flex flex-col items-center lg:items-start gap-3">
+                            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3.5">
+                                <span class="text-4xl md:text-5xl font-black text-brand-primary">295 ج.م</span>
+                                <div class="flex flex-col text-right">
+                                    <span class="text-[11px] text-gray-400 font-bold leading-none mb-0.5">كان بسعر</span>
+                                    <span class="text-xl text-gray-400 line-through font-bold">235 ج.م</span>
+                                </div>
+                                <span class="bg-gradient-to-r from-red-600 to-rose-600 text-white text-xs md:text-sm font-black px-3.5 py-1.5 rounded-full shadow-md animate-pulse">
+                                    🔥 هيرتفع لـ 385 ج.م قريباً!
+                                </span>
+                            </div>
+                            
+                            <!-- Stepped Pricing Indicator / Urgency Note -->
+                            <div class="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-950 text-xs md:text-sm font-bold px-3.5 py-1.5 rounded-xl shadow-2xs">
+                                <span>⏳ تنبيه السعر:</span>
+                                <span>كان السعر <span class="line-through text-gray-500 font-extrabold">235 ج.م</span>، وأصبح حالياً <span class="text-brand-primary font-black">295 ج.م</span>، وسيرتفع إلى <span class="text-red-700 font-black">385 ج.م</span> للدفعة القادمة.</span>
+                            </div>
+
+                            <!-- Package Clarity Note -->
+                            <div class="inline-flex items-center gap-1.5 text-xs md:text-sm text-emerald-900 font-extrabold bg-emerald-50 px-3.5 py-1.5 rounded-xl border border-emerald-200 shadow-2xs">
+                                <span>📦</span>
+                                <span>السعر يشمل <span class="text-emerald-800 font-black underline">المجموعة كاملة</span>: كتاب شفرة الرجالة + 4 كتيبات هدايا مجاناً.</span>
+                            </div>
                         </div>
 
                         <div class="flex justify-center lg:justify-start">
                             <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
-                                اطلبي نسختك دلوقتي
+                                اطلبي المجموعة كاملة دلوقتي
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                             </button>
                         </div>
@@ -408,7 +460,7 @@
             <!-- CTA Button after Index -->
             <div class="mt-10 flex justify-center">
                 <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
-                    اطلبي نسختك دلوقتي
+                    اطلبي المجموعة كاملة دلوقتي
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                 </button>
             </div>
@@ -464,7 +516,7 @@
             <!-- CTA Button after Lessons -->
             <div class="mt-8 flex justify-center">
                 <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
-                    اطلبي نسختك دلوقتي
+                    اطلبي المجموعة كاملة دلوقتي
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                 </button>
             </div>
@@ -562,7 +614,7 @@
             <!-- CTA Button after Proof -->
             <div class="mt-8 flex justify-center">
                 <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
-                    اطلبي نسختك دلوقتي
+                    اطلبي المجموعة كاملة دلوقتي
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                 </button>
             </div>
@@ -645,7 +697,7 @@
             <!-- CTA Button after Features -->
             <div class="mt-10 flex justify-center">
                 <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
-                    اطلبي نسختك دلوقتي
+                    اطلبي المجموعة كاملة دلوقتي
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                 </button>
             </div>
@@ -754,7 +806,7 @@
             <!-- CTA Button after Testimonials -->
             <div class="mt-8 flex justify-center">
                 <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
-                    اطلبي نسختك دلوقتي
+                    اطلبي المجموعة كاملة دلوقتي
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                 </button>
             </div>
@@ -831,7 +883,7 @@
                 </p>
                 <div class="flex justify-center">
                     <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
-                        اطلبي نسختك دلوقتي
+                        اطلبي المجموعة كاملة دلوقتي
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                     </button>
                 </div>
@@ -896,7 +948,7 @@
             <!-- CTA Button after Loyal Customers -->
             <div class="mt-8 flex justify-center">
                 <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
-                    اطلبي نسختك دلوقتي
+                    اطلبي المجموعة كاملة دلوقتي
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                 </button>
             </div>
@@ -908,8 +960,98 @@
         <div class="container mx-auto px-4 max-w-4xl">
             
             <div class="text-center mb-10">
-                <h2 class="text-3xl font-black mb-4 text-gray-900">⚡ احصلي على نسختك الآن بسعر <span class="text-brand-primary">190 ج.م</span> فقط</h2>
-                <p class="text-gray-600">أدخلي بياناتك لطلب الكتاب واستلامه فوراً</p>
+                <h2 class="text-2xl md:text-3xl font-black mb-2 text-gray-900">⚡ احصلي على المجموعة الكاملة الآن بسعر <span class="text-brand-primary">295 ج.م</span> فقط</h2>
+                <p class="text-gray-800 font-extrabold text-sm md:text-base">السعر يشمل <span class="text-brand-primary underline">المجموعة كاملة</span>: كتاب شفرة الرجالة + الـ 4 كتيبات هدايا مجاناً</p>
+                <p class="text-gray-500 font-medium text-xs md:text-sm mt-1">السعر كان <span class="line-through text-gray-400 font-bold">235 ج.م</span> وأصبح <span class="text-brand-primary font-bold">295 ج.م</span> وسيرتفع إلى <span class="text-red-600 font-bold">385 ج.م</span> قريباً — أدخلي بياناتك لاستلام الباقة فوراً</p>
+            </div>
+
+            <!-- Price Anchoring / Value Summary Box -->
+            <div class="max-w-2xl mx-auto mb-8 bg-gradient-to-b from-white to-pink-50/50 rounded-3xl p-6 md:p-8 border-2 border-brand-primary/20 shadow-lg text-right relative overflow-hidden">
+                <!-- Top Ribbon -->
+                <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-200 text-xs md:text-sm font-extrabold mb-4">
+                    <span>💎</span>
+                    <span>ملخص الباقة الكاملة وقيمة التوفير اليوم</span>
+                </div>
+
+                <h3 class="text-xl md:text-2xl font-black text-gray-900 mb-4">
+                    إيه اللي هتحصلي عليه فوراً بمجرد الشراء؟
+                </h3>
+
+                <!-- Items Breakdown -->
+                <div class="space-y-3 border-b border-gray-200 pb-5 mb-5 text-sm md:text-base">
+                    <div class="flex items-center justify-between font-bold text-gray-800">
+                        <span class="flex items-center gap-2">
+                            <span>📘</span>
+                            <span>كتاب شفرة الرجالة الأساسي</span>
+                        </span>
+                        <span class="text-gray-600 font-extrabold">300 ج.م</span>
+                    </div>
+
+                    <div class="flex items-center justify-between font-bold text-gray-800">
+                        <span class="flex items-center gap-2">
+                            <span>🎁</span>
+                            <span>هدية 1: دليل زوايا الحوض (علاقة بدون ألم)</span>
+                        </span>
+                        <span class="text-gray-600 font-extrabold">150 ج.م</span>
+                    </div>
+
+                    <div class="flex items-center justify-between font-bold text-gray-800">
+                        <span class="flex items-center gap-2">
+                            <span>🔥</span>
+                            <span>هدية 2: كتيب وداعاً لتمثيل الرعشة (النشوة المزدوجة)</span>
+                        </span>
+                        <span class="text-gray-600 font-extrabold">250 ج.م</span>
+                    </div>
+
+                    <div class="flex items-center justify-between font-bold text-gray-800">
+                        <span class="flex items-center gap-2">
+                            <span>⏱️</span>
+                            <span>هدية 3: كتالوج الفرملة اللذيذة (علاج سرعة القذف)</span>
+                        </span>
+                        <span class="text-gray-600 font-extrabold">300 ج.م</span>
+                    </div>
+
+                    <div class="flex items-center justify-between font-bold text-gray-800">
+                        <span class="flex items-center gap-2">
+                            <span>🗺️</span>
+                            <span>هدية 4: خريطة أوضاع الابتكار</span>
+                        </span>
+                        <span class="text-gray-600 font-extrabold">200 ج.م</span>
+                    </div>
+                </div>
+
+                <!-- Total & Discount Calculation -->
+                <div class="space-y-2 mb-4">
+                    <div class="flex items-center justify-between text-gray-500 font-bold text-sm md:text-base">
+                        <span>القيمة الإجمالية للباقة:</span>
+                        <span class="line-through text-lg font-black text-gray-400">1200 ج.م</span>
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 bg-gradient-to-r from-pink-100 to-rose-100 rounded-2xl border border-pink-200">
+                        <div>
+                            <span class="block text-xs md:text-sm text-gray-600 font-bold">سعر العرض الشامل اليوم:</span>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-3xl md:text-4xl font-black text-brand-primary">295 ج.م فقط</span>
+                                <span class="text-sm text-gray-400 line-through font-bold">235 ج.م</span>
+                            </div>
+                        </div>
+                        <div class="text-left">
+                            <span class="inline-block bg-brand-primary text-white text-xs md:text-sm font-black px-3.5 py-1.5 rounded-full shadow-xs">
+                                وفّرتِ 905 ج.م (خصم 75%) 🔥
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Alert Box -->
+                <div class="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-xl text-center text-xs md:text-sm font-bold text-amber-950 flex items-center justify-center gap-2">
+                    <span>⏳</span>
+                    <span>تنبيه زيادة السعر: كان السعر <span class="line-through text-gray-500 font-extrabold">235 ج.م</span>، السعر الحالي <span class="text-brand-primary font-black">295 ج.م</span>، وسيرتفع للدفعة القادمة إلى <span class="text-red-700 font-black">385 ج.م</span>!</span>
+                </div>
+
+                <p class="text-xs text-center text-gray-500 font-semibold mt-3">
+                    ⚡ الباقة كاملة تُرسل لكِ مباشرة عبر الواتساب والإيميل بمنتهى السرية والخصوصية
+                </p>
             </div>
 
             <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
@@ -1106,7 +1248,7 @@
                             </div>
 
                             <button type="submit" id="submit-btn" class="w-full bg-brand-primary hover:bg-red-800 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition-all mt-4 flex items-center justify-center gap-2">
-                                تأكيد الطلب واستلام الكتاب
+                                تأكيد الطلب واستلام المجموعة كاملة
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             </button>
 
@@ -1129,10 +1271,19 @@
     </footer>
 
     <!-- Mobile Sticky CTA -->
-    <div class="fixed bottom-0 left-0 w-full p-4 bg-white/90 backdrop-blur-md border-t border-gray-200 md:hidden z-50">
-        <button onclick="scrollToCheckout()" class="block w-full bg-brand-primary text-white text-center font-bold text-lg py-3 rounded-xl shadow-lg flex items-center justify-center gap-2">
-            <span>اطلبي الكتالوج السري الآن</span>
-            <span class="bg-white/20 px-2 py-0.5 rounded text-sm">190 ج.م</span>
+    <div class="fixed bottom-0 left-0 w-full p-2.5 bg-white/95 backdrop-blur-md border-t border-gray-200 md:hidden z-50 shadow-2xl">
+        <button onclick="scrollToCheckout()" class="w-full bg-gradient-to-r from-brand-primary to-red-700 text-white rounded-xl py-2 px-4 shadow-lg flex flex-col items-center justify-center animate-pulse">
+            <span class="text-base font-black tracking-wide flex items-center justify-center gap-2">
+                <span>اطلبي المجموعة كاملة - 295 ج.م</span>
+                <span class="bg-red-950/40 text-[10px] px-2 py-0.5 rounded-full font-bold">هيرتفع لـ 385</span>
+            </span>
+            <span class="text-[11px] text-pink-100 font-medium flex items-center gap-1.5 mt-0.5 opacity-90">
+                <span>الكتاب + 4 هدايا مجانية</span>
+                <span>•</span>
+                <span>⚡ السعر الحالي 295 ج.م</span>
+                <span>•</span>
+                <span>🔒 خصوصية تامة</span>
+            </span>
         </button>
     </div>
 
@@ -1192,7 +1343,7 @@
 
         // --- الثوابت والمتغيرات العامة ---
         const scriptUrl = 'https://script.google.com/macros/s/AKfycbx0jdlGbW-rRSTI9B2GTvDDiUgorHOMRS2V_0B2-vWfoZIY6kny4572GjZz5mjCY-Qi/exec';
-        const productPrice = "190";
+        const productPrice = "295";
         let globalOrderId = 'ORD-' + Date.now();
         let addToCartTracked = false;
         let lastSyncedData = "";
@@ -1230,7 +1381,7 @@
 
                 const payload = {
                     currency: 'EGP',
-                    value: 190.00,
+                    value: 295.00,
                     content_name: 'شفرة الرجالة - الكتالوج السري',
                     content_type: 'product',
                     ...customData
