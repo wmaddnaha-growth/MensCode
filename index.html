@@ -345,8 +345,7 @@
                         </li>
                     </ul>
                     
-                    <!-- Decision Block (
- + CTA) -->
+                    <!-- Decision Block (Price + CTA) -->
                     <div class="mt-10">
                         <div class="mb-5 flex flex-col items-center lg:items-start gap-3">
                             <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3.5">
@@ -371,12 +370,21 @@
                                 <span>📦</span>
                                 <span>السعر يشمل <span class="text-emerald-800 font-black underline">المجموعة كاملة</span>: كتاب شفرة الرجالة + 4 كتيبات هدايا مجاناً.</span>
                             </div>
+
+                            <!-- Book Only Option Note -->
+                            <div onclick="scrollToCheckout('book')" class="cursor-pointer inline-flex items-center gap-1.5 text-xs md:text-sm text-gray-700 font-bold bg-white hover:bg-pink-50 px-3.5 py-1.5 rounded-xl border border-gray-300 hover:border-brand-primary/50 transition-all shadow-2xs">
+                                <span>📘</span>
+                                <span>متاح أيضاً طلب <span class="text-gray-900 font-black">الكتاب الأساسي فقط</span> بسعر <span class="text-brand-primary font-black">199 ج.م</span> (اختاري من الأسفل 👇)</span>
+                            </div>
                         </div>
 
-                        <div class="flex justify-center lg:justify-start">
-                            <button onclick="scrollToCheckout()" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
-                                اطلبي المجموعة كاملة دلوقتي
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
+                            <button onclick="scrollToCheckout('bundle')" class="w-full sm:w-auto bg-gradient-to-r from-brand-primary to-red-700 text-white font-bold text-xl py-4 px-10 rounded-2xl btn-glow flex items-center justify-center gap-2">
+                                اطلبي المجموعة كاملة (295 ج.م)
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                            </button>
+                            <button onclick="scrollToCheckout('book')" class="w-full sm:w-auto bg-white hover:bg-gray-50 text-gray-800 border-2 border-gray-300 hover:border-brand-primary font-bold text-base py-4 px-6 rounded-2xl transition-all flex items-center justify-center gap-1.5 shadow-sm">
+                                <span>📘 الكتاب فقط (199 ج.م)</span>
                             </button>
                         </div>
                         
@@ -1061,6 +1069,12 @@
                     <span>عرض البلاك فرايداي (خصم فوق الخصم): السعر حالياً <span class="text-brand-primary font-black">295 ج.م فقط</span> بدلاً من <span class="line-through text-red-600 font-extrabold">385 ج.م</span> لفترة محدودة جداً!</span>
                 </div>
 
+                <!-- Book Only Note in Summary Box -->
+                <div class="mt-3 p-2.5 bg-white border border-gray-200 rounded-xl text-center text-xs md:text-sm font-bold text-gray-700 flex items-center justify-center gap-1.5">
+                    <span>📘</span>
+                    <span>ومتاح أيضاً طلب <span class="text-gray-900 font-black">الكتاب الأساسي فقط</span> بسعر <span class="text-brand-primary font-black">199 ج.م</span> (اختاري الباقة بالأسفل 👇)</span>
+                </div>
+
                 <p class="text-xs text-center text-gray-500 font-semibold mt-3">
                     ⚡ الباقة كاملة تُرسل لكِ مباشرة عبر الواتساب والإيميل بمنتهى السرية والخصوصية
                 </p>
@@ -1141,6 +1155,58 @@
 
                         <!-- Step 1: User Data -->
                         <div id="checkout-step-1" class="space-y-5">
+                            
+                            <!-- Package Selection -->
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">اختاري الباقة المناسبة لكِ <span class="text-red-500">*</span></label>
+                                <div class="space-y-3">
+                                    <!-- Option 1: Full Bundle (Default) -->
+                                    <label id="pkg-card-bundle" onclick="selectPackage('bundle')" class="cursor-pointer block relative p-4 rounded-2xl border-2 border-brand-primary bg-pink-50/70 shadow-sm transition-all">
+                                        <input type="radio" name="package_option" id="radio-bundle" value="bundle" checked class="hidden">
+                                        <div class="flex items-start justify-between gap-3">
+                                            <div class="flex items-start gap-3">
+                                                <div id="radio-dot-bundle" class="mt-1 w-5 h-5 rounded-full border-2 border-brand-primary flex items-center justify-center bg-white shrink-0">
+                                                    <div class="w-2.5 h-2.5 rounded-full bg-brand-primary"></div>
+                                                </div>
+                                                <div>
+                                                    <div class="flex flex-wrap items-center gap-2">
+                                                        <span class="font-black text-gray-900 text-sm md:text-base">📦 المجموعة كاملة (الكتاب + 4 هدايا)</span>
+                                                        <span class="bg-brand-primary text-white text-[10px] md:text-xs font-extrabold px-2.5 py-0.5 rounded-full">الأكثر طلباً 🔥</span>
+                                                    </div>
+                                                    <p class="text-xs text-gray-600 font-medium mt-1">تشمل كتاب شفرة الرجالة الأساسي + الـ 4 كتيبات الإضافية هدايا مجاناً</p>
+                                                </div>
+                                            </div>
+                                            <div class="text-left shrink-0">
+                                                <span class="block text-lg md:text-xl font-black text-brand-primary">295 ج.م</span>
+                                                <span class="block text-xs text-red-500 line-through font-bold">385 ج.م</span>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <!-- Option 2: Book Only -->
+                                    <label id="pkg-card-book" onclick="selectPackage('book')" class="cursor-pointer block relative p-4 rounded-2xl border-2 border-gray-200 bg-white hover:border-gray-300 transition-all">
+                                        <input type="radio" name="package_option" id="radio-book" value="book" class="hidden">
+                                        <div class="flex items-start justify-between gap-3">
+                                            <div class="flex items-start gap-3">
+                                                <div id="radio-dot-book" class="mt-1 w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center bg-white shrink-0">
+                                                    <div class="w-2.5 h-2.5 rounded-full bg-brand-primary hidden"></div>
+                                                </div>
+                                                <div>
+                                                    <div class="flex flex-wrap items-center gap-2">
+                                                        <span class="font-bold text-gray-800 text-sm md:text-base">📘 كتاب شفرة الرجالة فقط</span>
+                                                    </div>
+                                                    <p class="text-xs text-gray-500 font-medium mt-1">الكتاب الأساسي فقط (بدون الكتيبات الإضافية الأربعة)</p>
+                                                </div>
+                                            </div>
+                                            <div class="text-left shrink-0">
+                                                <span class="block text-lg md:text-xl font-black text-gray-800">199 ج.م</span>
+                                                <span class="block text-xs text-gray-400 line-through font-bold">300 ج.م</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-1">الاسم <span class="text-red-500">*</span></label>
                                 <input type="text" id="user-name" required placeholder="اكتبي اسمك هنا" class="form-input">
@@ -1174,6 +1240,18 @@
 
                         <!-- Step 2: Payment Details & Receipt Upload (Hidden initially) -->
                         <div id="checkout-step-2" class="hidden space-y-6">
+                            <!-- Selected Package Summary Banner -->
+                            <div class="p-3.5 bg-pink-50 border border-pink-200 rounded-xl flex items-center justify-between gap-2">
+                                <div class="text-right">
+                                    <span class="text-xs text-gray-500 font-bold block">الباقة المختارة:</span>
+                                    <span id="step2-pkg-name" class="text-sm md:text-base font-black text-gray-900">📦 المجموعة كاملة (الكتاب + 4 هدايا)</span>
+                                </div>
+                                <div class="text-left shrink-0">
+                                    <span class="text-xs text-gray-500 font-bold block">المبلغ المطلوب تحويله:</span>
+                                    <span id="step2-pkg-price" class="text-lg md:text-xl font-black text-brand-primary">295 ج.م</span>
+                                </div>
+                            </div>
+
                             <div class="mb-4 pt-2">
                                 <label class="block text-sm font-bold text-gray-700 mb-2">طريقة الدفع</label>
                                 <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-4 bg-gray-50 border border-gray-200 rounded-xl p-4">
@@ -1355,12 +1433,87 @@
 
         // --- الثوابت والمتغيرات العامة ---
         const scriptUrl = 'https://script.google.com/macros/s/AKfycbx0jdlGbW-rRSTI9B2GTvDDiUgorHOMRS2V_0B2-vWfoZIY6kny4572GjZz5mjCY-Qi/exec';
-        const productPrice = "295";
+        const pixelPrice = 295.00; // دائماً يرسل للبيكسل 295 في كل الأحوال
+        let selectedPackage = 'bundle'; // 'bundle' (295) أو 'book' (199)
+        let productPrice = "295";
         let globalOrderId = 'ORD-' + Date.now();
         let addToCartTracked = false;
         let lastSyncedData = "";
         let liveSyncTimeout = null;
         let isWhatsAppClicked = false;
+
+        // دالة اختيار الباقة (المجموعة كاملة 295 ج.م أو الكتاب فقط 199 ج.م)
+        function selectPackage(pkgType) {
+            selectedPackage = pkgType === 'book' ? 'book' : 'bundle';
+            productPrice = selectedPackage === 'book' ? "199" : "295";
+
+            const cardBundle = document.getElementById('pkg-card-bundle');
+            const cardBook = document.getElementById('pkg-card-book');
+            const radioBundle = document.getElementById('radio-bundle');
+            const radioBook = document.getElementById('radio-book');
+            const dotBundle = document.getElementById('radio-dot-bundle');
+            const dotBook = document.getElementById('radio-dot-book');
+
+            if (selectedPackage === 'bundle') {
+                if (radioBundle) radioBundle.checked = true;
+                if (cardBundle) cardBundle.className = "cursor-pointer block relative p-4 rounded-2xl border-2 border-brand-primary bg-pink-50/70 shadow-sm transition-all";
+                if (cardBook) cardBook.className = "cursor-pointer block relative p-4 rounded-2xl border-2 border-gray-200 bg-white hover:border-gray-300 transition-all";
+                if (dotBundle) {
+                    dotBundle.className = "mt-1 w-5 h-5 rounded-full border-2 border-brand-primary flex items-center justify-center bg-white shrink-0";
+                    dotBundle.innerHTML = '<div class="w-2.5 h-2.5 rounded-full bg-brand-primary"></div>';
+                }
+                if (dotBook) {
+                    dotBook.className = "mt-1 w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center bg-white shrink-0";
+                    dotBook.innerHTML = '<div class="w-2.5 h-2.5 rounded-full bg-brand-primary hidden"></div>';
+                }
+            } else {
+                if (radioBook) radioBook.checked = true;
+                if (cardBook) cardBook.className = "cursor-pointer block relative p-4 rounded-2xl border-2 border-brand-primary bg-pink-50/70 shadow-sm transition-all";
+                if (cardBundle) cardBundle.className = "cursor-pointer block relative p-4 rounded-2xl border-2 border-gray-200 bg-white hover:border-gray-300 transition-all";
+                if (dotBook) {
+                    dotBook.className = "mt-1 w-5 h-5 rounded-full border-2 border-brand-primary flex items-center justify-center bg-white shrink-0";
+                    dotBook.innerHTML = '<div class="w-2.5 h-2.5 rounded-full bg-brand-primary"></div>';
+                }
+                if (dotBundle) {
+                    dotBundle.className = "mt-1 w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center bg-white shrink-0";
+                    dotBundle.innerHTML = '<div class="w-2.5 h-2.5 rounded-full bg-brand-primary hidden"></div>';
+                }
+            }
+
+            // تحديث بيانات الخطوة الثانية وزر الإرسال وروابط الواتساب
+            const step2PkgName = document.getElementById('step2-pkg-name');
+            const step2PkgPrice = document.getElementById('step2-pkg-price');
+            const submitBtn = document.getElementById('submit-btn');
+
+            if (step2PkgName) {
+                step2PkgName.innerText = selectedPackage === 'book'
+                    ? '📘 كتاب شفرة الرجالة فقط'
+                    : '📦 المجموعة كاملة (الكتاب + 4 هدايا)';
+            }
+            if (step2PkgPrice) {
+                step2PkgPrice.innerText = productPrice + ' ج.م';
+            }
+            if (submitBtn) {
+                const btnText = selectedPackage === 'book'
+                    ? 'تأكيد الطلب واستلام الكتاب (199 ج.م)'
+                    : 'تأكيد الطلب واستلام المجموعة كاملة (295 ج.م)';
+                submitBtn.innerHTML = `${btnText} <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`;
+            }
+
+            // تحديث نص رسالة الواتساب في شاشة الشكر حسب الاختيار
+            const waText = selectedPackage === 'book'
+                ? encodeURIComponent('أريد كتاب شفرة الرجالة فقط (199 ج.م) و سأقوم بارسال صورة التحويل')
+                : encodeURIComponent('أريد كتاب شفرة الرجالة و الهدايا (المجموعة كاملة 295 ج.م) و سأقوم بارسال صورة التحويل');
+            const waUrl = `https://wa.me/201553089928?text=${waText}`;
+            const successMsg = document.getElementById('success-message');
+            if (successMsg) {
+                const waLinks = successMsg.querySelectorAll('a[href*="wa.me"]');
+                waLinks.forEach(link => { link.href = waUrl; });
+            }
+
+            // مزامنة الاختيار الجديد مع الشيت إذا كان المستخدم قد أدخل رقمه بالفعل
+            debouncedLiveSync();
+        }
 
         // تحديث بيانات المستخدم في البيكسل لتحسين المطابقة (Advanced Matching)
         function updatePixelUserData(email, phone) {
@@ -1464,7 +1617,10 @@
             firePixelEvent('AddToCart');
         }
 
-        function scrollToCheckout() {
+        function scrollToCheckout(pkgType) {
+            if (pkgType === 'book' || pkgType === 'bundle') {
+                selectPackage(pkgType);
+            }
             trackAddToCart();
 
             // إرجاع الفورم للخطوة الأولى فوراً إذا كانت الخطوة الثانية هي الظاهرة
@@ -1688,6 +1844,7 @@
                         name: name,
                         phone: phone,
                         email: email,
+                        price: productPrice,
                         base64Data: compressed.base64Data,
                         mimeType: compressed.mimeType
                     };
@@ -1780,7 +1937,7 @@
             const email = emailInput ? emailInput.value.trim() : "";
             
             if (phone && phone.length >= 10) {
-                const currentDataKey = `${globalOrderId}_${name}_${phone}_${email}`;
+                const currentDataKey = `${globalOrderId}_${name}_${phone}_${email}_${productPrice}`;
                 if (currentDataKey === lastSyncedData) return;
                 
                 lastSyncedData = currentDataKey;
@@ -1881,6 +2038,7 @@
                 name: name,
                 phone: phone,
                 email: email,
+                price: productPrice,
                 status: "🟡 بدأت الدفع"
             };
             sendPayload(step2StatusPayload);
@@ -1937,6 +2095,7 @@
                     name: document.getElementById('user-name')?.value.trim() || "",
                     phone: phone,
                     email: email,
+                    price: productPrice,
                     status: "🟢 تم التسليم"
                 };
                 sendPayload(deliveredPayload);
@@ -1979,6 +2138,7 @@
                         name: name,
                         phone: phone,
                         email: email,
+                        price: productPrice,
                         status: "🔵 رفع الإيصال"
                     };
                     sendPayload(submitStatusPayload);
